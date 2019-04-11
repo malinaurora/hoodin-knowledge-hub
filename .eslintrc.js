@@ -5,7 +5,7 @@ module.exports = {
     },
     extends: [
         'airbnb-base',
-        'plugin:vue/recommended'
+        'plugin:vue/recommended',
     ],
     globals: {
         Atomics: 'readonly',

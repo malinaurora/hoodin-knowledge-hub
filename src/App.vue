@@ -1,26 +1,21 @@
 <template>
   <div id="app">
-    {{ message }}
+    <Api />
   </div>
 </template>
 
 <script>
+import Api from './components/Api.vue';
+
 export default {
-    data() {
-        return {
-            message: 'Hello World',
-        };
+    components: {
+        Api,
     },
 };
+console.log(Api);
+
 </script>
 
 <style lang="scss">
-    #app {
-        font-size: 18px;
-        font-family: "Roboto", sans-serif;
-        color: blue;
-        &:hover {
-            color: red;
-        }
-    }
+
 </style>
