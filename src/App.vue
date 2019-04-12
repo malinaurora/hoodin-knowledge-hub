@@ -12,7 +12,6 @@ export default {
         Api,
     },
 };
-console.log(Api);
 
 </script>
 
