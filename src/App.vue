@@ -1,10 +1,9 @@
 <template>
   <div id="app">
+    <NavBar />
     <main class="container">
       <Start :api-data="apiData" />
-    <nav>
-      <NavBar />
-    </nav>
+    </main>
   </div>
 </template>
 
@@ -30,7 +29,6 @@ export default {
             .then(response => (this.apiData = response));
     },
 };
-console.log(Api);
 
 </script>
 
