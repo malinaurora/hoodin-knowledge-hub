@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <Start :api-data="apiData" />
+    <main class="container">
+      <Start :api-data="apiData" />
+    </main>
   </div>
 </template>
 
