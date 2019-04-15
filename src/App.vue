@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <NavBar />
     <main class="container">
       <Start :api-data="apiData" />
     </main>
@@ -9,10 +10,12 @@
 <script>
 import axios from 'axios';
 import Start from './components/Start.vue';
+import NavBar from './components/NavBar.vue';
 
 export default {
     components: {
         Start,
+        NavBar,
     },
     data() {
         return {
