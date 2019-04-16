@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <main class="container">
+      <Modal />
       <Start :api-data="apiData" />
     </main>
   </div>
@@ -9,10 +10,12 @@
 <script>
 import axios from 'axios';
 import Start from './components/Start.vue';
+import Modal from './components/Modal.vue';
 
 export default {
     components: {
         Start,
+        Modal,
     },
     data() {
         return {
