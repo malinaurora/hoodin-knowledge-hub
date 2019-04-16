@@ -24,6 +24,7 @@
           height="50%"
           :src="'https://www.youtube.com/embed/' + data.video.video_id"
         />
+
         <section class="text">
           <h2 v-if="data.title != ''">
             {{ data.title }}
@@ -31,6 +32,7 @@
           <b v-if="data.section !=''">{{ data.section }}</b>
           <p>{{ data.text | striphtml }}</p>
         </section>
+
         <footer>
           <p>{{ data.author.name }}</p>
           <img
@@ -54,6 +56,11 @@ export default {
             },
         },
     },
+    watch: {
+    },
+    mounted() {
+        console.log(this.apiData);
+    },
 };
 </script>
 
@@ -69,9 +76,6 @@ export default {
         &:hover{
             transform: scale(1);
             cursor: pointer;
-        }
-        h2{
-            font-size: 20px;
         }
         .text{
             margin: 10px;
@@ -96,7 +100,6 @@ export default {
         }
         footer{
             background-color: white;
-            font-size: 15px;
             width: 100%;
             padding:5px 10px 5px 10px;
             p{
