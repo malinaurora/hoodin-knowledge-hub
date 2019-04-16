@@ -30,5 +30,53 @@ export default {
 </script>
 
 <style lang="scss">
+@import url('https://fonts.googleapis.com/css?family=Montserrat|Roboto+Slab:300,400');
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: bold;
+    line-height: normal;
+    letter-spacing: -0.05em;
+   }
+h1 {
+    font-size: 2em;
+    }
+h2 {
+    font-size: 1.5em;
+    }
+h3 {
+    font-size: 1.3em;
+   }
+h4 {
+    font-size: 1em;
+   }
+h5 {
+    font-size: 0.8em;
+   }
+h6 {
+    font-size: 0.7em;
+   }
 
+p, footer {
+    font-family: 'Roboto Slab';
+    font-style: normal;
+    font-size: 0.75em;
+}
+p {
+    line-height: 21px;
+    font-weight: 300;
+}
+
+footer {
+    font-weight: normal;
+    line-height: normal;
+}
+
+.modal {
+    background: #F3F3F3;
+    box-shadow: 2px 6px 4px rgba(0, 0, 0, 0.25);
+    p {
+      font-size: 1.125em;
+    }
+}
 </style>
