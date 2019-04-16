@@ -1,34 +1,62 @@
 <template>
-  <nav>
-    <div class="sidebar">
+  <nav
+    :class="{toggleSidebar:isActive}"
+  >
+    <!-- When clicking the aside it will make the isActive true
+     and change the DOM class to toggled -->
+    <div
+      class="sidebar"
+      :class="{toggleSidebar:isActive}"
+      @click="toggleState"
+    >
       <ul class="mt-5">
         <li>
           <img
             src="/src/images/baseline-home.svg"
-            alt="Navigation icon home"
+            alt="Home navigation icon"
           >
-          <div>Home</div>
+          <div
+            class="navLable"
+            :class="{noHover:isActive}"
+          >
+            Home
+          </div>
         </li>
         <li>
           <img
             src="/src/images/baseline-favorite-border.svg"
-            alt="Navigation icon home"
+            alt="Favorite navigation icon"
           >
-          <div>Favorite</div>
+          <div
+            class="navLable"
+            :class="{noHover:isActive}"
+          >
+            Favorite
+          </div>
         </li>
         <li>
           <img
             src="/src/images/baseline-search.svg"
-            alt="Navigation icon home"
+            alt="Seach navigation icon"
           >
-          <div>Search</div>
+          <div
+            class="navLable"
+            :class="{noHover:isActive}"
+          >
+            Search
+          </div>
         </li>
         <li>
           <img
             src="/src/images/filter-outline.svg"
-            alt="Navigation icon home"
+            alt="Filter navigtion icon"
           >
-          <div>Filters</div>
+          <div
+            class="navLable"
+            :class="{noHover:isActive}"
+          >
+            Filters
+          </div>
         </li>
       </ul>
     </div>
@@ -38,10 +66,23 @@
 <script>
 export default {
     name: 'NavBar',
+    data() {
+        return {
+            isActive: false,
+        };
+    },
+    methods: {
+        toggleState() {
+            this.isActive = !this.isActive;
+        },
+    },
 };
 </script>
 
 <style lang="scss">
+    .toggleSidebar{
+        width:250px;
+    }
     nav{
         float:left;
         height: 100vh;
@@ -53,15 +94,19 @@ export default {
             width: 50px;
             position: fixed;
         }
+        .toggleSidebar{
+            width:250px;
+        }
         ul{
             padding: 0;
             margin:0;
             li{
                 margin-top: 20px;
-                &:hover div{
+                //Will not hover when element got the class "noHover"
+                &:hover .navLable:not(.noHover) {
                     visibility: visible;
                 }
-                 div{
+                 .navLable{
                     position: absolute;
                     background-color: #000;
                     padding: 2px 6px;
