@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <Header />
     <main class="container">
       <Start :api-data="apiData" />
     </main>
