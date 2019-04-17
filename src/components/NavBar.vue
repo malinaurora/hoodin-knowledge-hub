@@ -73,11 +73,9 @@ export default {
         ul{
             padding: 0;
             margin:0;
-            width:250px;
             li{
                 margin-top: 15px;
                 overflow:hidden;
-                //Will not hover when element got the class "noHover"
                 &:hover .navLable {
                     visibility: visible;
                 }
@@ -91,14 +89,14 @@ export default {
                     visibility: hidden;
                 }
                  .removeNavLable{
-                    margin-left: 25px;
-                    display:inline;
+                    margin-left: 70px;
+                    width:250px;
                 }
                 img{
                     margin: auto;
                     width: 35px;
                     margin-left: 7.5px;
-                    position: relative;
+                    float: left;
 
                 }
             }
