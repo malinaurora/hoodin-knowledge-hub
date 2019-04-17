@@ -1,7 +1,19 @@
 <template>
   <div id="app">
     <NavBar />
-    <Modal />
+    <button
+      class="modal_opener"
+      @click="toggleModal()"
+    >
+      Click Me! I Don't Bite... <span
+        role="img"
+        aria-label="emoji"
+      >😛</span>
+    </button>
+
+    <Modal
+      v-bind="{ closeCallback: toggleModal, show, customClass: 'custom_modal_class'}"
+    />
     <main class="container">
       <Start :api-data="apiData" />
     </main>
@@ -11,8 +23,8 @@
 <script>
 import axios from 'axios';
 import Start from './components/Start.vue';
-import Modal from './components/Modal.vue';
 import NavBar from './components/NavBar.vue';
+import Modal from './components/Modal.vue';
 
 export default {
     components: {
@@ -23,6 +35,7 @@ export default {
     data() {
         return {
             apiData: null,
+            show: false,
         };
     },
     mounted() {
@@ -36,6 +49,11 @@ export default {
                 // eslint-disable-next-line no-return-assign
                 .then(response => (this.apiData = response));
         }, 60000);
+    },
+    methods: {
+        toggleModal() {
+            this.show = !this.show;
+        },
     },
 };
 
@@ -92,11 +110,4 @@ footer {
     line-height: normal;
 }
 
-.modal {
-    background: #f3f3f3;
-    box-shadow: 2px 6px 4px rgba(0, 0, 0, 0.25);
-    p {
-    font-size: 1.125em;
-    }
-}
 </style>

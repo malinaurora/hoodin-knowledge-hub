@@ -1,64 +1,99 @@
 
 <template>
-  <div>
-    <button id="myBtn">
-      Open Modal
-    </button>
-
+  <div
+    class="modal"
+    :class="customClass"
+    :style="{ display: show ? 'block' : 'none' }"
+  >
     <div
-      id="myModal"
-      class="modal"
-    >
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <p>Some text in the Modal..</p>
-      </div>
+      class="overlay"
+      @click="closeCallback()"
+    />
+    <div class="modal_content">
+      <div/>
+      <slot>
+        <h1>Harnessing microorganisms for smart microsystems</h1>
+        <p />A research team has developed a method to construct a biohybrid system that incorporates Vorticella microorganisms. The method allows movable structures to be formed in a microchannel and harnessed to Vorticella. The biohybrid system demonstrates the conversion of motion from linear motion to rotation. These fundamental technologies help researchers to create wearable smart microsystems by using autonomous microorganisms.
+      </slot>
+      <button
+        title="Close"
+        class="close_modal"
+        @click="closeCallback()"
+      >
+        <i class="fas fa-times" />
+      </button>
     </div>
   </div>
 </template>
 
-
 <script>
 export default {
     name: 'Modal',
+    props: {
+        show: Boolean,
+        customClass: String,
+        closeCallback: Function,
+    },
 };
 </script>
 
 <style>
   .modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  position: fixed;
   left: 0;
   top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  width: 100%;
+  height: 100%;
 }
 
-/* Modal Content/Box */
-.modal-content {
-  background-color: #fefefe;
-  margin: 15% auto; /* 15% from the top and centered */
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
+.modal .overlay {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
 }
 
-/* The Close Button */
-.close {
-  color: #aaa;
-  float: right;
+.modal .modal_content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-height: 90%;
+  overflow: auto;
+  background: rgb(255, 255, 255);
+  box-sizing: border-box;
+  padding: 80px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.7);
+  border-radius: 4px;
+  max-width: 80%;
+}
+
+.modal .modal_content > h2 {
   font-size: 28px;
-  font-weight: bold;
+  font-weight: 200;
+  margin: 20px 0 40px;
+  text-align: center;
 }
 
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
+.modal .modal_content .buttons_wrapper {
+  padding: 20px;
+}
+
+.modal .close_modal {
+  position: absolute;
+  right: 10px;
+  top: 10px;
   cursor: pointer;
+  font-size: 18px;
+  opacity: 0.5;
+  background: none;
+  border: none;
+  transition: opacity 0.2s ease;
+}
+
+.modal .close_modal:hover {
+  opacity: 0.9;
 }
 </style>
