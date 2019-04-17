@@ -5,10 +5,7 @@
       class="modal_opener"
       @click="toggleModal()"
     >
-      Click Me! I Don't Bite... <span
-        role="img"
-        aria-label="emoji"
-      >😛</span>
+      Click Me! I Don't Bite...
     </button>
 
     <Modal
