@@ -15,6 +15,21 @@
         <Article :api-data="api" />
       </article>
     </div>
+    <div
+      class="text-center col-md-12 .offset-md-3 m-3"
+    >
+      <a
+        href="#"
+        class="btn btn-light btn-lg"
+        role="button"
+        aria-disabled="true"
+        @click="showMoreArtickels()"
+      >
+        <img
+          src="/src/assets/icons/baseline-arrow.svg"
+          alt="arrow icon"
+        > </a>
+    </div>
   </div>
 </template>
 
