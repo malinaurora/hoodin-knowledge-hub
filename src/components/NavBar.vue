@@ -91,7 +91,7 @@ export default {
                     visibility: hidden;
                 }
                  .removeNavLable{
-                    margin-left: 20px;
+                    margin-left: 25px;
                     display:inline;
                 }
                 img{
