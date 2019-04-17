@@ -65,6 +65,7 @@ export default {
             height: 100vh;
             width: 50px;
             position: fixed;
+            transition: .5S;
         }
         .toggleSidebar{
             width:250px;
@@ -87,13 +88,15 @@ export default {
                     visibility: hidden;
                 }
                  .removeNavLable{
-                    display: inline;
                     margin-left: 20px;
+                    position: absolute;
                 }
                 img{
                     margin: auto;
                     width: 35px;
                     margin-left: 7.5px;
+                    position: relative;
+
                 }
             }
         }
