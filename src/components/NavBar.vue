@@ -35,10 +35,10 @@ export default {
             isActive: false,
             notActive: true,
             menuItems: [
-                { text: 'Home', url: 'src/images/baseline-home.svg', alt: 'Home navigation icon' },
-                { text: 'Favorite', url: 'src/images/baseline-favorite-border.svg', alt: 'Favorite navigation icon' },
-                { text: 'Search', url: 'src/images/baseline-search.svg', alt: 'Search navigation icon' },
-                { text: 'Filter', url: 'src/images/filter-outline.svg', alt: 'Filter navigation icon' },
+                { text: 'Home', url: '/src/assets/icons/baseline-home.svg', alt: 'Home navigation icon' },
+                { text: 'Favorite', url: 'src/assets/icons/baseline-favorite-border.svg', alt: 'Favorite navigation icon' },
+                { text: 'Search', url: 'src/assets/icons/baseline-search.svg', alt: 'Search navigation icon' },
+                { text: 'Filter', url: 'src/assets/icons/filter-outline.svg', alt: 'Filter navigation icon' },
             ],
         };
     },
@@ -65,6 +65,7 @@ export default {
             height: 100vh;
             width: 50px;
             position: fixed;
+            transition: .4s;
         }
         .toggleSidebar{
             width:250px;
@@ -72,8 +73,10 @@ export default {
         ul{
             padding: 0;
             margin:0;
+            width:250px;
             li{
                 margin-top: 15px;
+                overflow:hidden;
                 //Will not hover when element got the class "noHover"
                 &:hover .navLable {
                     visibility: visible;
@@ -84,16 +87,19 @@ export default {
                     padding: 2px 6px;
                     margin-left:40px;
                     color:#fff;
+                    font-size: 14px;
                     visibility: hidden;
                 }
                  .removeNavLable{
-                    display: inline;
-                    margin-left: 20px;
+                    margin-left: 25px;
+                    display:inline;
                 }
                 img{
                     margin: auto;
                     width: 35px;
                     margin-left: 7.5px;
+                    position: relative;
+
                 }
             }
         }

@@ -52,9 +52,9 @@ h5 {
 h6 {
     font-size: 0.7em;
 }
-.Navbar {
+nav{
     font-family: "Roboto Slab";
-    font-size: 1.6em;
+    font-size: 1.3em;
 }
 p {
     font-family: "Roboto Slab";
