@@ -18,7 +18,7 @@
             :src="items.url"
             :alt="items.alt"
           >
-          <div :class="{navLable:notActive, removeNavLable:isActive, noHover:isActive}">
+          <div :class="{navLable:notActive, removeNavLable:isActive}">
             {{ items.text }}
           </div>
         </li>
@@ -68,7 +68,6 @@ export default {
         }
         .toggleSidebar{
             width:250px;
-
         }
         ul{
             padding: 0;
@@ -76,7 +75,7 @@ export default {
             li{
                 margin-top: 15px;
                 //Will not hover when element got the class "noHover"
-                &:hover .navLable:not(.noHover) {
+                &:hover .navLable {
                     visibility: visible;
                 }
                  .navLable{
@@ -87,8 +86,8 @@ export default {
                     color:#fff;
                     visibility: hidden;
                 }
-                .removeNavLable{
-                    display:inline;
+                 .removeNavLable{
+                    display: inline;
                     margin-left: 20px;
                 }
                 img{
