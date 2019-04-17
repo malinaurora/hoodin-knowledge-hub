@@ -10,10 +10,13 @@
 <script>
 import axios from 'axios';
 import Start from './components/Start.vue';
+import Header from './components/Header.vue';
+
 
 export default {
     components: {
         Start,
+        Header,
     },
     data() {
         return {
