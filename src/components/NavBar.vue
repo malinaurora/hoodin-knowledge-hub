@@ -2,60 +2,24 @@
   <nav
     :class="{toggleSidebar:isActive}"
   >
-    <!-- When clicking the aside it will make the isActive true
-     and change the DOM class to toggled -->
+    <!-- When clicking the sidebar it will make the isActive true
+     and change the DOM element class to toggled -->
     <div
       class="sidebar"
       :class="{toggleSidebar:isActive}"
       @click="toggleState"
     >
       <ul class="mt-5">
-        <li>
+        <li
+          v-for="(items, index) in menuItems"
+          :key="index"
+        >
           <img
-            src="/src/images/baseline-home.svg"
-            alt="Home navigation icon"
+            :src="items.url"
+            :alt="items.alt"
           >
-          <div
-            class="navLable"
-            :class="{noHover:isActive}"
-          >
-            Home
-          </div>
-        </li>
-        <li>
-          <img
-            src="/src/images/baseline-favorite-border.svg"
-            alt="Favorite navigation icon"
-          >
-          <div
-            class="navLable"
-            :class="{noHover:isActive}"
-          >
-            Favorite
-          </div>
-        </li>
-        <li>
-          <img
-            src="/src/images/baseline-search.svg"
-            alt="Seach navigation icon"
-          >
-          <div
-            class="navLable"
-            :class="{noHover:isActive}"
-          >
-            Search
-          </div>
-        </li>
-        <li>
-          <img
-            src="/src/images/filter-outline.svg"
-            alt="Filter navigtion icon"
-          >
-          <div
-            class="navLable"
-            :class="{noHover:isActive}"
-          >
-            Filters
+          <div :class="{navLable:notActive, removeNavLable:isActive, noHover:isActive}">
+            {{ items.text }}
           </div>
         </li>
       </ul>
@@ -69,11 +33,19 @@ export default {
     data() {
         return {
             isActive: false,
+            notActive: true,
+            menuItems: [
+                { text: 'Home', url: 'src/images/baseline-home.svg', alt: 'Home navigation icon' },
+                { text: 'Favorite', url: 'src/images/baseline-favorite-border.svg', alt: 'Favorite navigation icon' },
+                { text: 'Search', url: 'src/images/baseline-search.svg', alt: 'Search navigation icon' },
+                { text: 'Filter', url: 'src/images/filter-outline.svg', alt: 'Filter navigation icon' },
+            ],
         };
     },
     methods: {
         toggleState() {
             this.isActive = !this.isActive;
+            this.notActive = !this.notActive;
         },
     },
 };
@@ -96,12 +68,13 @@ export default {
         }
         .toggleSidebar{
             width:250px;
+
         }
         ul{
             padding: 0;
             margin:0;
             li{
-                margin-top: 20px;
+                margin-top: 15px;
                 //Will not hover when element got the class "noHover"
                 &:hover .navLable:not(.noHover) {
                     visibility: visible;
@@ -114,10 +87,14 @@ export default {
                     color:#fff;
                     visibility: hidden;
                 }
+                .removeNavLable{
+                    display:inline;
+                    margin-left: 20px;
+                }
                 img{
                     margin: auto;
                     width: 35px;
-                    margin-left: 7.5px
+                    margin-left: 7.5px;
                 }
             }
         }
