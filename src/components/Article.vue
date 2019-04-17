@@ -28,8 +28,8 @@
     <footer>
       <p>{{ apiData.author.name }}</p>
       <img
-        src="/src/images/baseline-favorite-border.svg"
-        alt="Navigation icon home"
+        src="/src/assets/icons/baseline-favorite-border.svg"
+        alt="Add to favorites."
       >
     </footer>
   </div>
