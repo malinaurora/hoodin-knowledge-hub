@@ -13,7 +13,7 @@ export default {
     name: 'Header',
     data() {
         return {
-            imgSrc: '/src/images/hoodin-logo.png',
+            imgSrc: '/src/assets/images/hoodin-logo.png',
         };
     },
 };
