@@ -24,17 +24,6 @@
         </div>
       </article>
     </div>
-    <div
-      class="text-center col-md-12 .offset-md-3
- m-3"
-    >
-      <a
-        href="#"
-        class="btn btn-primary btn-lg disabled"
-        role="button"
-        aria-disabled="true"
-      >Primary link</a>
-    </div>
   </div>
 </template>
 
