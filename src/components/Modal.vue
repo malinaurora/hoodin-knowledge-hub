@@ -10,12 +10,15 @@
       @click="closeCallback()"
     />
     <div class="modal_content">
-      <p
+      <div
         class="closeBtn"
         @click="closeCallback()"
       >
-        X
-      </p>
+        <img
+          src="/src/images/baseline-home.svg"
+          alt="Navigation icon home"
+        >
+      </div>
       <slot>
         <h1>Harnessing microorganisms for smart microsystems</h1>
         <p />A research team has developed a method to construct a biohybrid system that incorporates Vorticella microorganisms. The method allows movable structures to be formed in a microchannel and harnessed to Vorticella. The biohybrid system demonstrates the conversion of motion from linear motion to rotation. These fundamental technologies help researchers to create wearable smart microsystems by using autonomous microorganisms.
