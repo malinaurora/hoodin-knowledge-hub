@@ -15,6 +15,10 @@ Vue.filter('striphtml', (value) => {
     const text = div.textContent || div.innerText || '';
     return text;
 });
+
+Vue.component('modal', {
+    template: '#modal-template',
+});
 /* eslint-disable no-new */
 new Vue({
     el: '#app',
