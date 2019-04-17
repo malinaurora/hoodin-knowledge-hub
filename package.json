@@ -4,7 +4,7 @@
   "main": "main.js",
   "scripts": {
     "clean": "rimraf dist",
-    "build": "yarn run clean && webpack --mode production",
+    "build": "clean && webpack --mode production",
     "serve": "webpack-dev-server --mode development",
     "lint": "eslint --ext .js,.vue src"
   },
