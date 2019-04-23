@@ -1,19 +1,18 @@
-
 <template>
   <div
     class="modal"
   >
-    <img
-      class="exitBtn"
-      src="/src/assets/icons/baseline-close-24px.svg"
-      alt="closeModal"
-      @click="closeCallback()"
-    >
     <div
       class="overlay"
       @click="$router.go(-1)"
     />
     <div class="modal_content">
+      <img
+        class="exitBtn"
+        src="/src/assets/icons/baseline-close-24px.svg"
+        alt="closeModal"
+        @click="$router.go(-1)"
+      >
       <div
         v-if="modalArticle.imageObjects.images.length > 0 && modalArticle.video === null"
         class="modalImages"
@@ -92,7 +91,7 @@ export default {
   top: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.1);
 }
 
 .modal_content {
@@ -102,7 +101,6 @@ export default {
   transform: translate(-50%, -50%);
   max-height: 90%;
   max-width: 80%;
-  overflow: auto;
   background: rgb(255, 255, 255);
   box-sizing: border-box;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.7);
@@ -150,7 +148,7 @@ export default {
 .modalFooter > .modalTime {
   padding-left: 80px;
   position: absolute;
-  bottom: 30px;
+  bottom: 25px;
 }
 
 .modalFooter > img {
@@ -162,9 +160,20 @@ export default {
 
 .exitBtn {
   position: absolute;
-  top: 5%;
-  left: 85%;
+  top: -5px;
+  right: -40px;
+  width: 35px;
   z-index: 9999;
   cursor: pointer;
+  transform: scale(0.99);
+    &:hover{
+      transform: scale(1.2);
+    }
+}
+
+.modalFooter > .modalOrginalArticle {
+  padding-left: 80px;
+  position: absolute;
+  bottom: 80px;
 }
 </style>
