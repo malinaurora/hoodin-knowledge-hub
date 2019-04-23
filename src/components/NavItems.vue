@@ -2,8 +2,8 @@
   <ul class="mt-5">
     <!-- Looping out all data from menuLinks -->
     <li
-      v-for="(items, index) in menuLinks"
-      :key="index"
+      v-for="items in menuLinks"
+      :key="items.id"
     >
       <!-- Condition for the tooltip -->
       <img
@@ -29,8 +29,8 @@
     </li>
     <!-- Looping out all data from menuSort-->
     <li
-      v-for="(sortItems, index) in menuSort"
-      :key="index"
+      v-for="sortItems in menuSort"
+      :key="sortItems.id"
     >
       <!-- Condition for the tooltip. -->
       <img
@@ -55,7 +55,7 @@
 
 <script>
 export default {
-    // Getting is active props
+    // Getting isActive props
     props: {
         isActive: {
             type: Boolean,
@@ -100,7 +100,6 @@ export default {
                  .removeNavLable{
                     padding-left: 70px;
                     color:#000;
-                    display: block;
                 }
                 img{
                     margin: auto;
