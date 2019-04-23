@@ -9,43 +9,28 @@
       :class="{toggleSidebar:isActive}"
       @click="toggleState"
     >
-      <ul class="mt-5">
-        <li
-          v-for="(items, index) in menuItems"
-          :key="index"
-        >
-          <img
-            :src="items.url"
-            :alt="items.alt"
-          >
-          <div :class="{navLable:notActive, removeNavLable:isActive}">
-            {{ items.text }}
-          </div>
-        </li>
-      </ul>
+      <!-- Getting NavItems from component NavItems and sending isActive to NavItems-->
+      <NavItems :is-active="isActive" />
     </div>
   </nav>
 </template>
 
 <script>
+import NavItems from './NavItems.vue';
+
 export default {
     name: 'NavBar',
+    components: {
+        NavItems,
+    },
     data() {
         return {
             isActive: false,
-            notActive: true,
-            menuItems: [
-                { text: 'Home', url: '/src/assets/icons/baseline-home.svg', alt: 'Home navigation icon' },
-                { text: 'Favorite', url: 'src/assets/icons/baseline-favorite-border.svg', alt: 'Favorite navigation icon' },
-                { text: 'Search', url: 'src/assets/icons/baseline-search.svg', alt: 'Search navigation icon' },
-                { text: 'Filter', url: 'src/assets/icons/filter-outline.svg', alt: 'Filter navigation icon' },
-            ],
         };
     },
     methods: {
         toggleState() {
             this.isActive = !this.isActive;
-            this.notActive = !this.notActive;
         },
     },
 };
@@ -69,37 +54,6 @@ export default {
         }
         .toggleSidebar{
             width:250px;
-        }
-        ul{
-            padding: 0;
-            margin:0;
-            li{
-                margin-top: 15px;
-                overflow:hidden;
-                &:hover .navLable {
-                    visibility: visible;
-                }
-                 .navLable{
-                    position: absolute;
-                    background-color: #000;
-                    padding: 2px 6px;
-                    margin-left:40px;
-                    color:#fff;
-                    font-size: 14px;
-                    visibility: hidden;
-                }
-                 .removeNavLable{
-                    margin-left: 70px;
-                    width:250px;
-                }
-                img{
-                    margin: auto;
-                    width: 35px;
-                    margin-left: 7.5px;
-                    float: left;
-
-                }
-            }
         }
     }
 </style>
