@@ -56,12 +56,6 @@
 <script>
 export default {
     name: 'Modal',
-    props: {
-        // eslint-disable-next-line vue/require-default-prop
-        customClass: String,
-        // eslint-disable-next-line vue/require-default-prop
-        closeCallback: Function,
-    },
     data() {
         return {
             id: this.$route.params.id,
