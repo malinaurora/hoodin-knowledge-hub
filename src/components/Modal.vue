@@ -10,18 +10,46 @@
       @click="closeCallback()"
     />
     <div class="modal_content">
-      <div />
-      <slot>
+      <div
+        v-if="modalArticle.imageObjects.images.length > 0 && modalArticle.video === null"
+        class="modalImages"
+      >
+        <img
+          :src="modalArticle.imageObjects.images[0].url"
+          alt="Article picture."
+        >
+      </div>
+      <iframe
+        v-if="modalArticle.video != null"
+        class="modalVideo"
+        width="100%"
+        height="50%"
+        :src="'https://www.youtube.com/embed/' + modalArticle.video.video_id"
+      />
+
+      <section class="modalText">
         <h1>{{ modalArticle.title }}</h1>
         <p>{{ modalArticle.text | striphtml }}</p>
-      </slot>
-      <button
-        title="Close"
-        class="close_modal"
-        @click="closeCallback()"
-      >
-        <i class="fas fa-times" />
-      </button>
+      </section>
+      <footer class="modalFooter">
+        <p class="modalTime">
+          {{ modalArticle.published }}
+        </p>
+        <p class="modalAuthor">
+          {{ modalArticle.author.name }}
+        </p>
+        <a
+          class="modalOrginalArticle"
+          :v-if="modalArticle.source_url !=null"
+          :href="modalArticle.source_url"
+        >
+          Se Orginal artikeln
+        </a>
+        <img
+          src="/src/assets/icons/baseline-favorite-border.svg"
+          alt="Add to favorites."
+        >
+      </footer>
     </div>
   </div>
 </template>
@@ -31,23 +59,25 @@ export default {
     name: 'Modal',
     props: {
         show: Boolean,
+        // eslint-disable-next-line vue/require-default-prop
         customClass: String,
+        // eslint-disable-next-line vue/require-default-prop
         closeCallback: Function,
         modalArticle: Object,
     },
 };
 </script>
 
-<style>
-  .modal {
+<style lang="scss">
+.modal {
   position: fixed;
   left: 0;
   top: 0;
   width: 100%;
-  height: 100%;
+  height: 100%
 }
 
-.modal .overlay {
+.overlay {
   position: absolute;
   left: 0;
   top: 0;
@@ -56,45 +86,75 @@ export default {
   background: rgba(0, 0, 0, 0.3);
 }
 
-.modal .modal_content {
+.modal_content {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   max-height: 90%;
+  max-width: 80%;
   overflow: auto;
   background: rgb(255, 255, 255);
   box-sizing: border-box;
-  padding: 80px;
-  box-shadow: 0 1px 5px rgba(0,0,0,0.7);
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.7);
   border-radius: 4px;
-  max-width: 80%;
+  width: 950px;
+  height: 1000px;
 }
 
-.modal .modal_content > h2 {
+.modal_content > h2 {
   font-size: 28px;
   font-weight: 200;
   margin: 20px 0 40px;
   text-align: center;
 }
 
-.modal .modal_content .buttons_wrapper {
-  padding: 20px;
-}
-
-.modal .close_modal {
-  position: absolute;
-  right: 10px;
-  top: 10px;
+.closeBtn {
   cursor: pointer;
-  font-size: 18px;
-  opacity: 0.5;
-  background: none;
-  border: none;
-  transition: opacity 0.2s ease;
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 
-.modal .close_modal:hover {
-  opacity: 0.9;
+.modalImages {
+    height: auto;
+    position: relative;
+}
+
+.modalVideo {
+    border:none;
+    height: 45%;
+}
+
+.modalImages > img {
+    height: 45%;
+    width: 100%;
+}
+
+.modalText {
+    padding-top: 50px;
+    padding-right: 80px;
+    padding-left: 80px;
+    padding-bottom: 50px;
+}
+
+.modalFooter > .modalAuthor {
+  padding-left: 80px;
+  position: absolute;
+  bottom: 0px;
+  margin-bottom: 20px;
+}
+
+.modalFooter > .modalTime {
+  padding-left: 80px;
+  position: absolute;
+  bottom: 30px;
+}
+
+.modalFooter > img {
+  position: absolute;
+  bottom: 20px;
+  right: 80px;
+  width: 50px;
 }
 </style>
