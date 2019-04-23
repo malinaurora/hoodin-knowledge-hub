@@ -5,6 +5,12 @@
     :class="customClass"
     :style="{ display: show ? 'block' : 'none' }"
   >
+    <img
+      class="exitBtn"
+      src="/src/assets/icons/baseline-close-24px.svg"
+      alt="closeModal"
+      @click="closeCallback()"
+    >
     <div
       class="overlay"
       @click="closeCallback()"
@@ -39,8 +45,8 @@
           {{ modalArticle.author.name }}
         </p>
         <a
+          v-if="modalArticle.source_url !=null"
           class="modalOrginalArticle"
-          :v-if="modalArticle.source_url !=null"
           :href="modalArticle.source_url"
         >
           Se Orginal artikeln
@@ -78,7 +84,7 @@ export default {
 }
 
 .overlay {
-  position: absolute;
+  position: fixed;
   left: 0;
   top: 0;
   width: 100%;
@@ -87,7 +93,7 @@ export default {
 }
 
 .modal_content {
-  position: absolute;
+  position: relative;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -107,13 +113,6 @@ export default {
   font-weight: 200;
   margin: 20px 0 40px;
   text-align: center;
-}
-
-.closeBtn {
-  cursor: pointer;
-  position: absolute;
-  top: 10px;
-  right: 10px;
 }
 
 .modalImages {
@@ -156,5 +155,13 @@ export default {
   bottom: 20px;
   right: 80px;
   width: 50px;
+}
+
+.exitBtn {
+  position: absolute;
+  top: 5%;
+  left: 85%;
+  z-index: 9999;
+  cursor: pointer;
 }
 </style>
