@@ -2,7 +2,6 @@
 <template>
   <div
     class="modal"
-    :class="customClass"
   >
     <div
       class="overlay"
