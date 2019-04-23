@@ -9,6 +9,12 @@
       :class="{toggleSidebar:isActive}"
       @click="toggleState"
     >
+      <img
+        v-if="isActive"
+        class="closeNavBarImage"
+        :src="img"
+        @click="!toggleState"
+      >
       <!-- Getting NavItems from component NavItems and sending isActive to NavItems-->
       <NavItems :is-active="isActive" />
     </div>
@@ -26,6 +32,7 @@ export default {
     data() {
         return {
             isActive: false,
+            img: 'src/assets/icons/baseline-close.svg',
         };
     },
     methods: {
@@ -54,6 +61,12 @@ export default {
         }
         .toggleSidebar{
             width:250px;
+        }
+        .closeNavBarImage{
+            float: right;
+            margin: 5px 2px 0px 0px;
+            width: 35px;
+            cursor: pointer;
         }
     }
 </style>
