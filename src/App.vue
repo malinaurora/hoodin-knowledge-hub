@@ -2,18 +2,16 @@
   <div id="app">
     <NavBar />
     <main class="container">
-      <Start />
+      <router-view />
     </main>
   </div>
 </template>
 
 <script>
-import Start from './components/Start.vue';
 import NavBar from './components/NavBar.vue';
 
 export default {
     components: {
-        Start,
         NavBar,
     },
 };
