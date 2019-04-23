@@ -2,8 +2,6 @@
 <template>
   <div
     class="modal"
-    :class="customClass"
-    :style="{ display: show ? 'block' : 'none' }"
   >
     <img
       class="exitBtn"
@@ -13,7 +11,7 @@
     >
     <div
       class="overlay"
-      @click="closeCallback()"
+      @click="$router.go(-1)"
     />
     <div class="modal_content">
       <div
@@ -63,19 +61,24 @@
 <script>
 export default {
     name: 'Modal',
-    props: {
-        show: Boolean,
-        // eslint-disable-next-line vue/require-default-prop
-        customClass: String,
-        // eslint-disable-next-line vue/require-default-prop
-        closeCallback: Function,
-        modalArticle: Object,
+    data() {
+        return {
+            id: this.$route.params.id,
+            modalArticle: {},
+        };
+    },
+    created() {
+        this.$http.get(`https://interns-test-channel.hoodin.com/api/v2/items/${this.id}?&&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9`)
+            .then((res) => {
+                this.modalArticle = res.body.data.item;
+            });
     },
 };
 </script>
 
 <style lang="scss">
 .modal {
+  display: block;
   position: fixed;
   left: 0;
   top: 0;

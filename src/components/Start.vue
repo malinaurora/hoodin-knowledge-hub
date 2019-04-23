@@ -1,32 +1,28 @@
 
 <template>
   <div>
-    <Modal
-      v-bind="{ closeCallback: toggleModal, show, customClass: 'custom_modal_class'}"
-      :modal-article="modalArticle"
-    />
+    <router-view />
     <div class="row mb-5">
       <article
-        v-for="api of apiData.data.data.items"
+        v-for="api of apiData"
         :key="api.id"
         class="col-lg-4 col-md-6 mt-3 mb-3"
-        @click="toggleModal(), getArticle(api)"
+        @click="getArticle(api)"
       >
-        <Article :api-data="api" />
+        <router-link :to="{name: 'Modal', params: {id: api.id}}">
+          <Article :api-data="api" />
+        </router-link>
       </article>
     </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
 import Article from './Article.vue';
-import Modal from './Modal.vue';
 
 export default {
     components: {
         Article,
-        Modal,
     },
     data() {
         return {
@@ -36,14 +32,16 @@ export default {
         };
     },
     mounted() {
-        axios
+        this.$http
             .get('https://interns-test-channel.hoodin.com/api/v2/items?limit=15&&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9')
-        // eslint-disable-next-line no-return-assign
-            .then(response => (this.apiData = response));
+            .then((response) => {
+                console.log(response);
+                this.apiData = response.body.data.items;
+            });
         setInterval(() => {
-            axios
+            this.$http
                 .get('https://interns-test-channel.hoodin.com/api/v2/items?limit=15&&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9')
-                .then((response) => { this.apiData = response; });
+                .then((response) => { this.apiData = response.body.data.items; });
         }, 60000);
     },
     methods: {
@@ -58,4 +56,13 @@ export default {
 </script>
 
 <style lang="scss">
+article{
+    a{
+        color: black;
+        &:hover{
+            color: black;
+            text-decoration: none;
+        }
+    }
+}
 </style>
