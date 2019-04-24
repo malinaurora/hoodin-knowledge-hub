@@ -2,7 +2,6 @@
   <div id="app">
     <router-view />
     <NavBar />
-    <Modal />
     <main class="container">
       <Start :api-data="apiData" />
     </main>
@@ -12,14 +11,12 @@
 <script>
 import axios from 'axios';
 import Start from './components/Start.vue';
-import Modal from './components/Modal.vue';
 import NavBar from './components/NavBar.vue';
 
 export default {
     components: {
         Start,
         NavBar,
-        Modal,
     },
     data() {
         return {
