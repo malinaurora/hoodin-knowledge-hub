@@ -83,6 +83,8 @@ export default {
     },
     mounted() {
         this.imageSlider(this.slideIndex);
+        // load all favorites as an array and loop thru it comparing ids
+        // if they match the heart gets a different icon
         const data = JSON.parse(localStorage.getItem('id'));
         // eslint-disable-next-line no-restricted-syntax
         for (const favorit of data) {
@@ -92,9 +94,13 @@ export default {
         }
     },
     methods: {
+
+        // next image in slider
         nextImage(n) {
             this.imageSlider(this.slideIndex += n);
         },
+
+        // if the article contains more than one picture it shows a slider
         imageSlider(n) {
             let i;
             const x = document.getElementsByClassName(`${this.apiData.id}Image`);
@@ -127,6 +133,7 @@ export default {
                 }
                 index += 1;
             }
+            // convert array to string and save it in local storage
             localStorage.setItem('id', JSON.stringify(data));
             this.favorite = false;
         },
