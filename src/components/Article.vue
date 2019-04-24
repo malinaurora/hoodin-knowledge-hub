@@ -4,7 +4,7 @@
       v-if="apiData.imageObjects.images.length > 0 && apiData.video === null"
       class="images"
     >
-      <router-link :to="{name: 'Modal', params: {id: apiData.id}}">
+      <router-link :to="{name: modalRoute, params: {id: apiData.id}}">
         <img
           v-for="image of apiData.imageObjects.images"
           :key="image.url"
@@ -36,7 +36,7 @@
       :src="'https://www.youtube.com/embed/' + apiData.video.video_id"
     />
     <router-link
-      :to="{name: 'Modal', params: {id: apiData.id}}"
+      :to="{name: modalRoute, params: {id: apiData.id}}"
       class="text"
     >
       <h2 v-if="apiData.title != ''">
@@ -50,6 +50,14 @@
       <img
         src="/src/assets/icons/baseline-favorite-border.svg"
         alt="Add to favorites."
+        :style="{display: favorite ? 'none' : 'block'}"
+        @click="addFavorite()"
+      >
+      <img
+        src="/src/assets/icons/baseline-favorite.svg"
+        alt="Remove from favorites."
+        :style="{display: favorite ? 'block' : 'none'}"
+        @click="removeFavorite()"
       >
     </footer>
   </div>
@@ -65,14 +73,23 @@ export default {
                 return { message: 'Api Data' };
             },
         },
+        modalRoute: String,
     },
     data() {
         return {
             slideIndex: 1,
+            favorite: false,
         };
     },
     mounted() {
         this.imageSlider(this.slideIndex);
+        const data = JSON.parse(localStorage.getItem('id'));
+        // eslint-disable-next-line no-restricted-syntax
+        for (const favorit of data) {
+            if (this.apiData.id === favorit) {
+                this.favorite = true;
+            }
+        }
     },
     methods: {
         nextImage(n) {
@@ -91,6 +108,27 @@ export default {
             if (x[this.slideIndex - 1] !== undefined) {
                 x[this.slideIndex - 1].style.display = 'block';
             }
+        },
+        addFavorite() {
+            // send id of favorited articel to parent component
+            this.$emit('saveArticleId', this.apiData.id);
+            this.favorite = true;
+        },
+        removeFavorite() {
+            // load all favorited ids
+            const data = JSON.parse(localStorage.getItem('id'));
+            let index = 0;
+
+            // find the id of the removed aricle and remove it from local storage
+            // eslint-disable-next-line no-restricted-syntax
+            for (const unFavorite of data) {
+                if (unFavorite === this.apiData.id) {
+                    data.splice(index, 1);
+                }
+                index += 1;
+            }
+            localStorage.setItem('id', JSON.stringify(data));
+            this.favorite = false;
         },
     },
 };

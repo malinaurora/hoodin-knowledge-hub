@@ -57,12 +57,15 @@ export default {
     }
     nav{
         float:left;
-        height: 100vh;
+        height: 90%;
+        bottom:0;
+        top:0;
         width: 50px;
         .sidebar{
+            top:0;
             background-color: #F6F6F6;
             box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.25);
-            height: 100vh;
+            bottom:0;
             width: 50px;
             position: fixed;
             transition: .4s;

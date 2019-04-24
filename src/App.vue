@@ -2,7 +2,9 @@
   <div id="app">
     <NavBar />
     <main class="container">
-      <router-view />
+      <router-view
+        @saveArticleId="saveFavorites($event)"
+      />
     </main>
   </div>
 </template>

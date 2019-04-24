@@ -5,6 +5,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css';
 import vueResource from 'vue-resource';
 import VueRouter from 'vue-router';
 import Start from './components/Start.vue';
+import Favorite from './components/Favorite.vue';
 import Modal from './components/Modal.vue';
 import App from './App.vue';
 
@@ -16,10 +17,17 @@ Vue.use(vueResource);
 const routes = [
     // Add your routes here and import them above
     {
+        path: '/favorite',
+        component: Favorite,
+        children: [
+            { path: ':id', component: Modal, name: 'modalFavorite' },
+        ],
+    },
+    {
         path: '/',
         component: Start,
         children: [
-            { path: ':id', component: Modal, name: 'Modal' },
+            { path: ':id', component: Modal, name: 'modalStart' },
         ],
     },
 ];
