@@ -1,41 +1,18 @@
 <template>
   <div id="app">
     <NavBar />
-    <Modal />
     <main class="container">
-      <Start :api-data="apiData" />
+      <router-view />
     </main>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
-import Start from './components/Start.vue';
-import Modal from './components/Modal.vue';
 import NavBar from './components/NavBar.vue';
 
 export default {
     components: {
-        Start,
         NavBar,
-        Modal,
-    },
-    data() {
-        return {
-            apiData: null,
-        };
-    },
-    mounted() {
-        axios
-            .get('https://interns-test-channel.hoodin.com/api/v2/items?limit=15&&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9')
-        // eslint-disable-next-line no-return-assign
-            .then(response => (this.apiData = response));
-        setInterval(() => {
-            axios
-                .get('https://interns-test-channel.hoodin.com/api/v2/items?limit=15&&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9')
-                // eslint-disable-next-line no-return-assign
-                .then(response => (this.apiData = response));
-        }, 60000);
     },
 };
 
@@ -92,11 +69,4 @@ footer {
     line-height: normal;
 }
 
-.modal {
-    background: #f3f3f3;
-    box-shadow: 2px 6px 4px rgba(0, 0, 0, 0.25);
-    p {
-    font-size: 1.125em;
-    }
-}
 </style>

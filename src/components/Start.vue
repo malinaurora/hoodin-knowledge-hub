@@ -1,120 +1,54 @@
 
 <template>
-  <div class="row mb-5">
-    <article
-      v-for="data in apiData.data.data.items"
-      :id="data.id"
-      :key="data.id"
-      class="col-lg-4 col-md-6 mt-3 mb-3"
-    >
-      <div class="content">
-        <div
-          v-if="data.imageObjects.images.length > 0 && data.video === null"
-          class="images"
-        >
-          <img
-            :src="data.imageObjects.images[0].url"
-            alt="Article picture."
-          >
-        </div>
-        <iframe
-          v-if="data.video != null"
-          class="video"
-          width="100%"
-          height="50%"
-          :src="'https://www.youtube.com/embed/' + data.video.video_id"
-        />
-
-        <section class="text">
-          <h2 v-if="data.title != ''">
-            {{ data.title }}
-          </h2>
-          <b v-if="data.section !=''">{{ data.section }}</b>
-          <p>{{ data.text | striphtml }}</p>
-        </section>
-
-        <footer>
-          <p>{{ data.author.name }}</p>
-          <img
-            src="/src/assets/icons/baseline-favorite-border.svg"
-            alt="Navigation icon home"
-          >
-        </footer>
-      </div>
-    </article>
+  <div>
+    <div class="row mb-5">
+      <article
+        v-for="api of apiData"
+        :key="api.id"
+        class="col-lg-4 col-md-6 mt-3 mb-3"
+      >
+        <Article :api-data="api" />
+      </article>
+    </div>
+    <router-view />
   </div>
 </template>
 
 <script>
+import Article from './Article.vue';
 
 export default {
-    props: {
-        apiData: {
-            type: Object,
-            default() {
-                return { message: 'Api Data' };
-            },
-        },
+    components: {
+        Article,
     },
-    watch: {
+    data() {
+        return {
+            apiData: null,
+        };
     },
     mounted() {
+        this.$http
+            .get('https://interns-test-channel.hoodin.com/api/v2/items?limit=15&&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9')
+            .then((response) => {
+                this.apiData = response.body.data.items;
+            });
+        setInterval(() => {
+            this.$http
+                .get('https://interns-test-channel.hoodin.com/api/v2/items?limit=15&&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9')
+                .then((response) => { this.apiData = response.body.data.items; });
+        }, 60000);
     },
 };
 </script>
 
 <style lang="scss">
-    .content{
-        height: 500px;
-        box-shadow: 0px 0px 15px gray;
-        overflow: hidden;
-        transition: 0.2s;
-        transform: scale(0.98);
-        display: flex;
-        flex-direction: column;
+article{
+    a{
+        color: black;
         &:hover{
-            transform: scale(1);
-            cursor: pointer;
-        }
-        .text{
-            margin: 10px;
-            margin-bottom: 0;
-            text-overflow: ellipsis;
-            overflow: hidden;
-            word-break: break-word;
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-        }
-        .video{
-            border:none;
-            height: 45%;
-        }
-        .images{
-            height: 45%;
-            img{
-                height: 100%;
-                width: 100%;
-            }
-        }
-        footer{
-            background-color: white;
-            width: 100%;
-            padding:5px 10px 5px 10px;
-            p{
-                margin:0;
-                font-size: 11px;
-                max-width: 50%;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-                overflow: hidden;
-                position: relative;
-            }
-            img{
-                position: absolute;
-                bottom:5px;
-                right:10px;
-            }
+            color: black;
+            text-decoration: none;
         }
     }
+}
 </style>
