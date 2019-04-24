@@ -87,6 +87,7 @@ export default {
             for (i = 0; i < x.length; i++) {
                 x[i].style.display = 'none';
             }
+
             if (x[this.slideIndex - 1] !== undefined) {
                 x[this.slideIndex - 1].style.display = 'block';
             }
@@ -135,12 +136,14 @@ export default {
               top: 50%;
               -ms-transform: translateY(-50%);
               transform: translateY(-50%);
-              padding: 5px 10px 5px 10px;
+              padding: 0px 10px 0px 10px;
               border: none;
               background: none;
-              font-size: 20px;
+              font-size: 25px;
+              background-color: rgba(255, 255, 255, 0.5);
+              transition: 0.2s;
               &:hover{
-                background-color: lightgray;
+                background-color: rgba(211, 211, 211, 0.85);
               }
               &:focus{
                 outline:0;
@@ -152,12 +155,14 @@ export default {
               top: 50%;
               -ms-transform: translateY(-50%);
               transform: translateY(-50%);
-              padding: 5px 10px 5px 10px;
+              padding: 0px 10px 0px 10px;
               border: none;
               background: none;
-              font-size: 20px;
+              font-size: 25px;
+              background-color: rgba(255, 255, 255, 0.5);
+              transition: 0.2s;
               &:hover{
-                background-color: lightgray;
+                background-color: rgba(211, 211, 211, 0.85);
               }
               &:focus{
                 outline:0;

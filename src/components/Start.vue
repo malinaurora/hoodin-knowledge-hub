@@ -1,7 +1,6 @@
 
 <template>
   <div>
-    <router-view />
     <div class="row mb-5">
       <article
         v-for="api of apiData"
@@ -11,6 +10,7 @@
         <Article :api-data="api" />
       </article>
     </div>
+    <router-view />
   </div>
 </template>
 
