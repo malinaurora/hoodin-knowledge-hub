@@ -1,10 +1,6 @@
 
 <template>
   <div>
-    <button id="myBtn">
-      Open Modal
-    </button>
-
     <div
       id="myModal"
       class="modal"
