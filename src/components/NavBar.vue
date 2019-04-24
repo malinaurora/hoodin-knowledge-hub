@@ -2,6 +2,12 @@
   <nav
     :class="{toggleSidebar:isActive}"
   >
+    <img
+      class="responsiveMenu"
+      :class="{removeResponsiveMenu:isActive}"
+      :src="menuImg"
+      @click="toggleState"
+    >
     <!-- When clicking the sidebar it will make the isActive true
      and change the DOM element class to toggled -->
     <div
@@ -12,7 +18,7 @@
       <img
         v-if="isActive"
         class="closeNavBarImage"
-        :src="img"
+        :src="closeImg"
         @click="!toggleState"
       >
       <!-- Getting NavItems from component NavItems and sending isActive to NavItems-->
@@ -32,7 +38,8 @@ export default {
     data() {
         return {
             isActive: false,
-            img: 'src/assets/icons/baseline-close.svg',
+            closeImg: 'src/assets/icons/baseline-close.svg',
+            menuImg: 'src/assets/icons/baseline-menu.svg',
         };
     },
     methods: {
@@ -52,6 +59,7 @@ export default {
         height: 100vh;
         width: 50px;
         .sidebar{
+            top:0;
             background-color: #F6F6F6;
             box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.25);
             height: 100vh;
@@ -67,6 +75,34 @@ export default {
             margin: 5px 2px 0px 0px;
             width: 35px;
             cursor: pointer;
+        }
+        .responsiveMenu{
+            display:none;
+        }
+    }
+    @media (max-width: 767.98px) {
+        .toggleSidebar{
+            width: 100vw;
+        }
+        nav{
+            .sidebar{
+                width: 0px;
+                transition: none;
+            }
+              .toggleSidebar{
+                width: 100vw;
+            }
+            .responsiveMenu{
+                display:block;
+                width:45px;
+            }
+            .removeResponsiveMenu{
+                display:none;
+            }
+            .closeNavBarImage{
+                width: 45px;
+                margin: 0px;
+            }
         }
     }
 </style>
