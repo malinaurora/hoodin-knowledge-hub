@@ -8,7 +8,6 @@ import Start from './components/Start.vue';
 import Modal from './components/Modal.vue';
 import App from './App.vue';
 
-
 Vue.use(BootstrapVue);
 Vue.use(VueRouter);
 Vue.use(vueResource);

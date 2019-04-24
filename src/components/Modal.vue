@@ -19,7 +19,7 @@
       >
         <img
           :src="modalArticle.imageObjects.images[0].url"
-          alt="Article picture."
+          alt="Modal picture."
         >
       </div>
       <iframe
@@ -31,7 +31,10 @@
       />
 
       <section class="modalText">
-        <h1>{{ modalArticle.title }}</h1>
+        <h1 v-if="modalArticle.title != ''">
+          {{ modalArticle.title }}
+        </h1>
+        <b v-if="modalArticle.section !=''">{{ modalArticle.section }}</b>
         <p>{{ modalArticle.text | striphtml }}</p>
       </section>
       <footer class="modalFooter">
@@ -105,8 +108,8 @@ export default {
   box-sizing: border-box;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.7);
   border-radius: 4px;
-  width: 950px;
-  height: 1000px;
+  max-width: 35%;
+  height: 100%;
 }
 
 .modal_content > h2 {
@@ -117,7 +120,6 @@ export default {
 }
 
 .modalImages {
-    height: auto;
     position: relative;
 }
 
@@ -132,30 +134,30 @@ export default {
 }
 
 .modalText {
-    padding-top: 50px;
-    padding-right: 80px;
-    padding-left: 80px;
-    padding-bottom: 50px;
+    padding-top: 30px;
+    padding-right: 50px;
+    padding-left: 50px;
+    padding-bottom: 30px;
 }
 
 .modalFooter > .modalAuthor {
-  padding-left: 80px;
+  padding-left: 50px;
   position: absolute;
   bottom: 0px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .modalFooter > .modalTime {
-  padding-left: 80px;
+  padding-left: 50px;
   position: absolute;
-  bottom: 25px;
+  bottom: 20px;
 }
 
 .modalFooter > img {
   position: absolute;
-  bottom: 20px;
-  right: 80px;
-  width: 50px;
+  bottom: 10px;
+  right: 25px;
+  width: 45px;
 }
 
 .exitBtn {
@@ -165,6 +167,7 @@ export default {
   width: 35px;
   z-index: 9999;
   cursor: pointer;
+  border: 2px solid grey;
   transform: scale(0.99);
     &:hover{
       transform: scale(1.2);
@@ -172,8 +175,9 @@ export default {
 }
 
 .modalFooter > .modalOrginalArticle {
-  padding-left: 80px;
+  padding-left: 50px;
   position: absolute;
-  bottom: 80px;
+  bottom: 60px;
+  margin-bottom: 10px;
 }
 </style>
