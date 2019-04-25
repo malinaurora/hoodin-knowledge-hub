@@ -1,6 +1,6 @@
 
 <template>
-  <div>
+  <div clasS="favorite">
     <h1 class="mb-3 mt-4">
       Favorite
     </h1>
@@ -56,15 +56,17 @@ export default {
 };
 </script>
 
-<style>
-h1{
+<style lang="scss">
+.favorite{
+  h1{
     text-align: center;
-    font-size: 4em !important;
-}
-h2{
-    text-align: center;
-    margin-top: 30vh;
-    font-size: 2em !important;
-    font-weight: 200 !important;
+    font-size: 4em;
+  }
+  h2{
+      text-align: center;
+      margin-top: 30vh;
+      font-size: 2em;
+      font-weight: 200;
+  }
 }
 </style>
