@@ -11,6 +11,7 @@
           :api-data="api"
           modal-route="modalStart"
           @saveArticleId="saveFavorites($event)"
+          @removeArticleId="removeFavorite($event)"
         />
       </article>
     </div>
@@ -58,6 +59,19 @@ export default {
             // push new favorit id to array and saves it localy
             this.Favorites.push(id);
             localStorage.setItem('id', JSON.stringify(this.Favorites));
+        },
+        removeFavorite(removedId) {
+            // removes the id from start favorites array so it doesn't
+            // push same article multiple times
+            let index = 0;
+            // eslint-disable-next-line no-restricted-syntax
+            for (const id of this.Favorites) {
+                if (removedId === id) {
+                    this.Favorites.splice(index, 1);
+                }
+                // eslint-disable-next-line no-plusplus
+                index++;
+            }
         },
     },
 };

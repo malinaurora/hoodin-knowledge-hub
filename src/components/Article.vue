@@ -46,14 +46,25 @@
       <p>{{ apiData.text | striphtml }}</p>
     </router-link>
     <footer>
-      <p>{{ apiData.author.name }}</p>
+      <p>
+        {{ apiData.author.name }}
+      </p>
+      <div
+        class="msg"
+        :style="{visibility: showMsg ? 'visible' : 'hidden'}"
+      >
+        <p>Favorites are only stored locally on this device!</p>
+        <div class="arrow-down" />
+      </div>
       <img
+        class="favoriteIcon"
         src="/src/assets/icons/baseline-favorite-border.svg"
         alt="Add to favorites."
         :style="{display: favorite ? 'none' : 'block'}"
         @click="addFavorite()"
       >
       <img
+        class="favoriteIcon"
         src="/src/assets/icons/baseline-favorite.svg"
         alt="Remove from favorites."
         :style="{display: favorite ? 'block' : 'none'}"
@@ -79,6 +90,7 @@ export default {
         return {
             slideIndex: 1,
             favorite: false,
+            showMsg: false,
         };
     },
     mounted() {
@@ -119,8 +131,13 @@ export default {
             // send id of favorited articel to parent component
             this.$emit('saveArticleId', this.apiData.id);
             this.favorite = true;
+            this.showMsg = true;
+            setTimeout(() => {
+                this.showMsg = false;
+            }, 2000);
         },
         removeFavorite() {
+            this.$emit('removeArticleId', this.apiData.id);
             // load all favorited ids
             const data = JSON.parse(localStorage.getItem('id'));
             let index = 0;
@@ -145,7 +162,6 @@ export default {
     .content{
         height: 500px;
         box-shadow: 0px 0px 15px gray;
-        overflow: hidden;
         transition: 0.2s;
         transform: scale(0.98);
         display: flex;
@@ -155,6 +171,7 @@ export default {
             cursor: pointer;
         }
         .text{
+            overflow: hidden;
             margin: 10px;
             margin-bottom: 0;
             text-overflow: ellipsis;
@@ -218,6 +235,31 @@ export default {
             background-color: white;
             width: 100%;
             padding:5px 10px 5px 10px;
+            position: relative;
+            .msg{
+              position: absolute;
+              top:-30px;
+              right:10px;
+              border: 1px solid black;
+              box-shadow: 0px 0px 5px gray;
+              padding: 0 5px 0 5px;
+              border-radius: 5px;
+              p{
+                margin:0;
+                overflow:visible;
+                font-weight: normal;
+              }
+              .arrow-down {
+                width: 0;
+                height: 0;
+                border-left: 8px solid transparent;
+                border-right: 8px solid transparent;
+                border-top: 8px solid black;
+                position: absolute;
+                right: 5px;
+                bottom:-9px;
+              }
+            }
             p{
                 margin:0;
                 font-size: 11px;
@@ -226,11 +268,11 @@ export default {
                 text-overflow: ellipsis;
                 overflow: hidden;
                 position: relative;
+                display:inline-block;
             }
-            img{
-                position: absolute;
-                bottom:5px;
-                right:10px;
+
+            .favoriteIcon{
+                float:right;
             }
         }
     }
