@@ -37,9 +37,12 @@
         <b v-if="modalArticle.section !=''">{{ modalArticle.section }}</b>
         <p>{{ modalArticle.text | striphtml }}</p>
       </section>
-      <footer class="modalFooter">
+      <footer
+        class="modalFooter"
+        @click="formatDate()"
+      >
         <p class="modalTime">
-          {{ modalArticle.published }}
+          {{ modalArticle.published.split('T')[0] }}
         </p>
         <p class="modalAuthor">
           {{ modalArticle.author.name }}
@@ -49,7 +52,13 @@
           class="modalOrginalArticle"
           :href="modalArticle.source_url"
         >
-          Se Orginal artikeln
+          View original article
+        </a>
+        <a
+          href=""
+          class="modalShare"
+        >
+          Copy link
         </a>
         <img
           src="/src/assets/icons/baseline-favorite-border.svg"
@@ -155,9 +164,9 @@ export default {
 
 .modalFooter > img {
   position: absolute;
-  bottom: 10px;
+  bottom: 15px;
   right: 25px;
-  width: 45px;
+  width: 40px;
 }
 
 .exitBtn {
@@ -175,9 +184,16 @@ export default {
 }
 
 .modalFooter > .modalOrginalArticle {
-  padding-left: 50px;
+  right: 90px;
   position: absolute;
-  bottom: 60px;
+  bottom: 0px;
   margin-bottom: 10px;
+}
+
+.modalFooter > .modalShare {
+  right: 90px;
+  position: absolute;
+  bottom: 20px;
+  margin-bottom: 16px;
 }
 </style>
