@@ -89,7 +89,7 @@ export default {
     @media (max-width: 767.98px) {
         .toggleSidebar{
             width: 100vw;
-            height: 40px;
+            height: 100vh;
         }
         nav{
             position: fixed;
