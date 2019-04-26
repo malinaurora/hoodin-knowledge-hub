@@ -6,7 +6,9 @@
       class="overlay"
       @click="$router.go(-1)"
     />
-    <div class="modal_content">
+    <div
+      class="modal_content"
+    >
       <img
         class="exitBtn"
         src="/src/assets/icons/baseline-close-24px.svg"
@@ -37,45 +39,63 @@
         <b v-if="modalArticle.section !=''">{{ modalArticle.section }}</b>
         <p>{{ modalArticle.text | striphtml }}</p>
       </section>
+      <Share :style="{display: show ? 'block' : 'none'}" />
       <footer
         class="modalFooter"
-        @click="formatDate()"
       >
-        <p class="modalTime">
-          {{ modalArticle.published.split('T')[0] }}
-        </p>
-        <p class="modalAuthor">
-          {{ modalArticle.author.name }}
-        </p>
-        <a
-          v-if="modalArticle.source_url !=null"
-          class="modalOrginalArticle"
-          :href="modalArticle.source_url"
-        >
-          View original article
-        </a>
-        <a
-          href=""
-          class="modalShare"
-        >
-          Copy link
-        </a>
         <img
+          v-if="modalArticle.author.avatar != null"
+          class="avatarImage"
+          :src="modalArticle.author.avatar.url"
+          alt="Author avatar picture."
+        >
+        <div class="footerInfo">
+          <p class="modalTime">
+            {{ modalArticle.published.split('T')[0] }}
+          </p>
+          <p class="modalAuthor">
+            {{ modalArticle.author.name }}
+          </p>
+        </div>
+        <img
+          class="favoritesIcon"
           src="/src/assets/icons/baseline-favorite-border.svg"
           alt="Add to favorites."
         >
+        <div class="footerLinks">
+          <a
+            class="modalShare"
+            @click="getShare()"
+          >
+            Copy link
+          </a>
+          <a
+            v-if="modalArticle.source_url !=null"
+            class="modalOrginalArticle"
+            :href="modalArticle.source_url"
+          >
+
+            View original article
+          </a>
+        </div>
       </footer>
     </div>
   </div>
 </template>
 
 <script>
+import Share from './Share.vue';
+
 export default {
     name: 'Modal',
+    components: {
+        Share,
+    },
     data() {
         return {
             id: this.$route.params.id,
             modalArticle: {},
+            show: false,
         };
     },
     created() {
@@ -83,6 +103,14 @@ export default {
             .then((res) => {
                 this.modalArticle = res.body.data.item;
             });
+    },
+    methods: {
+        getShare() {
+            this.show = !this.show;
+        },
+        closeShare() {
+            this.show = false;
+        },
     },
 };
 </script>
@@ -94,7 +122,6 @@ export default {
   left: 0;
   top: 0;
   width: 100%;
-  height: 100%
 }
 
 .overlay {
@@ -118,82 +145,104 @@ export default {
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.7);
   border-radius: 4px;
   max-width: 35%;
-  height: 100%;
-}
-
-.modal_content > h2 {
+  display: flex;
+  flex-direction: column;
+  @media screen and (max-width: 1195px){
+    max-width: 60%;
+  }
+    @media screen and (max-width: 800px){
+    max-width: 90%;
+  }
+    @media screen and (max-width: 500px){
+      footer{
+        a {
+            font-size: 12px;
+            margin:0 5px 0 0px !important;
+          }
+          p{
+            font-size: 12px;
+            margin:0 0px 0 5px !important;
+          }
+      }
+  }
+    h2 {
   font-size: 28px;
   font-weight: 200;
   margin: 20px 0 40px;
   text-align: center;
-}
-
-.modalImages {
+  }
+  .modalImages {
     position: relative;
-}
-
-.modalVideo {
+      img {
+      height: 45%;
+      width: 100%;
+    }
+  }
+  .modalVideo {
     border:none;
     height: 45%;
+  }
+  .modalText {
+    padding-top: 60px;
+    padding-right: 60px;
+    padding-left: 60px;
+    padding-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
 }
 
-.modalImages > img {
-    height: 45%;
-    width: 100%;
-}
+.modalFooter {
+  padding: 10px;
+  .footerInfo{
+    display:inline-block;
+    vertical-align: bottom;
+    p{
+      margin:0 15px 0 15px;
+    }
+  }
+  .footerLinks{
+    float: right;
+    vertical-align: bottom;
+    a{
+      display: block;
+      margin:0 15px 0 15px;
+      color: #007bff;
+      text-align: right;
+      &:hover{
+        text-decoration: underline;
+        color: #007bff;
+        cursor: pointer;
+      }
+    }
+  }
 
-.modalText {
-    padding-top: 30px;
-    padding-right: 50px;
-    padding-left: 50px;
-    padding-bottom: 30px;
-}
+  .favoritesIcon {
+    margin-top:5px;
+    vertical-align: bottom;
+    width: 40px;
+    float: right;
+  }
 
-.modalFooter > .modalAuthor {
-  padding-left: 50px;
-  position: absolute;
-  bottom: 0px;
-  margin-bottom: 10px;
-}
-
-.modalFooter > .modalTime {
-  padding-left: 50px;
-  position: absolute;
-  bottom: 20px;
-}
-
-.modalFooter > img {
-  position: absolute;
-  bottom: 15px;
-  right: 25px;
-  width: 40px;
+  .avatarImage{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    box-shadow: 0px 0px 10px gray;
+  }
 }
 
 .exitBtn {
   position: absolute;
-  top: -5px;
-  right: -40px;
-  width: 35px;
-  z-index: 9999;
+  top: -8px;
+  right: -45px;
+  width: 40px;
   cursor: pointer;
-  border: 2px solid grey;
-  transform: scale(0.99);
+  transform: scale(0.8);
+  transition: 0.2s;
     &:hover{
-      transform: scale(1.2);
+      transform: scale(1);
     }
-}
-
-.modalFooter > .modalOrginalArticle {
-  right: 90px;
-  position: absolute;
-  bottom: 0px;
-  margin-bottom: 10px;
-}
-
-.modalFooter > .modalShare {
-  right: 90px;
-  position: absolute;
-  bottom: 20px;
-  margin-bottom: 16px;
 }
 </style>
