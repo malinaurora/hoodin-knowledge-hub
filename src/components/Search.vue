@@ -34,7 +34,7 @@ export default {
     },
     computed: {
         searchInArticles() {
-            return this.apiData.filter(api => api.title.match(this.search));
+            return this.apiData.filter(api => api.title.toLowerCase().match(this.search));
         },
 
     },
