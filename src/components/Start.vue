@@ -1,7 +1,7 @@
 
 <template>
   <div>
-    <div class="row mb-5 mt-4">
+    <div class="row mb-5 mt-5">
       <article
         v-for="api of apiData"
         :key="api.id"

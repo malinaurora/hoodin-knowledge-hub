@@ -46,6 +46,9 @@
       <p>{{ apiData.text | striphtml }}</p>
     </router-link>
     <footer>
+      <p class="time">
+        {{ time }}
+      </p>
       <p>
         {{ apiData.author.name }}
       </p>
@@ -91,6 +94,7 @@ export default {
             slideIndex: 1,
             favorite: false,
             showMsg: false,
+            time: '',
         };
     },
     mounted() {
@@ -104,6 +108,7 @@ export default {
                 this.favorite = true;
             }
         }
+        this.getTimeSincePublished();
     },
     methods: {
 
@@ -153,6 +158,31 @@ export default {
             // convert array to string and save it in local storage
             localStorage.setItem('id', JSON.stringify(data));
             this.favorite = false;
+        },
+        getTimeSincePublished() {
+            const dateWhenPublished = new Date(`${this.apiData.published}`);
+            const currentDate = new Date();
+            const dif = dateWhenPublished.getTime() - currentDate.getTime();
+
+            const SecondsFromPublishedtoCurrent = dif / 1000;
+            const SecondsBetweenDates = Math.abs(SecondsFromPublishedtoCurrent);
+
+            if (SecondsBetweenDates > 60) {
+                const minutesBetweenDates = SecondsBetweenDates / 60;
+                if (minutesBetweenDates > 60) {
+                    const hoursBetweenDates = minutesBetweenDates / 60;
+                    if (hoursBetweenDates > 24) {
+                        const daysBetweenDates = hoursBetweenDates / 24;
+                        this.time = `${Math.trunc(daysBetweenDates)}d`;
+                    } else {
+                        this.time = `${Math.trunc(hoursBetweenDates)}h`;
+                    }
+                } else {
+                    this.time = `${Math.trunc(minutesBetweenDates)}min`;
+                }
+            } else {
+                this.time = `${Math.trunc(SecondsBetweenDates)}s`;
+            }
         },
     },
 };
@@ -236,18 +266,26 @@ export default {
             width: 100%;
             padding:5px 10px 5px 10px;
             position: relative;
+            .time{
+              line-height: normal;
+              display: block;
+            }
             .msg{
               position: absolute;
               top:-30px;
               right:10px;
+              background-color: black;
               border: 1px solid black;
-              box-shadow: 0px 0px 5px gray;
-              padding: 0 5px 0 5px;
-              border-radius: 5px;
+              padding: 5px;
+              border-radius: 2px;
               p{
+                max-width: 100%;
+                font-size: 13px;
+                color: white;
                 margin:0;
                 overflow:visible;
                 font-weight: normal;
+                line-height: normal;
               }
               .arrow-down {
                 width: 0;
@@ -256,8 +294,8 @@ export default {
                 border-right: 8px solid transparent;
                 border-top: 8px solid black;
                 position: absolute;
-                right: 5px;
-                bottom:-9px;
+                right: 4px;
+                bottom:-8px;
               }
             }
             p{
@@ -269,6 +307,8 @@ export default {
                 overflow: hidden;
                 position: relative;
                 display:inline-block;
+                line-height: normal;
+                bottom: 0;
             }
 
             .favoriteIcon{
