@@ -21,6 +21,7 @@ export default {
     data() {
         return {
             apiData: null,
+            show: false,
         };
     },
     mounted() {
@@ -34,6 +35,11 @@ export default {
                 // eslint-disable-next-line no-return-assign
                 .then(response => (this.apiData = response));
         }, 60000);
+    },
+    methods: {
+        toggleModal() {
+            this.show = !this.show;
+        },
     },
 };
 
@@ -90,11 +96,4 @@ footer {
     line-height: normal;
 }
 
-.modal {
-    background: #f3f3f3;
-    box-shadow: 2px 6px 4px rgba(0, 0, 0, 0.25);
-    p {
-    font-size: 1.125em;
-    }
-}
 </style>

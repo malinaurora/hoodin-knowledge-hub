@@ -25,6 +25,7 @@ Vue.filter('striphtml', (value) => {
     const text = div.textContent || div.innerText || '';
     return text;
 });
+
 /* eslint-disable no-new */
 new Vue({
     el: '#app',
