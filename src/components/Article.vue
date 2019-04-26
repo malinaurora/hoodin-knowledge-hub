@@ -161,12 +161,14 @@ export default {
             this.favorite = false;
         },
         getTimeSincePublished() {
+            // gets time difference between current date and time when article published in seconds
             const dateWhenPublished = new Date(`${this.apiData.published}`);
             const currentDate = new Date();
             const dif = dateWhenPublished.getTime() - currentDate.getTime();
             const SecondsFromPublishedtoCurrent = dif / 1000;
             const SecondsBetweenDates = Math.abs(SecondsFromPublishedtoCurrent);
 
+            // converts seconds to minutes, hours, days, and date
             if (SecondsBetweenDates > 60) {
                 const minutesBetweenDates = SecondsBetweenDates / 60;
                 if (minutesBetweenDates > 60) {
@@ -311,6 +313,7 @@ export default {
                 position: relative;
                 display:inline-block;
                 line-height: normal;
+                font-weight: normal;
             }
 
             .favoriteIcon{
