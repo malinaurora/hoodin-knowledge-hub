@@ -1,16 +1,7 @@
 <template>
   <div id="app">
+    <router-view />
     <NavBar />
-    <button
-      class="modal_opener"
-      @click="toggleModal()"
-    >
-      Click Me! I Don't Bite...
-    </button>
-
-    <Modal
-      v-bind="{ closeCallback: toggleModal, show, customClass: 'custom_modal_class'}"
-    />
     <main class="container">
       <Start :api-data="apiData" />
     </main>
@@ -21,13 +12,11 @@
 import axios from 'axios';
 import Start from './components/Start.vue';
 import NavBar from './components/NavBar.vue';
-import Modal from './components/Modal.vue';
 
 export default {
     components: {
         Start,
         NavBar,
-        Modal,
     },
     data() {
         return {
@@ -88,9 +77,9 @@ h5 {
 h6 {
     font-size: 0.7em;
 }
-.Navbar {
+nav{
     font-family: "Roboto Slab";
-    font-size: 1.6em;
+    font-size: 1.3em;
 }
 p {
     font-family: "Roboto Slab";

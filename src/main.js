@@ -3,11 +3,21 @@ import BootstrapVue from 'bootstrap-vue';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import VueRouter from 'vue-router';
+import Start from './components/Start.vue';
 import App from './App.vue';
 
 
 Vue.use(BootstrapVue);
 Vue.use(VueRouter);
+
+const routes = [
+    // Add your routes here and import them above
+    { path: '/', component: Start },
+];
+
+const router = new VueRouter({
+    routes,
+});
 
 Vue.filter('striphtml', (value) => {
     const div = document.createElement('div');
@@ -19,5 +29,6 @@ Vue.filter('striphtml', (value) => {
 /* eslint-disable no-new */
 new Vue({
     el: '#app',
+    router,
     render: h => h(App),
 });

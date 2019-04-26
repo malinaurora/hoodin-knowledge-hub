@@ -5,7 +5,7 @@
       v-for="data in apiData.data.data.items"
       :id="data.id"
       :key="data.id"
-      class="col-lg-4 col-md-6 mt-3 mb-3"
+      class="col-lg-4 col-md-6 mt-5 mb-3"
     >
       <div class="content">
         <div
@@ -36,7 +36,7 @@
         <footer>
           <p>{{ data.author.name }}</p>
           <img
-            src="/src/images/baseline-favorite-border.svg"
+            src="/src/assets/icons/baseline-favorite-border.svg"
             alt="Navigation icon home"
           >
         </footer>
@@ -59,7 +59,6 @@ export default {
     watch: {
     },
     mounted() {
-        console.log(this.apiData);
     },
 };
 </script>

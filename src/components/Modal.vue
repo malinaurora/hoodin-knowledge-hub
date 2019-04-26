@@ -1,10 +1,6 @@
 
 <template>
-  <div
-    class="modal"
-    :class="customClass"
-    :style="{ display: show ? 'block' : 'none' }"
-  >
+  <div>
     <div
       class="overlay"
       @click="closeCallback()"
