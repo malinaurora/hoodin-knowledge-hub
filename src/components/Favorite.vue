@@ -2,9 +2,6 @@
 <template>
   <div clasS="favorite">
     <header>
-      <h1 class="mb-3 mt-4">
-        Favorite
-      </h1>
       <h2 :style="{display: favorites ? 'block' : 'none'}">
         No Articles Saved To Favorites!
       </h2>
@@ -67,7 +64,7 @@ export default {
     }
     h2{
         text-align: center;
-        margin-top: 30vh;
+        margin-top: 35vh;
         font-size: 2em;
         font-weight: 200;
     }
