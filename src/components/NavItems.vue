@@ -6,17 +6,23 @@
       :key="items.id"
     >
       <!-- Condition for the tooltip -->
-      <img
-        v-if="!isActive"
-        v-b-tooltip.hover.html.left="items.text"
-        :src="items.url"
-        :alt="items.alt"
+      <router-link
+        :to="items.to"
       >
-      <img
-        v-else
-        :src="items.url"
-        :alt="items.alt"
-      >
+        <img
+          v-if="!isActive"
+          v-b-tooltip.hover.html.left="items.text"
+          :src="items.url"
+          :alt="items.alt"
+          @click="stayClosed()"
+        >
+
+        <img
+          v-else
+          :src="items.url"
+          :alt="items.alt"
+        >
+      </router-link>
 
       <!-- Added two more classes to fix router-link styling -->
       <router-link
@@ -79,7 +85,13 @@ export default {
                     text: 'Filter', url: 'src/assets/icons/filter-outline.svg', alt: 'Filter navigation icon',
                 },
             ],
+            close: true,
         };
+    },
+    methods: {
+        stayClosed() {
+            this.$emit('close', this.close);
+        },
     },
 
 };

@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import vueResource from 'vue-resource';
 import VueRouter from 'vue-router';
+import moment from 'moment';
 import Start from './components/Start.vue';
 import Favorite from './components/Favorite.vue';
 import Modal from './components/Modal.vue';
@@ -42,6 +43,25 @@ Vue.filter('striphtml', (value) => {
     const text = div.textContent || div.innerText || '';
     return text;
 });
+moment.locale('en', {
+    relativeTime: {
+        future: 'in %s',
+        past: '%s ago',
+        s: '%ds',
+        m: '1min',
+        mm: '%dmin',
+        h: '1h',
+        hh: '%dh',
+        d: '1d',
+        dd: '%dd',
+        M: '1mth',
+        MM: '%dmth',
+        y: '1y',
+        yy: '%dy',
+    },
+});
+
+Vue.filter('moment', date => moment(date).fromNow(true));
 
 /* eslint-disable no-new */
 new Vue({
