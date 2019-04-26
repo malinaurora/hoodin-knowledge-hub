@@ -2,12 +2,16 @@
   <nav
     :class="{toggleSidebar:isActive}"
   >
-    <img
+    <div
       class="responsiveMenu"
       :class="{removeResponsiveMenu:isActive}"
-      :src="menuImg"
       @click="toggleState"
     >
+      <div />
+      <div />
+      <div />
+    </div>
+
     <!-- When clicking the sidebar it will make the isActive true
      and change the DOM element class to toggled -->
     <div
@@ -83,8 +87,15 @@ export default {
     @media (max-width: 767.98px) {
         .toggleSidebar{
             width: 100vw;
+            height: 40px;
         }
         nav{
+            position: fixed;
+            width: 100vw;
+            height: 40px;
+            z-index: 9999999;
+            background-color: #F6F6F6;
+            box-shadow: 2px 2px #F6F6F6;
             .sidebar{
                 width: 0px;
                 transition: none;
@@ -94,7 +105,14 @@ export default {
             }
             .responsiveMenu{
                 display:block;
-                width:45px;
+                margin: 5px;
+                div{
+                    width: 35px;
+                    height: 4px;
+                    border-radius: 3px;
+                    background-color: #000;
+                    margin: 6px 0;
+                }
             }
             .removeResponsiveMenu{
                 display:none;

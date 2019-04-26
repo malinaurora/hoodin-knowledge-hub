@@ -5,7 +5,7 @@
       v-for="data in apiData.data.data.items"
       :id="data.id"
       :key="data.id"
-      class="col-lg-4 col-md-6 mt-3 mb-3"
+      class="col-lg-4 col-md-6 mt-5 mb-3"
     >
       <div class="content">
         <div

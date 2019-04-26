@@ -91,6 +91,7 @@ export default {
             padding: 0;
             margin:0;
             li{
+                list-style-type: none;
                 margin-top: 15px;
                 overflow:hidden;
                  .navLable{
