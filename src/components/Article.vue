@@ -49,6 +49,7 @@
       <p class="time">
         {{ time }}
       </p>
+      <br>
       <p>
         {{ apiData.author.name }}
       </p>
@@ -163,7 +164,6 @@ export default {
             const dateWhenPublished = new Date(`${this.apiData.published}`);
             const currentDate = new Date();
             const dif = dateWhenPublished.getTime() - currentDate.getTime();
-
             const SecondsFromPublishedtoCurrent = dif / 1000;
             const SecondsBetweenDates = Math.abs(SecondsFromPublishedtoCurrent);
 
@@ -173,7 +173,11 @@ export default {
                     const hoursBetweenDates = minutesBetweenDates / 60;
                     if (hoursBetweenDates > 24) {
                         const daysBetweenDates = hoursBetweenDates / 24;
-                        this.time = `${Math.trunc(daysBetweenDates)}d`;
+                        if (daysBetweenDates > 7) {
+                            this.time = dateWhenPublished.toLocaleDateString();
+                        } else {
+                            this.time = `${Math.trunc(daysBetweenDates)}d`;
+                        }
                     } else {
                         this.time = `${Math.trunc(hoursBetweenDates)}h`;
                     }
@@ -268,7 +272,6 @@ export default {
             position: relative;
             .time{
               line-height: normal;
-              display: block;
             }
             .msg{
               position: absolute;
@@ -308,7 +311,6 @@ export default {
                 position: relative;
                 display:inline-block;
                 line-height: normal;
-                bottom: 0;
             }
 
             .favoriteIcon{
