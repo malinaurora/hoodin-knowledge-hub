@@ -25,4 +25,9 @@ export default {
 width: 200px;
 height: 50px;
 }
+@media (max-width: 767.98px) {
+  .logo {
+    margin-top:45px;
+    }
+}
 </style>
