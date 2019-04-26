@@ -2,6 +2,7 @@
   <div id="app">
     <NavBar />
     <main class="container">
+      <Search />
       <router-view />
     </main>
   </div>
@@ -9,10 +10,13 @@
 
 <script>
 import NavBar from './components/NavBar.vue';
+import Search from './components/Search.vue';
+
 
 export default {
     components: {
         NavBar,
+        Search,
     },
 };
 
