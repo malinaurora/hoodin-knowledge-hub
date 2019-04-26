@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <Header />
     <router-view />
     <NavBar />
     <main class="container">
@@ -11,11 +12,14 @@
 <script>
 import axios from 'axios';
 import Start from './components/Start.vue';
+import Header from './components/Header.vue';
 import NavBar from './components/NavBar.vue';
+
 
 export default {
     components: {
         Start,
+        Header,
         NavBar,
     },
     data() {
