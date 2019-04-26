@@ -2,6 +2,16 @@
   <nav
     :class="{toggleSidebar:isActive}"
   >
+    <div
+      class="responsiveMenu"
+      :class="{removeResponsiveMenu:isActive}"
+      @click="toggleState"
+    >
+      <div />
+      <div />
+      <div />
+    </div>
+
     <!-- When clicking the sidebar it will make the isActive true
      and change the DOM element class to toggled -->
     <div
@@ -9,43 +19,36 @@
       :class="{toggleSidebar:isActive}"
       @click="toggleState"
     >
-      <ul class="mt-5">
-        <li
-          v-for="(items, index) in menuItems"
-          :key="index"
-        >
-          <img
-            :src="items.url"
-            :alt="items.alt"
-          >
-          <div :class="{navLable:notActive, removeNavLable:isActive}">
-            {{ items.text }}
-          </div>
-        </li>
-      </ul>
+      <img
+        v-if="isActive"
+        class="closeNavBarImage"
+        :src="closeImg"
+        @click="!toggleState"
+      >
+      <!-- Getting NavItems from component NavItems and sending isActive to NavItems-->
+      <NavItems :is-active="isActive" />
     </div>
   </nav>
 </template>
 
 <script>
+import NavItems from './NavItems.vue';
+
 export default {
     name: 'NavBar',
+    components: {
+        NavItems,
+    },
     data() {
         return {
             isActive: false,
-            notActive: true,
-            menuItems: [
-                { text: 'Home', url: '/src/assets/icons/baseline-home.svg', alt: 'Home navigation icon' },
-                { text: 'Favorite', url: 'src/assets/icons/baseline-favorite-border.svg', alt: 'Favorite navigation icon' },
-                { text: 'Search', url: 'src/assets/icons/baseline-search.svg', alt: 'Search navigation icon' },
-                { text: 'Filter', url: 'src/assets/icons/filter-outline.svg', alt: 'Filter navigation icon' },
-            ],
+            closeImg: 'src/assets/icons/baseline-close.svg',
+            menuImg: 'src/assets/icons/baseline-menu.svg',
         };
     },
     methods: {
         toggleState() {
             this.isActive = !this.isActive;
-            this.notActive = !this.notActive;
         },
     },
 };
@@ -57,12 +60,15 @@ export default {
     }
     nav{
         float:left;
-        height: 100vh;
+        height: 90%;
+        bottom:0;
+        top:0;
         width: 50px;
         .sidebar{
+            top:0;
             background-color: #F6F6F6;
             box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.25);
-            height: 100vh;
+            bottom:0;
             width: 50px;
             position: fixed;
             transition: .4s;
@@ -70,37 +76,52 @@ export default {
         .toggleSidebar{
             width:250px;
         }
-        ul{
-            padding: 0;
-            margin:0;
-            width:250px;
-            li{
-                margin-top: 15px;
-                overflow:hidden;
-                //Will not hover when element got the class "noHover"
-                &:hover .navLable {
-                    visibility: visible;
-                }
-                 .navLable{
-                    position: absolute;
-                    background-color: #000;
-                    padding: 2px 6px;
-                    margin-left:40px;
-                    color:#fff;
-                    font-size: 14px;
-                    visibility: hidden;
-                }
-                 .removeNavLable{
-                    margin-left: 25px;
-                    display:inline;
-                }
-                img{
-                    margin: auto;
+        .closeNavBarImage{
+            float: right;
+            margin: 5px 2px 0px 0px;
+            width: 35px;
+            cursor: pointer;
+        }
+        .responsiveMenu{
+            display:none;
+        }
+    }
+    @media (max-width: 767.98px) {
+        .toggleSidebar{
+            width: 100vw;
+            height: 100vh;
+        }
+        nav{
+            position: fixed;
+            width: 100vw;
+            height: 40px;
+            z-index: 9999999;
+            background-color: #F6F6F6;
+            box-shadow: 2px 2px #F6F6F6;
+            .sidebar{
+                width: 0px;
+                transition: none;
+            }
+              .toggleSidebar{
+                width: 100vw;
+            }
+            .responsiveMenu{
+                display:block;
+                margin: 5px;
+                div{
                     width: 35px;
-                    margin-left: 7.5px;
-                    position: relative;
-
+                    height: 4px;
+                    border-radius: 3px;
+                    background-color: #000;
+                    margin: 6px 0;
                 }
+            }
+            .removeResponsiveMenu{
+                display:none;
+            }
+            .closeNavBarImage{
+                width: 45px;
+                margin: 0px;
             }
         }
     }
