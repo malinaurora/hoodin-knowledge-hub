@@ -1,19 +1,21 @@
 <template>
   <div id="app">
+    <Header />
     <NavBar />
     <main class="container">
-      <Start />
+      <router-view />
     </main>
   </div>
 </template>
 
 <script>
-import Start from './components/Start.vue';
+import Header from './components/Header.vue';
 import NavBar from './components/NavBar.vue';
+
 
 export default {
     components: {
-        Start,
+        Header,
         NavBar,
     },
 };
@@ -52,9 +54,9 @@ h5 {
 h6 {
     font-size: 0.7em;
 }
-.Navbar {
+nav{
     font-family: "Roboto Slab";
-    font-size: 1.6em;
+    font-size: 1.3em;
 }
 p {
     font-family: "Roboto Slab";
