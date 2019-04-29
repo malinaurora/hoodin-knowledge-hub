@@ -40,7 +40,10 @@
         <b v-if="modalArticle.section !=''">{{ modalArticle.section }}</b>
         <p>{{ modalArticle.text | striphtml }}</p>
       </section>
-      <Share v-if="show === true" />
+      <share
+        v-if="show === true"
+        @close="close($event)"
+      />
       <footer
         class="modalFooter"
       >
@@ -108,8 +111,8 @@ export default {
         getShare() {
             this.show = !this.show;
         },
-        closeShare() {
-            this.show = false;
+        close(val) {
+            this.show = val;
         },
     },
 };
