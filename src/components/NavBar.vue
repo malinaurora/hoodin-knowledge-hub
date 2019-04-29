@@ -26,7 +26,10 @@
         @click="!toggleState"
       >
       <!-- Getting NavItems from component NavItems and sending isActive to NavItems-->
-      <NavItems :is-active="isActive" />
+      <NavItems
+        :is-active="isActive"
+        @close="toggleState($event)"
+      />
     </div>
   </nav>
 </template>
@@ -47,8 +50,10 @@ export default {
         };
     },
     methods: {
-        toggleState() {
-            this.isActive = !this.isActive;
+        toggleState(stayClosed) {
+            if (stayClosed !== false) {
+                this.isActive = !this.isActive;
+            }
         },
     },
 };
