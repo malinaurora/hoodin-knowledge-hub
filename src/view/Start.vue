@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import Article from './Article.vue';
+import Article from '../components/Article.vue';
 
 export default {
     components: {
@@ -43,33 +43,31 @@ export default {
                 .then((data) => { this.apiData = data.data.items; });
         }, 60000);
 
-        // convert local Storage from string to array
+        /* convert local Storage from string to array */
         const data = JSON.parse(localStorage.getItem('id'));
 
-        // push old favorites to favorites array
-        // eslint-disable-next-line no-restricted-syntax
-        for (const id of data) {
+        /* push old favorites to favorites array */
+        data.forEach((id) => {
             this.Favorites.push(id);
-        }
+        });
     },
     methods: {
         saveFavorites(id) {
-            // push new favorit id to array and saves it localy
+            /* push new favorit id to array and saves it localy */
             this.Favorites.push(id);
             localStorage.setItem('id', JSON.stringify(this.Favorites));
         },
         removeFavorite(removedId) {
-            // removes the id from start favorites array so it doesn't
-            // push same article multiple times
+            /* removes the id from start favorites array so it doesn't
+            push same article multiple times */
             let index = 0;
-            // eslint-disable-next-line no-restricted-syntax
-            for (const id of this.Favorites) {
+
+            this.Favorites.forEach((id) => {
                 if (removedId === id) {
                     this.Favorites.splice(index, 1);
                 }
-                // eslint-disable-next-line no-plusplus
-                index++;
-            }
+                index += 1;
+            });
         },
     },
 };

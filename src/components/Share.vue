@@ -12,7 +12,7 @@
         @click="closeShare()"
       >
       <div class="urlContent">
-        <p>Link for article</p>
+        <p>Link to article</p>
         <input
           id="myCopy"
           type="text"
@@ -40,6 +40,7 @@ export default {
         };
     },
     mounted() {
+        // Takes the url from the browser.
         this.url = window.location.href;
     },
     methods: {
@@ -47,6 +48,7 @@ export default {
             this.show = !this.show;
             this.$emit('close', this.show);
         },
+        // Copy text from the input field.
         copyText() {
             const copy = document.getElementById('myCopy');
             copy.select();
