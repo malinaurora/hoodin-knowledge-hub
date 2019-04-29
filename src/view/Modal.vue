@@ -88,7 +88,7 @@
 </template>
 
 <script>
-import Share from './Share.vue';
+import Share from '../components/Share.vue';
 
 export default {
     name: 'Modal',
