@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <Header />
     <NavBar />
     <main class="container">
       <Search />
@@ -9,12 +10,15 @@
 </template>
 
 <script>
+import Header from './components/Header.vue';
 import NavBar from './components/NavBar.vue';
 import Search from './components/Search.vue';
 
 
+
 export default {
     components: {
+        Header,
         NavBar,
         Search,
     },
@@ -71,6 +75,12 @@ b{
 footer {
     font-weight: normal;
     line-height: normal;
+}
+
+a {
+    font-family: "Roboto Slab";
+    line-height: 25px;
+    font-weight: 100;
 }
 
 </style>
