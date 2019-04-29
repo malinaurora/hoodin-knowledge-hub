@@ -2,7 +2,7 @@
 <template>
   <div clasS="favorite">
     <header>
-      <h2 :style="{display: favorites ? 'block' : 'none'}">
+      <h2 v-if="noFavorites === true">
         No Articles Saved To Favorites!
       </h2>
     </header>
@@ -33,14 +33,14 @@ export default {
         return {
             apiData: null,
             id: '',
-            favorites: false,
+            noFavorites: false,
         };
     },
     mounted() {
         document.body.scrollTop = 0;
         const data = JSON.parse(localStorage.getItem('id'));
         if (data.length <= 0) {
-            this.favorites = true;
+            this.noFavorites = true;
         }
         // eslint-disable-next-line no-restricted-syntax
         for (const idString of data) {

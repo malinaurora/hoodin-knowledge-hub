@@ -54,24 +54,24 @@
         {{ apiData.author.name }}
       </p>
       <div
+        v-if="showMsg === true"
         class="msg"
-        :style="{visibility: showMsg ? 'visible' : 'hidden'}"
       >
         <p>Favorites are only stored locally on this device!</p>
         <div class="arrow-down" />
       </div>
       <img
+        v-if="favorite === false"
         class="favoriteIcon"
         src="/src/assets/icons/baseline-favorite-border.svg"
         alt="Add to favorites."
-        :style="{display: favorite ? 'none' : 'block'}"
         @click="addFavorite()"
       >
       <img
+        v-if="favorite === true"
         class="favoriteIcon"
         src="/src/assets/icons/baseline-favorite.svg"
         alt="Remove from favorites."
-        :style="{display: favorite ? 'block' : 'none'}"
         @click="removeFavorite()"
       >
     </footer>
