@@ -4,9 +4,9 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import VueRouter from 'vue-router';
 import moment from 'moment';
-import Start from './components/Start.vue';
-import Favorite from './components/Favorite.vue';
-import Modal from './components/Modal.vue';
+import Start from './view/Start.vue';
+import Favorite from './view/Favorite.vue';
+import Modal from './view/Modal.vue';
 import App from './App.vue';
 
 

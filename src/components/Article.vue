@@ -88,7 +88,10 @@ export default {
                 return { message: 'Api Data' };
             },
         },
-        modalRoute: String,
+        modalRoute: {
+            type: String,
+            default: 'modalStart',
+        },
     },
     data() {
         return {
@@ -100,8 +103,8 @@ export default {
     },
     mounted() {
         this.imageSlider(this.slideIndex);
-        // load all favorites as an array and loop thru it comparing ids
-        // if they match the heart gets a different icon
+        /* load all favorites as an array and loop thru it comparing ids
+        if they match the heart gets a different icon */
         const data = JSON.parse(localStorage.getItem('id'));
 
         data.forEach((favorit) => {
@@ -113,19 +116,19 @@ export default {
     },
     methods: {
 
-        // next image in slider
+        /* next image in slider */
         nextImage(n) {
             this.imageSlider(this.slideIndex += n);
         },
 
-        // if the article contains more than one picture it shows a slider
+        /* if the article contains more than one picture it shows a slider */
         imageSlider(n) {
             let i;
             const x = document.getElementsByClassName(`${this.apiData.id}Image`);
             if (n > x.length) { this.slideIndex = 1; }
             if (n < 1) { this.slideIndex = x.length; }
-            // eslint-disable-next-line no-plusplus
-            for (i = 0; i < x.length; i++) {
+
+            for (i = 0; i < x.length; i += 1) {
                 x[i].style.display = 'none';
             }
 
@@ -134,7 +137,7 @@ export default {
             }
         },
         addFavorite() {
-            // send id of favorited articel to parent component
+            /* send id of favorited articel to parent component */
             this.$emit('saveArticleId', this.apiData.id);
             this.favorite = true;
             this.showMsg = true;
@@ -144,21 +147,20 @@ export default {
         },
         removeFavorite() {
             this.$emit('removeArticleId', this.apiData.id);
-            // load all favorited ids
+            /* load all favorited ids */
             const data = JSON.parse(localStorage.getItem('id'));
             let index = 0;
             this.showMsg = false;
 
-            // find the id of the removed aricle and remove it from local storage
+            /* find the id of the removed aricle and remove it from local storage */
             data.forEach((unFavorite) => {
                 if (unFavorite === this.apiData.id) {
                     data.splice(index, 1);
                 }
-                // eslint-disable-next-line no-plusplus
-                index++;
+                index += 1;
             });
 
-            // convert array to string and save it in local storage
+            /* convert array to string and save it in local storage */
             localStorage.setItem('id', JSON.stringify(data));
             this.favorite = false;
         },
