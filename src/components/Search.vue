@@ -3,7 +3,7 @@
     <input
       v-model="search"
       type="text"
-      placeholder="Search title.."
+      placeholder="Search..."
     >
     <div class="row mb-5">
       <article
@@ -34,8 +34,17 @@ export default {
     },
     computed: {
         searchInArticles() {
-            return this.apiData.filter(api => api.title.toLowerCase().match(this.search));
+            const searchLowerCase = this.search.toLowerCase();
+            return this.apiData.filter(api => api.title.toLowerCase()
+                .match(searchLowerCase)
+                || api.author.name.toLowerCase()
+                    .match(searchLowerCase)
+                    || api.subtitle.toLowerCase()
+                        .match(searchLowerCase)
+                        || api.text.toLowerCase()
+                            .match(searchLowerCase));
         },
+
 
     },
     mounted() {
@@ -45,9 +54,7 @@ export default {
     },
 };
 
-
 </script>
 
 <style>
-
 </style>
