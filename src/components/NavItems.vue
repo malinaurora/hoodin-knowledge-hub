@@ -50,12 +50,20 @@
         {{ sortItems.text }}
       </div>
     </li>
+    <li v-if="isActive">
+      <Search />
+    </li>
   </ul>
 </template>
 
 <script>
+import Search from './Search.vue';
+
 export default {
     // Getting isActive props
+    components: {
+        Search,
+    },
     props: {
         isActive: {
             type: Boolean,
