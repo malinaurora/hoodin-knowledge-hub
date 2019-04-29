@@ -1,10 +1,7 @@
 <template>
   <div class="content">
     <div
-      v-if="
-        apiData.imageObjects.images.length
-          >
-          0 && apiData.video === null"
+      v-if="apiData.imageObjects.images.length > 0 && apiData.video === null"
       class="images"
     >
       <router-link :to="{name: modalRoute, params: {id: apiData.id}}">
@@ -50,31 +47,31 @@
     </router-link>
     <footer>
       <p class="time">
-        {{ time }}
+        {{ apiData.published | moment }}
       </p>
       <br>
       <p>
         {{ apiData.author.name }}
       </p>
       <div
+        v-if="showMsg === true"
         class="msg"
-        :style="{visibility: showMsg ? 'visible' : 'hidden'}"
       >
         <p>Favorites are only stored locally on this device!</p>
         <div class="arrow-down" />
       </div>
       <img
+        v-if="favorite === false"
         class="favoriteIcon"
         src="/src/assets/icons/baseline-favorite-border.svg"
         alt="Add to favorites."
-        :style="{display: favorite ? 'none' : 'block'}"
         @click="addFavorite()"
       >
       <img
+        v-if="favorite === true"
         class="favoriteIcon"
         src="/src/assets/icons/baseline-favorite.svg"
         alt="Remove from favorites."
-        :style="{display: favorite ? 'block' : 'none'}"
         @click="removeFavorite()"
       >
     </footer>
@@ -106,13 +103,13 @@ export default {
         // load all favorites as an array and loop thru it comparing ids
         // if they match the heart gets a different icon
         const data = JSON.parse(localStorage.getItem('id'));
-        // eslint-disable-next-line no-restricted-syntax
-        for (const favorit of data) {
+
+        data.forEach((favorit) => {
             if (this.apiData.id === favorit) {
                 this.favorite = true;
             }
-        }
-        this.getTimeSincePublished();
+        });
+        this.time = new Date();
     },
     methods: {
 
@@ -143,55 +140,27 @@ export default {
             this.showMsg = true;
             setTimeout(() => {
                 this.showMsg = false;
-            }, 2000);
+            }, 4000);
         },
         removeFavorite() {
             this.$emit('removeArticleId', this.apiData.id);
             // load all favorited ids
             const data = JSON.parse(localStorage.getItem('id'));
             let index = 0;
+            this.showMsg = false;
 
             // find the id of the removed aricle and remove it from local storage
-            // eslint-disable-next-line no-restricted-syntax
-            for (const unFavorite of data) {
+            data.forEach((unFavorite) => {
                 if (unFavorite === this.apiData.id) {
                     data.splice(index, 1);
                 }
-                index += 1;
-            }
+                // eslint-disable-next-line no-plusplus
+                index++;
+            });
+
             // convert array to string and save it in local storage
             localStorage.setItem('id', JSON.stringify(data));
             this.favorite = false;
-        },
-        getTimeSincePublished() {
-            // gets time difference between current date and time when article published in seconds
-            const dateWhenPublished = new Date(`${this.apiData.published}`);
-            const currentDate = new Date();
-            const dif = dateWhenPublished.getTime() - currentDate.getTime();
-            const SecondsFromPublishedtoCurrent = dif / 1000;
-            const SecondsBetweenDates = Math.abs(SecondsFromPublishedtoCurrent);
-
-            // converts seconds to minutes, hours, days, and date
-            if (SecondsBetweenDates > 60) {
-                const minutesBetweenDates = SecondsBetweenDates / 60;
-                if (minutesBetweenDates > 60) {
-                    const hoursBetweenDates = minutesBetweenDates / 60;
-                    if (hoursBetweenDates > 24) {
-                        const daysBetweenDates = hoursBetweenDates / 24;
-                        if (daysBetweenDates > 7) {
-                            this.time = dateWhenPublished.toLocaleDateString();
-                        } else {
-                            this.time = `${Math.trunc(daysBetweenDates)}d`;
-                        }
-                    } else {
-                        this.time = `${Math.trunc(hoursBetweenDates)}h`;
-                    }
-                } else {
-                    this.time = `${Math.trunc(minutesBetweenDates)}min`;
-                }
-            } else {
-                this.time = `${Math.trunc(SecondsBetweenDates)}s`;
-            }
         },
     },
 };
@@ -280,8 +249,8 @@ export default {
             }
             .msg{
               position: absolute;
-              top:-30px;
-              right:10px;
+              top:-10px;
+              right: 10px;
               background-color: black;
               border: 1px solid black;
               padding: 5px;
@@ -302,7 +271,7 @@ export default {
                 border-right: 8px solid transparent;
                 border-top: 8px solid black;
                 position: absolute;
-                right: 4px;
+                right: 3px;
                 bottom:-8px;
               }
             }

@@ -4,7 +4,6 @@
     <NavBar />
     <main class="container">
       <router-view />
-      <more-articles />
     </main>
   </div>
 </template>
@@ -12,14 +11,12 @@
 <script>
 import Header from './components/Header.vue';
 import NavBar from './components/NavBar.vue';
-import MoreArticles from './components/MoreArticles.vue';
 
 
 export default {
     components: {
         Header,
         NavBar,
-        MoreArticles,
     },
 };
 

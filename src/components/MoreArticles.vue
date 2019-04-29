@@ -1,18 +1,18 @@
 
 <template>
-  <div
-    class="text-center col-md-12 .offset-md-3 m-3 fixed-bottom"
-  >
+  <div class="text-center col-md-12 m-3 mt-5">
     <a
-      class=" btn btn-light btn-lg"
+      class="load-more-btn btn"
       role="button"
       aria-disabled="true"
       @click="loadData"
     >
       <img
+        class="icon"
         src="/src/assets/icons/baseline-arrow.svg"
         alt="load more"
-      > </a>
+      >
+    </a>
   </div>
 </template>
 
@@ -21,46 +21,30 @@
 export default {
     data() {
         return {
-            apiData: null,
-            message: 'test',
-            btn: false,
-            articlesArray: [],
             limit: 15,
-            offset: 0,
-            token: 'eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9',
         };
-    },
-    mounted() {
-        fetch(
-            `https://interns-test-channel.hoodin.com/api/v2/items?&offset=${
-                this.offset
-            }&limit=${this.limit}&token=${this.token}`,
-        )
-            .then(response => response.json())
-            .then((post) => {
-                this.apiData = post.data.items;
-            });
     },
     methods: {
         loadData() {
-            this.btn = true;
-            // const data = JSON.parse(localStorage.getItem('id'));
-            console.log(data);
-
-            // eslint-disable-next-line no-restricted-syntax
-            for (const api of data) {
-                api.articlesArray.push({
-                    text: this.apiData[api].id,
-                    // eslint-disable-next-line no-tabs
-                });
-            }
-            this.btn = false;
-            this.apiData.offset += this.apiData.limit;
+            this.limit += 15;
+            this.$emit('showMore', this.limit);
         },
     },
 };
 </script>
 
 
-<style>
+<style lang="scss">
+.load-more-btn {
+    background: rgb(255, 255, 255);
+    &:hover {
+        box-sizing: border-box;
+        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.7);
+    }
+}
+
+.icon {
+    width: 35px;
+    height: 35px;
+}
 </style>

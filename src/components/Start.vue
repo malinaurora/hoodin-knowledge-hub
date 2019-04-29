@@ -1,7 +1,6 @@
 
 <template>
   <div
-    :v-for="article in articlesArray"
     class="row mb-5 mt-4"
   >
     <article
@@ -16,33 +15,34 @@
         @removeArticleId="removeFavorite($event)"
       />
     </article>
+
+    <MoreArticels @showMore="showMore($event)" />
   </div>
 </template>
 
 <script>
 import Article from './Article.vue';
-import MoreArtickels from './MoreArticles.vue';
+import MoreArticels from './MoreArticles.vue';
 
 export default {
     components: {
         Article,
-        MoreArtickels,
+        MoreArticels,
     },
     data() {
         return {
             apiData: null,
             Favorites: [],
-            articlesArray: [],
-            article: {},
+            limit: 15,
         };
     },
     mounted() {
-        fetch('https://interns-test-channel.hoodin.com/api/v2/items?limit=15&&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9')
+        fetch(`https://interns-test-channel.hoodin.com/api/v2/items?limit=${this.limit}&&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9`)
             .then(response => response.json())
             .then((data) => { this.apiData = data.data.items; });
 
         setInterval(() => {
-            fetch('https://interns-test-channel.hoodin.com/api/v2/items?limit=15&&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9')
+            fetch(`https://interns-test-channel.hoodin.com/api/v2/items?limit=${this.limit}&&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9`)
                 .then(response => response.json())
                 .then((data) => { this.apiData = data.data.items; });
         }, 60000);
@@ -74,6 +74,13 @@ export default {
                 // eslint-disable-next-line no-plusplus
                 index++;
             }
+        },
+        showMore(limit) {
+            this.limit = limit;
+
+            fetch(`https://interns-test-channel.hoodin.com/api/v2/items?limit=${this.limit}&&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9`)
+                .then(response => response.json())
+                .then((data) => { this.apiData = data.data.items; });
         },
     },
 };
