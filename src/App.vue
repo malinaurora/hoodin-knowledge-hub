@@ -14,8 +14,6 @@ import Header from './components/Header.vue';
 import NavBar from './components/NavBar.vue';
 import Search from './components/Search.vue';
 
-
-
 export default {
     components: {
         Header,
