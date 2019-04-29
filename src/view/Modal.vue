@@ -3,14 +3,14 @@
   <div class="modal">
     <div
       class="overlay"
-      @click="$router.go(-1)"
+      @click="$router.go(-1), enableScroll()"
     />
     <div class="modal_content">
       <img
         class="exitBtn"
         src="/src/assets/icons/baseline-close-24px.svg"
         alt="closeModal"
-        @click="$router.go(-1)"
+        @click="$router.go(-1), enableScroll()"
       >
       <div
         v-if="modalArticle.imageObjects.images.length > 0 && modalArticle.video === null"
@@ -111,7 +111,7 @@ export default {
     },
     mounted() {
         this.imageSlider(this.slideIndex);
-        console.log('kör');
+        document.getElementsByTagName('body')[0].style.overflow = 'hidden';
     },
     created() {
     // fetch the data from the api.
@@ -152,6 +152,9 @@ export default {
             if (x[this.slideIndex - 1] !== undefined) {
                 x[this.slideIndex - 1].style.display = 'block';
             }
+        },
+        enableScroll() {
+            document.getElementsByTagName('body')[0].style.overflow = 'auto';
         },
     },
 };
