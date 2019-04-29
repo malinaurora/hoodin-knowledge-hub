@@ -1,7 +1,10 @@
 <template>
   <div class="content">
     <div
-      v-if="apiData.imageObjects.images.length > 0 && apiData.video === null"
+      v-if="
+        apiData.imageObjects.images.length
+          >
+          0 && apiData.video === null"
       class="images"
     >
       <router-link :to="{name: modalRoute, params: {id: apiData.id}}">

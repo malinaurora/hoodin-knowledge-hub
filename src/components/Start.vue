@@ -1,50 +1,39 @@
 
 <template>
-  <div>
-    <div class="row mb-5 mt-4">
-      <article
-        v-for="api of apiData"
-        :key="api.id"
-        class="col-lg-4 col-md-6 mt-3 mb-3"
-      >
-        <Article
-          :api-data="api"
-          modal-route="modalStart"
-          @saveArticleId="saveFavorites($event)"
-          @removeArticleId="removeFavorite($event)"
-        />
-      </article>
-    </div>
-    <div
-      class="text-center col-md-12 .offset-md-3 m-3"
+  <div
+    :v-for="article in articlesArray"
+    class="row mb-5 mt-4"
+  >
+    <article
+      v-for="api of apiData"
+      :key="api.id"
+      class="col-lg-4 col-md-6 mt-3 mb-3"
     >
-      <a
-        href="#"
-        class="btn btn-light btn-lg"
-        role="button"
-        aria-disabled="true"
-        @click="showMoreArtickels()"
-      >
-        <img
-          src="/src/assets/icons/baseline-arrow.svg"
-          alt="arrow icon"
-        > </a>
-    </div>
-    <router-view />
+      <Article
+        :api-data="api"
+        modal-route="modalStart"
+        @saveArticleId="saveFavorites($event)"
+        @removeArticleId="removeFavorite($event)"
+      />
+    </article>
   </div>
 </template>
 
 <script>
 import Article from './Article.vue';
+import MoreArtickels from './MoreArticles.vue';
 
 export default {
     components: {
         Article,
+        MoreArtickels,
     },
     data() {
         return {
             apiData: null,
             Favorites: [],
+            articlesArray: [],
+            article: {},
         };
     },
     mounted() {
