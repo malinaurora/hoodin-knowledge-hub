@@ -1,15 +1,11 @@
 
 <template>
-  <div
-    class="modal"
-  >
+  <div class="modal">
     <div
       class="overlay"
       @click="$router.go(-1)"
     />
-    <div
-      class="modal_content"
-    >
+    <div class="modal_content">
       <img
         class="exitBtn"
         src="/src/assets/icons/baseline-close-24px.svg"
@@ -21,9 +17,26 @@
         class="modalImages"
       >
         <img
-          :src="modalArticle.imageObjects.images[0].url"
-          alt="Modal picture."
+          v-for="image of modalArticle.imageObjects.images"
+          :key="image.url"
+          :src="image.url"
+          alt="Article picture."
+          :class="modalArticle.id +'modalImage'"
         >
+        <button
+          v-if="modalArticle.imageObjects.images.length > 1"
+          class="nextImageLeftModal"
+          @click="nextImage(-1)"
+        >
+          &#10094;
+        </button>
+        <button
+          v-if="modalArticle.imageObjects.images.length > 1"
+          class="nextImageRightModal"
+          @click="nextImage(1)"
+        >
+          &#10095;
+        </button>
       </div>
       <iframe
         v-if="modalArticle.video != null"
@@ -44,9 +57,7 @@
         v-if="show === true"
         @close="close($event)"
       />
-      <footer
-        class="modalFooter"
-      >
+      <footer class="modalFooter">
         <img
           v-if="modalArticle.author.avatar != null"
           class="avatarImage"
@@ -70,17 +81,12 @@
           <a
             class="modalShare"
             @click="getShare()"
-          >
-            Copy link
-          </a>
+          >Copy link</a>
           <a
             v-if="modalArticle.source_url !=null"
             class="modalOrginalArticle"
             :href="modalArticle.source_url"
-          >
-
-            View original article
-          </a>
+          >View original article</a>
         </div>
       </footer>
     </div>
@@ -98,14 +104,26 @@ export default {
     data() {
         return {
             id: this.$route.params.id,
+            slideIndex: 1,
             modalArticle: {},
             show: false,
         };
     },
+    mounted() {
+        this.imageSlider(this.slideIndex);
+        console.log('kör');
+    },
     created() {
-        fetch(`https://interns-test-channel.hoodin.com/api/v2/items/${this.id}?&&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9`)
+    // fetch the data from the api.
+        fetch(
+            `https://interns-test-channel.hoodin.com/api/v2/items/${
+                this.id
+            }?&&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9`,
+        )
             .then(response => response.json())
-            .then((data) => { this.modalArticle = data.data.item; });
+            .then((data) => {
+                this.modalArticle = data.data.item;
+            });
     },
     methods: {
         getShare() {
@@ -113,6 +131,27 @@ export default {
         },
         close(val) {
             this.show = val;
+        },
+        nextImage(n) {
+            this.imageSlider((this.slideIndex += n));
+        },
+        imageSlider(n) {
+            let i;
+            const x = document.getElementsByClassName(`${this.modalArticle.id}modalImage`);
+            if (n > x.length) {
+                this.slideIndex = 1;
+            }
+            if (n < 1) {
+                this.slideIndex = x.length;
+            }
+
+            for (i = 0; i < x.length; i += 1) {
+                x[i].style.display = 'none';
+            }
+
+            if (x[this.slideIndex - 1] !== undefined) {
+                x[this.slideIndex - 1].style.display = 'block';
+            }
         },
     },
 };
@@ -133,7 +172,7 @@ export default {
   top: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.6);
 }
 
 .modal_content {
@@ -147,42 +186,42 @@ export default {
   box-sizing: border-box;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.7);
   border-radius: 4px;
-  max-width: 40%;
+  max-width: 35%;
   display: flex;
   flex-direction: column;
-  @media screen and (max-width: 1195px){
+  @media screen and (max-width: 1195px) {
     max-width: 60%;
   }
-    @media screen and (max-width: 800px){
+  @media screen and (max-width: 800px) {
     max-width: 90%;
   }
-    @media screen and (max-width: 500px){
-      footer{
-        a {
-            font-size: 12px;
-            margin:0 5px 0 0px !important;
-          }
-          p{
-            font-size: 12px;
-            margin:0 0px 0 5px !important;
-          }
+  @media screen and (max-width: 500px) {
+    footer {
+      a {
+        font-size: 12px;
+        margin: 0 5px 0 0px !important;
       }
+      p {
+        font-size: 12px;
+        margin: 0 0px 0 5px !important;
+      }
+    }
   }
-    h2 {
-  font-size: 28px;
-  font-weight: 200;
-  margin: 20px 0 40px;
-  text-align: center;
+  h2 {
+    font-size: 28px;
+    font-weight: 200;
+    margin: 20px 0 40px;
+    text-align: center;
   }
   .modalImages {
     position: relative;
-      img {
+    img {
       height: 45%;
       width: 100%;
     }
   }
   .modalVideo {
-    border:none;
+    border: none;
     height: 45%;
   }
   .modalText {
@@ -198,22 +237,22 @@ export default {
 
 .modalFooter {
   padding: 10px;
-  .footerInfo{
-    display:inline-block;
+  .footerInfo {
+    display: inline-block;
     vertical-align: bottom;
-    p{
-      margin:0 15px 0 15px;
+    p {
+      margin: 0 15px 0 15px;
     }
   }
-  .footerLinks{
+  .footerLinks {
     float: right;
     vertical-align: bottom;
-    a{
+    a {
       display: block;
-      margin:0 15px 0 15px;
+      margin: 0 15px 0 15px;
       color: #007bff;
       text-align: right;
-      &:hover{
+      &:hover {
         text-decoration: underline;
         color: #007bff;
         cursor: pointer;
@@ -222,13 +261,13 @@ export default {
   }
 
   .favoritesIcon {
-    margin-top:5px;
+    margin-top: 5px;
     vertical-align: bottom;
     width: 40px;
     float: right;
   }
 
-  .avatarImage{
+  .avatarImage {
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -244,8 +283,48 @@ export default {
   cursor: pointer;
   transform: scale(0.8);
   transition: 0.2s;
-    &:hover{
-      transform: scale(1);
-    }
+  &:hover {
+    transform: scale(1);
+  }
+}
+
+.nextImageRightModal {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  padding: 0px 10px 0px 10px;
+  border: none;
+  background: none;
+  font-size: 25px;
+  background-color: rgba(255, 255, 255, 0.5);
+  transition: 0.2s;
+  &:hover {
+    background-color: rgba(211, 211, 211, 0.85);
+  }
+  &:focus {
+    outline: 0;
+  }
+}
+
+.nextImageLeftModal {
+  position: absolute;
+  left: 0px;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  padding: 0px 10px 0px 10px;
+  border: none;
+  background: none;
+  font-size: 25px;
+  background-color: rgba(255, 255, 255, 0.5);
+  transition: 0.2s;
+  &:hover {
+    background-color: rgba(211, 211, 211, 0.85);
+  }
+  &:focus {
+    outline: 0;
+  }
 }
 </style>
