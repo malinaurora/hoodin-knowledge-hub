@@ -1,3 +1,4 @@
+
 <template>
   <div
     class="modal"
@@ -39,7 +40,7 @@
         <b v-if="modalArticle.section !=''">{{ modalArticle.section }}</b>
         <p>{{ modalArticle.text | striphtml }}</p>
       </section>
-      <Share :style="{display: show ? 'block' : 'none'}" />
+      <Share v-if="show === true" />
       <footer
         class="modalFooter"
       >
@@ -144,7 +145,7 @@ export default {
   box-sizing: border-box;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.7);
   border-radius: 4px;
-  max-width: 35%;
+  max-width: 40%;
   display: flex;
   flex-direction: column;
   @media screen and (max-width: 1195px){
