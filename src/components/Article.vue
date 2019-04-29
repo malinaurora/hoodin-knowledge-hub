@@ -103,12 +103,12 @@ export default {
         // load all favorites as an array and loop thru it comparing ids
         // if they match the heart gets a different icon
         const data = JSON.parse(localStorage.getItem('id'));
-        // eslint-disable-next-line no-restricted-syntax
-        for (const favorit of data) {
+
+        data.forEach((favorit) => {
             if (this.apiData.id === favorit) {
                 this.favorite = true;
             }
-        }
+        });
         this.time = new Date();
     },
     methods: {
@@ -140,22 +140,24 @@ export default {
             this.showMsg = true;
             setTimeout(() => {
                 this.showMsg = false;
-            }, 2000);
+            }, 4000);
         },
         removeFavorite() {
             this.$emit('removeArticleId', this.apiData.id);
             // load all favorited ids
             const data = JSON.parse(localStorage.getItem('id'));
             let index = 0;
+            this.showMsg = false;
 
             // find the id of the removed aricle and remove it from local storage
-            // eslint-disable-next-line no-restricted-syntax
-            for (const unFavorite of data) {
+            data.forEach((unFavorite) => {
                 if (unFavorite === this.apiData.id) {
                     data.splice(index, 1);
                 }
-                index += 1;
-            }
+                // eslint-disable-next-line no-plusplus
+                index++;
+            });
+
             // convert array to string and save it in local storage
             localStorage.setItem('id', JSON.stringify(data));
             this.favorite = false;
@@ -247,8 +249,8 @@ export default {
             }
             .msg{
               position: absolute;
-              top:-30px;
-              right:10px;
+              top:-10px;
+              right: 10px;
               background-color: black;
               border: 1px solid black;
               padding: 5px;
@@ -269,7 +271,7 @@ export default {
                 border-right: 8px solid transparent;
                 border-top: 8px solid black;
                 position: absolute;
-                right: 4px;
+                right: 3px;
                 bottom:-8px;
               }
             }

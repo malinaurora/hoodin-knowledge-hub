@@ -47,10 +47,9 @@ export default {
         const data = JSON.parse(localStorage.getItem('id'));
 
         // push old favorites to favorites array
-        // eslint-disable-next-line no-restricted-syntax
-        for (const id of data) {
+        data.forEach((id) => {
             this.Favorites.push(id);
-        }
+        });
     },
     methods: {
         saveFavorites(id) {
@@ -62,14 +61,14 @@ export default {
             // removes the id from start favorites array so it doesn't
             // push same article multiple times
             let index = 0;
-            // eslint-disable-next-line no-restricted-syntax
-            for (const id of this.Favorites) {
+
+            this.Favorites.forEach((id) => {
                 if (removedId === id) {
                     this.Favorites.splice(index, 1);
                 }
                 // eslint-disable-next-line no-plusplus
                 index++;
-            }
+            });
         },
     },
 };
