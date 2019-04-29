@@ -73,4 +73,10 @@ footer {
     line-height: normal;
 }
 
+a {
+    font-family: "Roboto Slab";
+    line-height: 25px;
+    font-weight: 100;
+}
+
 </style>

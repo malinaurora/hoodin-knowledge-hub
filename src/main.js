@@ -6,7 +6,6 @@ import moment from 'moment';
 import router from './router';
 import App from './App.vue';
 
-
 Vue.use(BootstrapVue);
 
 Vue.filter('striphtml', (value) => {
