@@ -1,0 +1,50 @@
+
+<template>
+  <div class="text-center col-md-12 m-3 mt-5">
+    <a
+      class="load-more-btn btn"
+      role="button"
+      aria-disabled="true"
+      @click="loadData"
+    >
+      <img
+        class="icon"
+        src="/src/assets/icons/baseline-arrow.svg"
+        alt="load more"
+      >
+    </a>
+  </div>
+</template>
+
+
+<script>
+export default {
+    data() {
+        return {
+            limit: 15,
+        };
+    },
+    methods: {
+        loadData() {
+            this.limit += 15;
+            this.$emit('showMore', this.limit);
+        },
+    },
+};
+</script>
+
+
+<style lang="scss">
+.load-more-btn {
+    background: rgb(255, 255, 255);
+    &:hover {
+        box-sizing: border-box;
+        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.7);
+    }
+}
+
+.icon {
+    width: 35px;
+    height: 35px;
+}
+</style>
