@@ -120,6 +120,8 @@ export default {
             .then((data) => {
                 this.modalArticle = data.data.item;
             });
+        this.imageSlider(this.slideIndex);
+        document.getElementsByTagName('body')[0].style.overflow = 'hidden';
     },
     methods: {
         getShare() {
