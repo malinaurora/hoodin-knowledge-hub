@@ -216,7 +216,7 @@ export default {
   .modalImages {
     position: relative;
     img {
-      height: 45%;
+      height: 60%;
       width: 100%;
     }
   }
