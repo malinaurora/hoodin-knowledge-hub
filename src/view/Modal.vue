@@ -109,10 +109,6 @@ export default {
             show: false,
         };
     },
-    mounted() {
-        this.imageSlider(this.slideIndex);
-        document.getElementsByTagName('body')[0].style.overflow = 'hidden';
-    },
     created() {
     // fetch the data from the api.
         fetch(
