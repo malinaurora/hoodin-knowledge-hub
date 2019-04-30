@@ -86,8 +86,7 @@ export default {
 
 .modal_content {
   max-width: 85%;
-  height: 150px;
-  padding: 20px;
+  padding: 40px;
   p{
     font-weight: normal;
   }
@@ -106,19 +105,18 @@ export default {
   .urlContent {
     .urlPlacholder {
       width: 100%;
+      margin-top: 30px;
+      margin-bottom: 30px;
+      height: 40px;
+      border: 1px solid black;
       &:focus {
         outline: none;
       }
     }
   }
 .copyBtn {
-    -moz-box-shadow: 0px 0px 0px -1px #000000;
-    -webkit-box-shadow: 0px 0px 0px -1px #000000;
-    box-shadow: 0px 0px 0px -1px #000000;
     background-color:#c4c4c4;
-    -moz-border-radius:5px;
-    -webkit-border-radius:5px;
-    border-radius:5px;
+    border:none;
     display:inline-block;
     cursor:pointer;
     color:#000000;
@@ -127,8 +125,7 @@ export default {
     padding:5px;
     text-decoration:none;
     width: 70px;
-    margin-top: 10px;
-    margin-bottom: 5px;
+    height: 40px;
 }
 .copyBtn:hover {
     background-color:#949494;
