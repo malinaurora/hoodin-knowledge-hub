@@ -5,7 +5,9 @@
       class="overlay"
       @click="$router.go(-1), enableScroll()"
     />
-    <div class="modal_content">
+    <div
+      class="modal_content"
+    >
       <img
         class="exitBtn"
         src="/src/assets/icons/baseline-close-24px.svg"
@@ -109,9 +111,9 @@ export default {
             show: false,
         };
     },
-    created() {
+    async created() {
     // fetch the data from the api.
-        fetch(
+        await fetch(
             `https://interns-test-channel.hoodin.com/api/v2/items/${
                 this.id
             }?&&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9`,
@@ -217,7 +219,7 @@ export default {
   .modalImages {
     position: relative;
     img {
-      height: 60%;
+      height: 40%;
       width: 100%;
     }
   }

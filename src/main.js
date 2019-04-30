@@ -5,6 +5,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css';
 import moment from 'moment';
 import router from './router';
 import App from './App.vue';
+import 'babel-polyfill';
 
 Vue.use(BootstrapVue);
 
