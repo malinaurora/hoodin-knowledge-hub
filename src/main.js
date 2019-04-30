@@ -15,7 +15,7 @@ Vue.filter('striphtml', (value) => {
     const text = div.textContent || div.innerText || '';
     return text;
 });
-moment.locale('en', {
+moment.updateLocale('en', {
     relativeTime: {
         future: 'in %s',
         past: '%s ago',
