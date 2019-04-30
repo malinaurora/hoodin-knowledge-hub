@@ -1,10 +1,9 @@
 <template>
   <div id="app">
     <Header />
-    <NavBar />
+    <NavBar @search="search($event)" />
     <main class="container">
-      <Search />
-      <router-view />
+      <router-view :search-string="searchString" />
     </main>
   </div>
 </template>
@@ -12,13 +11,21 @@
 <script>
 import Header from './components/Header.vue';
 import NavBar from './components/NavBar.vue';
-import Search from './components/Search.vue';
 
 export default {
     components: {
         Header,
         NavBar,
-        Search,
+    },
+    data() {
+        return {
+            searchString: '',
+        };
+    },
+    methods: {
+        search(searchString) {
+            this.searchString = searchString;
+        },
     },
 };
 

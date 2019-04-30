@@ -57,7 +57,7 @@
       </div>
     </li>
     <li v-if="isActive">
-      <Search />
+      <Search @search="search($event)" />
     </li>
   </ul>
 </template>
@@ -99,6 +99,9 @@ export default {
     methods: {
         stayClosed() {
             this.$emit('close', this.close);
+        },
+        search(searchString) {
+            this.$emit('search', searchString);
         },
     },
 

@@ -3,7 +3,7 @@
   <div>
     <div class="row mb-5 mt-4">
       <article
-        v-for="api of apiData"
+        v-for="api of searchInArticles"
         :key="api.id"
         class="col-lg-4 col-md-6 mt-3 mb-3"
       >
@@ -29,12 +29,29 @@ export default {
         Article,
         MoreArticles,
     },
+    props: {
+        searchString: {
+            type: String,
+            default: '',
+        },
+    },
     data() {
         return {
-            apiData: null,
+            apiData: [],
             Favorites: [],
             limit: 15,
         };
+    },
+    computed: {
+        searchInArticles() {
+            const searchLowerCase = this.searchString.toLowerCase();
+            return this.apiData.filter(
+                api => api.title.toLowerCase().match(searchLowerCase)
+          || api.author.name.toLowerCase().match(searchLowerCase)
+          || api.subtitle.toLowerCase().match(searchLowerCase)
+          || api.text.toLowerCase().match(searchLowerCase),
+            );
+        },
     },
     mounted() {
         fetch(`https://interns-test-channel.hoodin.com/api/v2/items?limit=${this.limit}&&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9`)
@@ -60,6 +77,7 @@ export default {
             /* push new favorit id to array and saves it localy */
             this.Favorites.push(id);
             localStorage.setItem('id', JSON.stringify(this.Favorites));
+            console.log(this.searchString);
         },
         removeFavorite(removedId) {
             /* removes the id from start favorites array so it doesn't

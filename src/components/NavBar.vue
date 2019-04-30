@@ -29,6 +29,7 @@
       <NavItems
         :is-active="isActive"
         @close="toggleState($event)"
+        @search="search($event)"
       />
     </div>
   </nav>
@@ -54,6 +55,9 @@ export default {
             if (stayClosed !== false) {
                 this.isActive = !this.isActive;
             }
+        },
+        search(searchString) {
+            this.$emit('search', searchString);
         },
     },
 };
