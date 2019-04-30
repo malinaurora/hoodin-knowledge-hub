@@ -56,7 +56,8 @@
         {{ sortItems.text }}
       </div>
     </li>
-    <li :style="{display: isActive ? 'block' : 'none'}">
+    <li :style="{display: isActive ? 'block' : 'none'}"
+     @click="stayClosed()">
       <Search @search="search($event)" />
     </li>
   </ul>
