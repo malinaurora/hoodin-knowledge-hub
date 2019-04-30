@@ -16,7 +16,10 @@
       </article>
     </div>
     <router-view />
-    <MoreArticles @showMore="showMore($event)" />
+    <MoreArticles
+      v-if="apiData"
+      @showMore="showMore($event)"
+    />
   </div>
 </template>
 
