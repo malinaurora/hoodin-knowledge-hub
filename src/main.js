@@ -5,6 +5,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css';
 import moment from 'moment';
 import router from './router';
 import App from './App.vue';
+import 'babel-polyfill';
 
 Vue.use(BootstrapVue);
 
@@ -14,7 +15,7 @@ Vue.filter('striphtml', (value) => {
     const text = div.textContent || div.innerText || '';
     return text;
 });
-moment.locale('en', {
+moment.updateLocale('en', {
     relativeTime: {
         future: 'in %s',
         past: '%s ago',
