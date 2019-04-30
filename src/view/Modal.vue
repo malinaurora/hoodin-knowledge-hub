@@ -6,6 +6,7 @@
       @click="$router.go(-1), enableScroll()"
     />
     <div
+      v-if="dataLoaded"
       class="modal_content"
     >
       <img
@@ -109,6 +110,7 @@ export default {
             slideIndex: 1,
             modalArticle: {},
             show: false,
+            dataLoaded: false,
         };
     },
     async created() {
@@ -121,6 +123,7 @@ export default {
             .then(response => response.json())
             .then((data) => {
                 this.modalArticle = data.data.item;
+                this.dataLoaded = true;
             });
         this.imageSlider(this.slideIndex);
         document.getElementsByTagName('body')[0].style.overflow = 'hidden';
@@ -219,7 +222,8 @@ export default {
   .modalImages {
     position: relative;
     img {
-      height: 40%;
+      max-height: 60%;
+      height: 60%;
       width: 100%;
     }
   }
