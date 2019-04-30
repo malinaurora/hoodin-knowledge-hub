@@ -183,7 +183,7 @@ export default {
         }
         .text{
             overflow: hidden;
-            margin: 10px;
+            margin: 20px;
             margin-bottom: 0;
             text-overflow: ellipsis;
             overflow: hidden;
