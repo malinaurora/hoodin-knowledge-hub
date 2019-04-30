@@ -56,7 +56,7 @@
         {{ sortItems.text }}
       </div>
     </li>
-    <li v-if="isActive">
+    <li :style="{display: isActive ? 'block' : 'none'}">
       <Search @search="search($event)" />
     </li>
   </ul>

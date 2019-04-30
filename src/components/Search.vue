@@ -2,7 +2,6 @@
   <div>
     <input
       v-model="search"
-      type="text"
       placeholder="Search..."
       @input="sendSearch(search)"
     >
