@@ -11,7 +11,7 @@
                 <p>Link to article</p>
                 <input id="myCopy" type="text" class="urlPlacholder" :value="url" />
             </div>
-            <button class="copyBtn" Copy < button/@click="copyText()">
+            <button class="copyBtn" @click="copyText()">Copy</button>
         </div>
     </div>
 </template>
