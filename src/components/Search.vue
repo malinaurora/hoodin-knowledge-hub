@@ -30,7 +30,7 @@ export default {
   }
   input{
     width: 65%;
-    margin-left: 18px;
+    margin-left: 17px;
   }
       @media (max-width: 767.98px) {
           div{
