@@ -19,9 +19,7 @@ module.exports = {
     },
     rules: {
         "prettier/prettier": ['error'],
-        indent: ['error', 4],
         "no-console": ["error", { "allow": ["warn", "error"] }],
-        "vue/html-indent": ['error', 4],
         eqeqeq: ['error', 'smart'],
         "vue/eqeqeq": ['error'],
         "vue/require-default-prop": ['error'],
