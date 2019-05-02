@@ -32,11 +32,8 @@
             height="50%"
             :src="'https://www.youtube.com/embed/' + apiData.video.video_id"
         />
-        <router-link
-            v-if="apiData.title !== ''"
-            :to="{ name: modalRoute, params: { id: apiData.id } }"
-        >
-            <h2 class="text">
+        <router-link :to="{ name: modalRoute, params: { id: apiData.id } }" class="text">
+            <h2 v-if="apiData.title !== ''">
                 {{ apiData.title }}
             </h2>
             <b v-if="apiData.section !== ''">{{ apiData.section }}</b>
