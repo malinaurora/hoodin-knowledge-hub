@@ -22,6 +22,5 @@ module.exports = {
         "no-console": ["error", { "allow": ["warn", "error"] }],
         eqeqeq: ['error', 'smart'],
         "vue/eqeqeq": ['error'],
-        "vue/require-default-prop": ['error'],
     }
 };
