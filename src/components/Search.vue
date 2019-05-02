@@ -24,5 +24,21 @@ export default {
 };
 </script>
 
-<style>
+<style style lang="scss" scoped>
+  div{
+    width: 250px;
+  }
+  input{
+    width: 65%;
+    margin-left: 18px;
+  }
+      @media (max-width: 767.98px) {
+          div{
+    width: 100%;
+  }
+        input{
+        width: 80%;
+        }
+      }
+
 </style>
