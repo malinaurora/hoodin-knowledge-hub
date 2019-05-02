@@ -35,30 +35,21 @@
     </li>
     <!-- Looping out all data from menuSort-->
     <li
-      v-for="sortItems in menuSort"
-      :key="sortItems.id"
+      @click="stayClosed()"
     >
-      <!-- Condition for the tooltip. -->
       <img
         v-if="!isActive"
-        v-b-tooltip.hover.html.left="sortItems.text"
-        :src="sortItems.url"
-        :alt="sortItems.alt"
+        v-b-tooltip.hover.left="'Search'"
+        :src="searchImg.url"
       >
       <img
         v-else
-        :src="sortItems.url"
-        :alt="sortItems.alt"
+        :src="searchImg.url"
       >
-      <div
-        :class="{navLable: !isActive, removeNavLable: isActive}"
-      >
-        {{ sortItems.text }}
-      </div>
-    </li>
-    <li :style="{display: isActive ? 'block' : 'none'}"
-     @click="stayClosed()">
-      <Search @search="search($event)" />
+      <Search
+        :style="{display: isActive ? 'block' : 'none'}"
+        @search="search($event)"
+      />
     </li>
   </ul>
 </template>
@@ -94,6 +85,9 @@ export default {
                     text: 'Filter', url: 'src/assets/icons/filter-outline.svg', alt: 'Filter navigation icon',
                 },
             ],
+            searchImg: {
+                url: 'src/assets/icons/baseline-search.svg', alt: 'Search navigation icon',
+            },
             close: true,
         };
     },
@@ -123,7 +117,7 @@ export default {
                     visibility: hidden;
                 }
                  .removeNavLable{
-                    padding-left: 70px;
+                    padding-left: 60px;
                     color:#000;
                 }
                 img{
