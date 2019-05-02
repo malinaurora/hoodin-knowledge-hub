@@ -45,7 +45,7 @@
         v-if="modalArticle.video != null"
         class="modalVideo"
         width="100%"
-        height="50%"
+        height="100%"
         :src="'https://www.youtube.com/embed/' + modalArticle.video.video_id"
       />
 
@@ -88,6 +88,8 @@
           <a
             v-if="modalArticle.source_url !=null"
             class="modalOrginalArticle"
+            target="_blank"
+            rel="noopener noreferrer"
             :href="modalArticle.source_url"
           >View original article</a>
         </div>
@@ -213,42 +215,103 @@ export default {
       }
     }
   }
-  h2 {
-    font-size: 28px;
-    font-weight: 200;
-    margin: 20px 0 40px;
-    text-align: center;
-  }
-  .modalImages {
-    position: relative;
-    img {
-      max-height: 60%;
-      height: 60%;
-      width: 100%;
+  .nextImageLeftModal {
+    position: absolute;
+    left: 0px;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    padding: 0px 10px 0px 10px;
+    border: none;
+    background: none;
+    font-size: 25px;
+    background-color: rgba(255, 255, 255, 0.5);
+    transition: 0.2s;
+    &:hover {
+      background-color: rgba(211, 211, 211, 0.85);
+    }
+    &:focus {
+      outline: 0;
     }
   }
-  .modalVideo {
+  .nextImageRightModal {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    padding: 0px 10px 0px 10px;
     border: none;
-    height: 45%;
-  }
+    background: none;
+    font-size: 25px;
+    background-color: rgba(255, 255, 255, 0.5);
+    transition: 0.2s;
+    &:hover {
+        background-color: rgba(211, 211, 211, 0.85);
+      }
+    &:focus {
+        outline: 0;
+      }
+    }
+  h2 {
+      font-size: 28px;
+      font-weight: 200;
+      margin: 20px 0 40px;
+      text-align: center;
+    }
+  .modalImages {
+      position: relative;
+      img {
+        max-height: 60%;
+        height: 60%;
+        width: 100%;
+      }
+    }
+  iframe {
+      height: 400px;
+      border: none;
+    }
   .modalText {
-    padding-top: 60px;
-    padding-right: 60px;
-    padding-left: 60px;
-    padding-bottom: 50px;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
+      padding-top: 50px;
+      padding-right: 60px;
+      padding-left: 60px;
+      padding-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+  .exitBtn {
+      position: absolute;
+      top: -8px;
+      right: -45px;
+      width: 40px;
+      cursor: pointer;
+      transform: scale(0.8);
+      transition: 0.2s;
+      &:hover {
+      transform: scale(1);
+    }
   }
 }
 
 .modalFooter {
   padding: 10px;
   .footerInfo {
-    display: inline-block;
+    float: left;
     vertical-align: bottom;
     p {
+      display: block;
       margin: 0 15px 0 15px;
+    }
+    .modalAuthor {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      display: inline-block;
+      width: 200px;
+      &:hover {
+        overflow: visible;
+      }
     }
   }
   .footerLinks {
@@ -266,72 +329,17 @@ export default {
       }
     }
   }
-
   .favoritesIcon {
     margin-top: 5px;
     vertical-align: bottom;
     width: 40px;
     float: right;
   }
-
   .avatarImage {
     width: 50px;
     height: 50px;
     border-radius: 50%;
     box-shadow: 0px 0px 10px gray;
-  }
-}
-
-.exitBtn {
-  position: absolute;
-  top: -8px;
-  right: -45px;
-  width: 40px;
-  cursor: pointer;
-  transform: scale(0.8);
-  transition: 0.2s;
-  &:hover {
-    transform: scale(1);
-  }
-}
-
-.nextImageRightModal {
-  position: absolute;
-  right: 0;
-  top: 50%;
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-  padding: 0px 10px 0px 10px;
-  border: none;
-  background: none;
-  font-size: 25px;
-  background-color: rgba(255, 255, 255, 0.5);
-  transition: 0.2s;
-  &:hover {
-    background-color: rgba(211, 211, 211, 0.85);
-  }
-  &:focus {
-    outline: 0;
-  }
-}
-
-.nextImageLeftModal {
-  position: absolute;
-  left: 0px;
-  top: 50%;
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-  padding: 0px 10px 0px 10px;
-  border: none;
-  background: none;
-  font-size: 25px;
-  background-color: rgba(255, 255, 255, 0.5);
-  transition: 0.2s;
-  &:hover {
-    background-color: rgba(211, 211, 211, 0.85);
-  }
-  &:focus {
-    outline: 0;
   }
 }
 </style>
