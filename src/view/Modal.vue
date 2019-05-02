@@ -35,7 +35,7 @@
                 </button>
             </div>
             <iframe
-                v-if="modalArticle.video != null"
+                v-if="modalArticle.video !== null"
                 class="modalVideo"
                 width="100%"
                 height="50%"
@@ -43,16 +43,16 @@
             />
 
             <section class="modalText">
-                <h1 v-if="modalArticle.title != ''">
+                <h1 v-if="modalArticle.title !== ''">
                     {{ modalArticle.title }}
                 </h1>
-                <b v-if="modalArticle.section != ''">{{ modalArticle.section }}</b>
+                <b v-if="modalArticle.section !== ''">{{ modalArticle.section }}</b>
                 <p>{{ modalArticle.text | striphtml }}</p>
             </section>
             <share v-if="show === true" @close="close($event)" />
             <footer class="modalFooter">
                 <img
-                    v-if="modalArticle.author.avatar != null"
+                    v-if="modalArticle.author.avatar !== null"
                     class="avatarImage"
                     :src="modalArticle.author.avatar.url"
                     alt="Author avatar picture."
@@ -73,7 +73,7 @@
                 <div class="footerLinks">
                     <a class="modalShare" @click="getShare()">Copy link</a>
                     <a
-                        v-if="modalArticle.source_url != null"
+                        v-if="modalArticle.source_url !== null"
                         class="modalOrginalArticle"
                         :href="modalArticle.source_url"
                         >View original article</a
