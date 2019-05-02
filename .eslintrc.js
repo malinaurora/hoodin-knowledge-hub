@@ -1,25 +1,26 @@
 module.exports = {
     env: {
-        browser: true,
         es6: true,
+        browser: true,
     },
     extends: [
         'airbnb-base',
         'plugin:vue/recommended',
+        'prettier',
+        'prettier/vue',
     ],
-    globals: {
-        Atomics: 'readonly',
-        SharedArrayBuffer: 'readonly',
-    },
-    parserOptions: {
-        ecmaVersion: 2018,
-        sourceType: 'module',
-    },
     plugins: [
+        'prettier',
         'vue',
     ],
-    rules: {
-        "indent": ["error", 4],
-        "linebreak-style": 0
+    parserOptions: {
+        parser: 'babel-eslint',
+        sourceType: 'module',
     },
+    rules: {
+        "prettier/prettier": ['error'],
+        "no-console": ["error", { "allow": ["warn", "error"] }],
+        eqeqeq: ['error', 'smart'],
+        "vue/eqeqeq": ['error'],
+    }
 };
