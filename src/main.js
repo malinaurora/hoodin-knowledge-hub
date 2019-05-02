@@ -8,7 +8,7 @@ import App from './App.vue';
 
 Vue.use(BootstrapVue);
 
-Vue.filter('striphtml', (value) => {
+Vue.filter('striphtml', value => {
     const div = document.createElement('div');
     div.innerHTML = value;
     const text = div.textContent || div.innerText || '';

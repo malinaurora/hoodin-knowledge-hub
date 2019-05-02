@@ -1,11 +1,7 @@
 <template>
-  <div class="text-center m-3">
-    <img
-      :src="imgSrc"
-      class="rounded logo"
-      alt="logo"
-    >
-  </div>
+    <div class="text-center m-3">
+        <img :src="imgSrc" class="rounded logo" alt="logo" />
+    </div>
 </template>
 
 <script>
@@ -17,17 +13,16 @@ export default {
         };
     },
 };
-
 </script>
 
 <style lang="scss">
 .logo {
-width: 200px;
-height: 50px;
+    width: 200px;
+    height: 50px;
 }
 @media (max-width: 767.98px) {
-  .logo {
-    margin-top:45px;
+    .logo {
+        margin-top: 45px;
     }
 }
 </style>
