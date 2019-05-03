@@ -35,6 +35,7 @@ export default {
             apiData: [],
             Favorites: [],
             limit: 15,
+            offset: 0,
         };
     },
     watch: {
@@ -48,6 +49,8 @@ export default {
                 .then(data => {
                     this.apiData = data.data.items;
                 });
+
+            this.offset = 0;
         },
     },
     mounted() {
@@ -60,18 +63,6 @@ export default {
             .then(data => {
                 this.apiData = data.data.items;
             });
-
-        setInterval(() => {
-            fetch(
-                `https://interns-test-channel.hoodin.com/api/v2/items?limit=${
-                    this.limit
-                }&&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9`,
-            )
-                .then(response => response.json())
-                .then(data => {
-                    this.apiData = data.data.items;
-                });
-        }, 60000);
 
         /* convert local Storage from string to array */
         const data = JSON.parse(localStorage.getItem('id'));
@@ -99,17 +90,19 @@ export default {
                 index += 1;
             });
         },
-        showMore(limit) {
-            this.limit = limit;
+        showMore() {
+            this.offset += 15;
 
             fetch(
-                `https://interns-test-channel.hoodin.com/api/v2/items?limit=${
+                `https://interns-test-channel.hoodin.com/api/v2/items?offset=${this.offset}&limit=${
                     this.limit
-                }&&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9`,
+                }&searchString=${
+                    this.searchString
+                }&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9`,
             )
                 .then(response => response.json())
                 .then(data => {
-                    this.apiData = data.data.items;
+                    this.apiData = this.apiData.concat(data.data.items);
                 });
         },
     },

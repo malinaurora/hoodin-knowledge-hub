@@ -8,15 +8,9 @@
 
 <script>
 export default {
-    data() {
-        return {
-            limit: 15,
-        };
-    },
     methods: {
         loadData() {
-            this.limit += 15;
-            this.$emit('showMore', this.limit);
+            this.$emit('showMore');
         },
     },
 };
