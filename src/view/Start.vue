@@ -33,6 +33,10 @@ export default {
             type: String,
             default: '',
         },
+        checkedCategoriesArray: {
+            type: Array,
+            default: Function,
+        },
     },
     data() {
         return {
