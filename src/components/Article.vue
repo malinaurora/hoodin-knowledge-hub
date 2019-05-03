@@ -195,7 +195,7 @@ export default {
             height: 100%;
             width: 100%;
         }
-        .text{
+        .text {
             overflow: hidden;
             margin: 20px;
             margin-bottom: 0;
@@ -206,107 +206,108 @@ export default {
             flex-direction: column;
             flex: 1;
         }
-        .video{
-            border:none;
+        .video {
+            border: none;
             height: 45%;
         }
-        .images{
+        .images {
             height: 45%;
             position: relative;
-            img{
+            img {
                 height: 100%;
                 width: 100%;
             }
-            .nextImageRight{
-              position: absolute;
-              right:0;
-              top: 50%;
-              -ms-transform: translateY(-50%);
-              transform: translateY(-50%);
-              padding: 0px 10px 0px 10px;
-              border: none;
-              background: none;
-              font-size: 25px;
-              background-color: rgba(255, 255, 255, 0.5);
-              transition: 0.2s;
-              &:hover{
-                background-color: rgba(211, 211, 211, 0.85);
+            .nextImageRight {
+                position: absolute;
+                right: 0;
+                top: 50%;
+                -ms-transform: translateY(-50%);
+                transform: translateY(-50%);
+                padding: 0px 10px 0px 10px;
+                border: none;
+                background: none;
+                font-size: 25px;
+                background-color: rgba(255, 255, 255, 0.5);
+                transition: 0.2s;
+                &:hover {
+                    background-color: rgba(211, 211, 211, 0.85);
+                }
+                &:focus {
+                    outline: 0;
+                }
             }
-            &:focus {
-                outline: 0;
+            .nextImageLeft {
+                position: absolute;
+                left: 0px;
+                top: 50%;
+                -ms-transform: translateY(-50%);
+                transform: translateY(-50%);
+                padding: 0px 10px 0px 10px;
+                border: none;
+                background: none;
+                font-size: 25px;
+                background-color: rgba(255, 255, 255, 0.5);
+                transition: 0.2s;
+                &:hover {
+                    background-color: rgba(211, 211, 211, 0.85);
+                }
+                &:focus {
+                    outline: 0;
+                }
             }
         }
-        .nextImageLeft {
-            position: absolute;
-            left: 0px;
-            top: 50%;
-            -ms-transform: translateY(-50%);
-            transform: translateY(-50%);
-            padding: 0px 10px 0px 10px;
-            border: none;
-            background: none;
-            font-size: 25px;
-            background-color: rgba(255, 255, 255, 0.5);
-            transition: 0.2s;
-            &:hover {
-                background-color: rgba(211, 211, 211, 0.85);
-            }
-            &:focus {
-                outline: 0;
-            }
-        }
-    }
-    footer {
-        background-color: white;
-        width: 100%;
-        padding: 5px 10px 5px 10px;
-        position: relative;
-        .time {
-            line-height: normal;
-        }
-        .msg {
-            position: absolute;
-            top: -10px;
-            right: 10px;
-            background-color: black;
-            border: 1px solid black;
-            padding: 5px;
-            border-radius: 2px;
-            p {
-                max-width: 100%;
-                font-size: 13px;
-                color: white;
-                margin: 0;
-                overflow: visible;
-                font-weight: normal;
+        footer {
+            background-color: white;
+            width: 100%;
+            padding: 5px 10px 5px 10px;
+            position: relative;
+            .time {
                 line-height: normal;
             }
-            .arrow-down {
-                width: 0;
-                height: 0;
-                border-left: 8px solid transparent;
-                border-right: 8px solid transparent;
-                border-top: 8px solid black;
+            .msg {
                 position: absolute;
-                right: 3px;
-                bottom: -8px;
+                top: -10px;
+                right: 10px;
+                background-color: black;
+                border: 1px solid black;
+                padding: 5px;
+                border-radius: 2px;
+                p {
+                    max-width: 100%;
+                    font-size: 13px;
+                    color: white;
+                    margin: 0;
+                    overflow: visible;
+                    font-weight: normal;
+                    line-height: normal;
+                }
+                .arrow-down {
+                    width: 0;
+                    height: 0;
+                    border-left: 8px solid transparent;
+                    border-right: 8px solid transparent;
+                    border-top: 8px solid black;
+                    position: absolute;
+                    right: 3px;
+                    bottom: -8px;
+                }
             }
-        }
-        p {
-            margin: 0;
-            font-size: 11px;
-            max-width: 50%;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            overflow: hidden;
-            position: relative;
-            display: inline-block;
-            line-height: normal;
-            font-weight: normal;
-        }
+            p {
+                margin: 0;
+                font-size: 11px;
+                max-width: 50%;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                position: relative;
+                display: inline-block;
+                line-height: normal;
+                font-weight: normal;
+            }
 
-        .favoriteIcon {
-            float: right;
+            .favoriteIcon {
+                float: right;
+            }
         }
     }
 }
