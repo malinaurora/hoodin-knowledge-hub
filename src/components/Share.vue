@@ -1,4 +1,3 @@
-
 <template>
   <div
     v-if="show === true"
@@ -31,7 +30,6 @@
         Copy
       </button>
     </div>
-  </div>
 </template>
 
 <script>
@@ -63,7 +61,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import url("https://fonts.googleapis.com/css?family=Montserrat|Roboto+Slab:300,400");
+@import url('https://fonts.googleapis.com/css?family=Montserrat|Roboto+Slab:300,400');
 .modal {
   display: block;
   position: fixed;
