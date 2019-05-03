@@ -31,6 +31,7 @@
         Copy
       </button>
     </div>
+  </div>
 </template>
 
 <script>
