@@ -1,4 +1,4 @@
-<template>
+s<template>
     <div v-if="show === true" class="modal">
         <div class="modal_content">
             <img
