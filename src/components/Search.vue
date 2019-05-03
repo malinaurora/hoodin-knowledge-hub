@@ -1,15 +1,10 @@
 <template>
-  <div>
-    <input
-      v-model="search"
-      placeholder="Search..."
-      @input="sendSearch(search)"
-    >
-  </div>
+    <div>
+        <input v-model="search" placeholder="Search..." @input="sendSearch(search)" />
+    </div>
 </template>
 
 <script>
-
 export default {
     data() {
         return {
@@ -25,20 +20,19 @@ export default {
 </script>
 
 <style style lang="scss" scoped>
-  div{
+div {
     width: 250px;
-  }
-  input{
+}
+input {
     width: 65%;
     margin-left: 17px;
-  }
-      @media (max-width: 767.98px) {
-          div{
-    width: 100%;
-  }
-        input{
+}
+@media (max-width: 767.98px) {
+    div {
+        width: 100%;
+    }
+    input {
         width: 80%;
-        }
-      }
-
+    }
+}
 </style>
