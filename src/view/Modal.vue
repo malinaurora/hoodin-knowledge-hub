@@ -49,9 +49,7 @@
       />
 
             <section class="modalText">
-                <h1 v-if="modalArticle.title !== ''">
-                    {{ modalArticle.title }}
-                </h1>
+                <h1 v-if="modalArticle.title !== ''">{{ modalArticle.title }}</h1>
                 <b v-if="modalArticle.section !== ''">{{ modalArticle.section }}</b>
                 <p>{{ modalArticle.text | striphtml }}</p>
             </section>
@@ -64,12 +62,8 @@
                     alt="Author avatar picture."
                 />
                 <div class="footerInfo">
-                    <p class="modalTime">
-                        {{ modalArticle.published.split('T')[0] }}
-                    </p>
-                    <p class="modalAuthor">
-                        {{ modalArticle.author.name }}
-                    </p>
+                    <p class="modalTime">{{ modalArticle.published.split('T')[0] }}</p>
+                    <p class="modalAuthor">{{ modalArticle.author.name }}</p>
                 </div>
                 <img
                     class="favoritesIcon"
@@ -148,25 +142,25 @@ export default {
         close(val) {
             this.show = val;
         },
-        nextImage(n) {
-            this.imageSlider((this.slideIndex += n));
+        nextImage(next) {
+            this.imageSlider((this.slideIndex += next));
         },
-        imageSlider(n) {
+        imageSlider(next) {
             let i;
-            const x = document.getElementsByClassName(`${this.modalArticle.id}modalImage`);
-            if (n > x.length) {
+            const picture = document.getElementsByClassName(`${this.modalArticle.id}modalImage`);
+            if (next > picture.length) {
                 this.slideIndex = 1;
             }
-            if (n < 1) {
-                this.slideIndex = x.length;
+            if (next < 1) {
+                this.slideIndex = picture.length;
             }
 
-            for (i = 0; i < x.length; i += 1) {
-                x[i].style.display = 'none';
+            for (i = 0; i < picture.length; i += 1) {
+                picture[i].style.display = 'none';
             }
 
-            if (x[this.slideIndex - 1] !== undefined) {
-                x[this.slideIndex - 1].style.display = 'block';
+            if (picture[this.slideIndex - 1] !== undefined) {
+                picture[this.slideIndex - 1].style.display = 'block';
             }
         },
         enableScroll() {
