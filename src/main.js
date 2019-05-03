@@ -25,8 +25,8 @@ moment.locale('en', {
         hh: '%dh',
         d: '1d',
         dd: '%dd',
-        M: '1mth',
-        MM: '%dmth',
+        m: '1mth',
+        mm: '%dmth',
         y: '1y',
         yy: '%dy',
     },
@@ -38,5 +38,5 @@ Vue.filter('moment', date => moment(date).fromNow(true));
 new Vue({
     el: '#app',
     router,
-    render: h => h(App),
+    render: html => html(App),
 });
