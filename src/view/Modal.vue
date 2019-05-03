@@ -1,4 +1,3 @@
-
 <template>
   <div class="modal">
     <div
@@ -49,31 +48,44 @@
         :src="'https://www.youtube.com/embed/' + modalArticle.video.video_id"
       />
 
-      <section class="modalText">
-        <h1 v-if="modalArticle.title != ''">
-          {{ modalArticle.title }}
-        </h1>
-        <b v-if="modalArticle.section !=''">{{ modalArticle.section }}</b>
-        <p>{{ modalArticle.text | striphtml }}</p>
-      </section>
-      <share
-        v-if="show === true"
-        @close="close($event)"
-      />
-      <footer class="modalFooter">
-        <img
-          v-if="modalArticle.author.avatar != null"
-          class="avatarImage"
-          :src="modalArticle.author.avatar.url"
-          alt="Author avatar picture."
-        >
-        <div class="footerInfo">
-          <p class="modalTime">
-            {{ modalArticle.published.split('T')[0] }}
-          </p>
-          <p class="modalAuthor">
-            {{ modalArticle.author.name }}
-          </p>
+            <section class="modalText">
+                <h1 v-if="modalArticle.title !== ''">
+                    {{ modalArticle.title }}
+                </h1>
+                <b v-if="modalArticle.section !== ''">{{ modalArticle.section }}</b>
+                <p>{{ modalArticle.text | striphtml }}</p>
+            </section>
+            <share v-if="show === true" @close="close($event)" />
+            <footer class="modalFooter">
+                <img
+                    v-if="modalArticle.author.avatar !== null"
+                    class="avatarImage"
+                    :src="modalArticle.author.avatar.url"
+                    alt="Author avatar picture."
+                />
+                <div class="footerInfo">
+                    <p class="modalTime">
+                        {{ modalArticle.published.split('T')[0] }}
+                    </p>
+                    <p class="modalAuthor">
+                        {{ modalArticle.author.name }}
+                    </p>
+                </div>
+                <img
+                    class="favoritesIcon"
+                    src="/src/assets/icons/baseline-favorite-border.svg"
+                    alt="Add to favorites."
+                />
+                <div class="footerLinks">
+                    <a class="modalShare" @click="getShare()">Copy link</a>
+                    <a
+                        v-if="modalArticle.source_url !== null"
+                        class="modalOrginalArticle"
+                        :href="modalArticle.source_url"
+                        >View original article</a
+                    >
+                </div>
+            </footer>
         </div>
         <img
           class="favoritesIcon"
@@ -93,9 +105,7 @@
             :href="modalArticle.source_url"
           >View original article</a>
         </div>
-      </footer>
     </div>
-  </div>
 </template>
 
 <script>
@@ -123,7 +133,7 @@ export default {
             }?&&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9`,
         )
             .then(response => response.json())
-            .then((data) => {
+            .then(data => {
                 this.modalArticle = data.data.item;
                 this.dataLoaded = true;
             });
@@ -167,20 +177,20 @@ export default {
 
 <style lang="scss">
 .modal {
-  display: block;
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
+    display: block;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
 }
 
 .overlay {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.6);
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
 }
 
 .modal_content {
@@ -340,6 +350,59 @@ export default {
     height: 50px;
     border-radius: 50%;
     box-shadow: 0px 0px 10px gray;
+  }
+}
+
+.exitBtn {
+  position: absolute;
+  top: -8px;
+  right: -45px;
+  width: 40px;
+  cursor: pointer;
+  transform: scale(0.8);
+  transition: 0.2s;
+  &:hover {
+    transform: scale(1);
+  }
+}
+
+.nextImageRightModal {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  padding: 0px 10px 0px 10px;
+  border: none;
+  background: none;
+  font-size: 25px;
+  background-color: rgba(255, 255, 255, 0.5);
+  transition: 0.2s;
+  &:hover {
+    background-color: rgba(211, 211, 211, 0.85);
+  }
+  &:focus {
+    outline: 0;
+  }
+}
+
+.nextImageLeftModal {
+  position: absolute;
+  left: 0px;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  padding: 0px 10px 0px 10px;
+  border: none;
+  background: none;
+  font-size: 25px;
+  background-color: rgba(255, 255, 255, 0.5);
+  transition: 0.2s;
+  &:hover {
+    background-color: rgba(211, 211, 211, 0.85);
+  }
+  &:focus {
+    outline: 0;
   }
 }
 </style>
