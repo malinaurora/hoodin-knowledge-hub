@@ -1,13 +1,17 @@
 <template>
     <div class="modal">
-        <div class="overlay" @click="$router.go(-1), enableScroll()" />
+        <router-link :to="this.$route.matched[0]">
+            <div class="overlay" @click="enableScroll()" />
+        </router-link>
         <div class="modal_content">
-            <img
-                class="exitBtn"
-                src="/src/assets/icons/baseline-close-24px.svg"
-                alt="closeModal"
-                @click="$router.go(-1), enableScroll()"
-            />
+            <router-link :to="this.$route.matched[0]">
+                <img
+                    class="exitBtn"
+                    src="/src/assets/icons/baseline-close-24px.svg"
+                    alt="closeModal"
+                    @click="enableScroll()"
+                />
+            </router-link>
             <div
                 v-if="modalArticle.imageObjects.images.length > 0 && modalArticle.video === null"
                 class="modalImages"
@@ -74,6 +78,7 @@
                     <a class="modalShare" @click="getShare()">Copy link</a>
                     <a
                         v-if="modalArticle.source_url !== null"
+                        target="_blank"
                         class="modalOrginalArticle"
                         :href="modalArticle.source_url"
                         >View original article</a

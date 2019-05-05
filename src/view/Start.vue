@@ -11,7 +11,7 @@
             </article>
         </div>
         <router-view />
-        <MoreArticles @showMore="showMore($event)" />
+        <MoreArticles v-if="apiData.length > 0" @showMore="showMore($event)" />
     </div>
 </template>
 
@@ -92,7 +92,6 @@ export default {
         },
         showMore() {
             this.offset += 15;
-
             fetch(
                 `https://interns-test-channel.hoodin.com/api/v2/items?offset=${this.offset}&limit=${
                     this.limit
