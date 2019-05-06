@@ -1,5 +1,6 @@
 <template>
     <div>
+        {{ checkedCategoriesArray }}
         <div class="row mb-5 mt-4">
             <article v-for="api of apiData" :key="api.id" class="col-lg-4 col-md-6 mt-3 mb-3">
                 <Article
@@ -28,6 +29,10 @@ export default {
         searchString: {
             type: String,
             default: '',
+        },
+        checkedCategoriesArray: {
+            type: Array,
+            default: Array,
         },
     },
     data() {
@@ -103,6 +108,9 @@ export default {
                 .then(data => {
                     this.apiData = this.apiData.concat(data.data.items);
                 });
+        },
+        log(data) {
+            return console.log(data);
         },
     },
 };

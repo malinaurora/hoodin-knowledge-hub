@@ -30,16 +30,21 @@
             <img v-else :src="searchImg.url" />
             <Search :style="{ display: isActive ? 'block' : 'none' }" @search="search($event)" />
         </li>
+        <li @click="stayClosed()">
+            <FilterCategories @checkedCategories="checkedCategories($event)" />
+        </li>
     </ul>
 </template>
 
 <script>
 import Search from './Search.vue';
+import FilterCategories from './FilterCategories.vue';
 
 export default {
     // Getting isActive props
     components: {
         Search,
+        FilterCategories,
     },
     props: {
         isActive: {
@@ -87,6 +92,9 @@ export default {
         },
         search(searchString) {
             this.$emit('search', searchString);
+        },
+        checkedCategories(checkedCategories) {
+            this.$emit('checkedCategories', checkedCategories);
         },
     },
 };

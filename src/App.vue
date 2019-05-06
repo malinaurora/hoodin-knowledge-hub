@@ -1,9 +1,12 @@
 <template>
     <div id="app">
         <Header />
-        <NavBar @search="search($event)" />
+        <NavBar @search="search($event)" @checkedCategories="checkedCategories($event)" />
         <main class="container">
-            <router-view :search-string="searchString" />
+            <router-view
+                :search-string="searchString"
+                :checked-categories-array="checkedCategoriesArray"
+            />
         </main>
     </div>
 </template>
@@ -20,11 +23,15 @@ export default {
     data() {
         return {
             searchString: '',
+            checkedCategoriesArray: [],
         };
     },
     methods: {
         search(searchString) {
             this.searchString = searchString;
+        },
+        checkedCategories(checkedCategories) {
+            this.checkedCategoriesArray = checkedCategories;
         },
     },
 };
