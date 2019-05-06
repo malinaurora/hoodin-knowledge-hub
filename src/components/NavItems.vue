@@ -31,8 +31,14 @@
             <Search :style="{ display: isActive ? 'block' : 'none' }" @search="search($event)" />
         </li>
         <li @click="stayClosed()">
-            <FilterCategories @checkedCategories="checkedCategories($event)" />
+            <span v-if="isActive" @click="toggle = !toggle">{{ filtersImgAndText.text }}</span>
+            <img v-if="!isActive" v-b-tooltip.hover.left="'Filters'" :src="filtersImgAndText.url" />
+            <img v-else :src="filtersImgAndText.url" />
+            <div v-if="isActive">
+                <FilterCategories v-if="toggle" @checkedCategories="checkedCategories($event)" />
+            </div>
         </li>
+        <li>heeej</li>
     </ul>
 </template>
 
@@ -67,23 +73,17 @@ export default {
                     alt: 'Favorite navigation icon',
                 },
             ],
-            menuSort: [
-                {
-                    text: 'Search',
-                    url: 'src/assets/icons/baseline-search.svg',
-                    alt: 'Search navigation icon',
-                },
-                {
-                    text: 'Filter',
-                    url: 'src/assets/icons/filter-outline.svg',
-                    alt: 'Filter navigation icon',
-                },
-            ],
             searchImg: {
                 url: 'src/assets/icons/baseline-search.svg',
                 alt: 'Search navigation icon',
             },
+            filtersImgAndText: {
+                url: 'src/assets/icons/filter-outline.svg',
+                alt: 'Filters navigation icon',
+                text: 'Categories',
+            },
             close: true,
+            toggle: false,
         };
     },
     methods: {
@@ -128,6 +128,9 @@ ul {
             &:hover {
                 color: #7b7b7b;
             }
+        }
+        span {
+            padding-left: 15px;
         }
     }
 }

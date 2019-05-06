@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <div v-for="categories in apiCategories" :key="categories.id">
+    <div class="dropdown">
+        <li v-for="categories in apiCategories" :key="categories.id" class="dropdownItems">
             <input
                 :id="categories.id"
                 v-model="checkedCategories"
@@ -8,8 +8,7 @@
                 type="checkbox"
             />
             <label :for="categories.id">{{ categories.name }}</label>
-        </div>
-        <span>Checked : {{ checkedCategories }}</span>
+        </li>
     </div>
 </template>
 
@@ -38,4 +37,23 @@ export default {
 };
 </script>
 
-<style style lang="scss" scoped></style>
+<style style lang="scss">
+.dropdown {
+    background-color: #e6e6e6;
+    -moz-box-shadow: inset 0 -5px 5px -5px #969696, inset 0 5px 5px -5px #969696;
+    -webkit-box-shadow: inset 0 -5px 5px -5px #969696, inset 0 5px 5px -5px #969696;
+    box-shadow: inset 0 -5px 5px -5px #969696, inset 0 5px 5px -5px #969696;
+    .dropdownItems {
+        margin-top: 5px;
+        margin: 5px 0px 0px 25px
+    }
+    input {
+        float: right;
+        margin-top: 8px;
+        margin: 8px 35px 0px 0px;
+    }
+    label{
+        margin-bottom: 0rem
+    }
+}
+</style>
