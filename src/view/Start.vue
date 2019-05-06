@@ -41,6 +41,7 @@ export default {
             Favorites: [],
             limit: 15,
             offset: 0,
+            category: '',
         };
     },
     watch: {
@@ -48,7 +49,29 @@ export default {
             fetch(
                 `https://interns-test-channel.hoodin.com/api/v2/items?limit=${
                     this.limit
-                }&searchString=${searchString}&&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9`,
+                }&searchString=${searchString}&mediaCategories=${
+                    this.category
+                }&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9`,
+            )
+                .then(response => response.json())
+                .then(data => {
+                    this.apiData = data.data.items;
+                });
+
+            this.offset = 0;
+        },
+        checkedCategoriesArray(categories) {
+            let categoryString = '';
+            categories.forEach(category => {
+                categoryString += `${category},`;
+            });
+            this.category = categoryString;
+            fetch(
+                `https://interns-test-channel.hoodin.com/api/v2/items?limit=${
+                    this.limit
+                }&searchString=${
+                    this.searchString
+                }&mediaCategories=${categoryString}&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9`,
             )
                 .then(response => response.json())
                 .then(data => {
@@ -100,17 +123,14 @@ export default {
             fetch(
                 `https://interns-test-channel.hoodin.com/api/v2/items?offset=${this.offset}&limit=${
                     this.limit
-                }&searchString=${
-                    this.searchString
+                }&searchString=${this.searchString}&mediaCategories=${
+                    this.category
                 }&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9`,
             )
                 .then(response => response.json())
                 .then(data => {
                     this.apiData = this.apiData.concat(data.data.items);
                 });
-        },
-        log(data) {
-            return console.log(data);
         },
     },
 };
