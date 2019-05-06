@@ -15,6 +15,12 @@
 
 <script>
 export default {
+    props: {
+        removedCategory: {
+            type: String,
+            default: '',
+        },
+    },
     data() {
         return {
             apiCategories: [],
@@ -24,6 +30,15 @@ export default {
     watch: {
         checkedCategories() {
             this.$emit('checkedCategories', this.checkedCategories);
+        },
+        removedCategory(removedCategory) {
+            let index = 0;
+            this.checkedCategories.forEach(category => {
+                if (category === removedCategory) {
+                    this.checkedCategories.splice(index, 1);
+                }
+                index += 1;
+            });
         },
     },
     mounted() {

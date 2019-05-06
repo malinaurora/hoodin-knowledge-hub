@@ -1,7 +1,15 @@
 <template>
     <div id="app">
+        <NavBar
+            :removed-category="removedCategory"
+            @search="search($event)"
+            @checkedCategories="checkedCategories($event)"
+        />
         <Header />
-        <NavBar @search="search($event)" @checkedCategories="checkedCategories($event)" />
+        <FilterHeader
+            :checked-categories-array="checkedCategoriesArray"
+            @removeFilter="removeFilter($event)"
+        />
         <main class="container">
             <router-view
                 :search-string="searchString"
@@ -14,16 +22,19 @@
 <script>
 import Header from './components/Header.vue';
 import NavBar from './components/NavBar.vue';
+import FilterHeader from './components/FilterHeader.vue';
 
 export default {
     components: {
         Header,
         NavBar,
+        FilterHeader,
     },
     data() {
         return {
             searchString: '',
             checkedCategoriesArray: [],
+            removedCategory: '',
         };
     },
     methods: {
@@ -32,6 +43,9 @@ export default {
         },
         checkedCategories(checkedCategories) {
             this.checkedCategoriesArray = checkedCategories;
+        },
+        removeFilter(category) {
+            this.removedCategory = category;
         },
     },
 };

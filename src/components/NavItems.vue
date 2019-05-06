@@ -31,7 +31,10 @@
             <Search :style="{ display: isActive ? 'block' : 'none' }" @search="search($event)" />
         </li>
         <li @click="stayClosed()">
-            <FilterCategories @checkedCategories="checkedCategories($event)" />
+            <FilterCategories
+                :removed-category="removedCategory"
+                @checkedCategories="checkedCategories($event)"
+            />
         </li>
     </ul>
 </template>
@@ -49,6 +52,10 @@ export default {
     props: {
         isActive: {
             type: Boolean,
+        },
+        removedCategory: {
+            type: String,
+            default: '',
         },
     },
     data() {

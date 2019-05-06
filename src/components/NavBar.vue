@@ -16,6 +16,7 @@
             <img v-if="isActive" class="closeNavBarImage" :src="closeImg" @click="!toggleState" />
             <!-- Getting NavItems from component NavItems and sending isActive to NavItems-->
             <NavItems
+                :removed-category="removedCategory"
                 :is-active="isActive"
                 @close="toggleState($event)"
                 @search="search($event)"
@@ -32,6 +33,12 @@ export default {
     name: 'NavBar',
     components: {
         NavItems,
+    },
+    props: {
+        removedCategory: {
+            type: String,
+            default: '',
+        },
     },
     data() {
         return {
