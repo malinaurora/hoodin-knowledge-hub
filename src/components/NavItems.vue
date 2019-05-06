@@ -30,7 +30,7 @@
             <img v-else :src="searchImg.url" />
             <Search :style="{ display: isActive ? 'block' : 'none' }" @search="search($event)" />
         </li>
-        <li @click="stayClosed()">
+        <li class="animationFix" @click="stayClosed()">
             <span v-if="isActive" @click="toggle = !toggle">{{ filtersImgAndText.text }}</span>
             <img v-if="!isActive" v-b-tooltip.hover.left="'Filters'" :src="filtersImgAndText.url" />
             <img v-else :src="filtersImgAndText.url" />
@@ -40,7 +40,6 @@
                 @checkedCategories="checkedCategories($event)"
             />
         </li>
-        <li>heeej</li>
     </ul>
 </template>
 
@@ -106,6 +105,9 @@ export default {
 ul {
     padding: 0;
     margin: 0;
+    .animationFix {
+        width: 250px;
+    }
     li {
         list-style-type: none;
         margin-top: 15px;
@@ -133,6 +135,7 @@ ul {
         }
         span {
             padding-left: 15px;
+            color: #000000;
         }
     }
     /* width */
