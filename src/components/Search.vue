@@ -30,7 +30,8 @@ div {
 }
 input {
     width: 65%;
-    margin-left: 17px;
+    margin-left: 15px;
+    padding-left: 3px;
 }
 @media (max-width: 767.98px) {
     div {
