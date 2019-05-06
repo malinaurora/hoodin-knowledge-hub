@@ -43,17 +43,20 @@ export default {
     -moz-box-shadow: inset 0 -5px 5px -5px #969696, inset 0 5px 5px -5px #969696;
     -webkit-box-shadow: inset 0 -5px 5px -5px #969696, inset 0 5px 5px -5px #969696;
     box-shadow: inset 0 -5px 5px -5px #969696, inset 0 5px 5px -5px #969696;
+    max-height: 180px;
+    overflow: auto;
+    width: 100%;
     .dropdownItems {
         margin-top: 5px;
-        margin: 5px 0px 0px 25px
+        margin: 5px 0px 0px 25px;
     }
     input {
         float: right;
         margin-top: 8px;
         margin: 8px 35px 0px 0px;
     }
-    label{
-        margin-bottom: 0rem
+    label {
+        margin-bottom: 0rem;
     }
 }
 </style>
