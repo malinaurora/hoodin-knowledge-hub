@@ -1,5 +1,6 @@
 <template>
     <div>
+        {{ checkedCategoriesArray }}
         <div class="row mb-5 mt-4">
             <article
                 v-for="api of searchInArticles"
@@ -35,7 +36,7 @@ export default {
         },
         checkedCategoriesArray: {
             type: Array,
-            default: Function,
+            default: Array,
         },
     },
     data() {
@@ -118,6 +119,9 @@ export default {
                 .then(data => {
                     this.apiData = data.data.items;
                 });
+        },
+        log(data) {
+            return console.log(data);
         },
     },
 };

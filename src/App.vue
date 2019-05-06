@@ -30,8 +30,8 @@ export default {
         search(searchString) {
             this.searchString = searchString;
         },
-        checkedCategories(checkedCategoriesArray) {
-            this.checkedCategoriesArray = checkedCategoriesArray;
+        checkedCategories(checkedCategories) {
+            this.checkedCategoriesArray = checkedCategories;
         },
     },
 };
