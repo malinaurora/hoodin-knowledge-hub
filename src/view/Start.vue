@@ -45,6 +45,7 @@ export default {
     },
     watch: {
         searchString(searchString) {
+            document.body.scrollTop = 0;
             fetch(
                 `https://interns-test-channel.hoodin.com/api/v2/items?limit=${
                     this.limit
@@ -60,6 +61,7 @@ export default {
             this.offset = 0;
         },
         checkedCategoriesArray(categories) {
+            document.body.scrollTop = 0;
             let categoryString = '';
             categories.forEach(category => {
                 categoryString += `${category},`;
