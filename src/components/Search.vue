@@ -9,11 +9,16 @@ export default {
     data() {
         return {
             search: '',
+            offset: 15,
         };
     },
     methods: {
         sendSearch(string) {
-            this.$emit('search', string);
+            if (string === '') {
+                this.$emit('search', string, this.offset);
+            } else {
+                this.$emit('search', string);
+            }
         },
     },
 };

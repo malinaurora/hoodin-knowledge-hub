@@ -106,27 +106,27 @@ export default {
     },
     methods: {
         /* next image in slider */
-        nextImage(n) {
-            this.imageSlider((this.slideIndex += n));
+        nextImage(next) {
+            this.imageSlider((this.slideIndex += next));
         },
 
         /* if the article contains more than one picture it shows a slider */
-        imageSlider(n) {
+        imageSlider(next) {
             let i;
-            const x = document.getElementsByClassName(`${this.apiData.id}Image`);
-            if (n > x.length) {
+            const imageArray = document.getElementsByClassName(`${this.apiData.id}Image`);
+            if (next > imageArray.length) {
                 this.slideIndex = 1;
             }
-            if (n < 1) {
-                this.slideIndex = x.length;
+            if (next < 1) {
+                this.slideIndex = imageArray.length;
             }
 
-            for (i = 0; i < x.length; i += 1) {
-                x[i].style.display = 'none';
+            for (i = 0; i < imageArray.length; i += 1) {
+                imageArray[i].style.display = 'none';
             }
 
-            if (x[this.slideIndex - 1] !== undefined) {
-                x[this.slideIndex - 1].style.display = 'block';
+            if (imageArray[this.slideIndex - 1] !== undefined) {
+                imageArray[this.slideIndex - 1].style.display = 'block';
             }
         },
         addFavorite() {

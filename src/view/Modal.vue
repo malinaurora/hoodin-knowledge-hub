@@ -1,13 +1,17 @@
 <template>
     <div class="modal">
-        <div class="overlay" @click="$router.go(-1), enableScroll()" />
+        <router-link :to="this.$route.matched[0]">
+            <div class="overlay" @click="enableScroll()" />
+        </router-link>
         <div class="modal_content">
-            <img
-                class="exitBtn"
-                src="/src/assets/icons/baseline-close-24px.svg"
-                alt="closeModal"
-                @click="$router.go(-1), enableScroll()"
-            />
+            <router-link :to="this.$route.matched[0]">
+                <img
+                    class="exitBtn"
+                    src="/src/assets/icons/baseline-close-24px.svg"
+                    alt="closeModal"
+                    @click="enableScroll()"
+                />
+            </router-link>
             <div
                 v-if="modalArticle.imageObjects.images.length > 0 && modalArticle.video === null"
                 class="modalImages"
@@ -74,6 +78,7 @@
                     <a class="modalShare" @click="getShare()">Copy link</a>
                     <a
                         v-if="modalArticle.source_url !== null"
+                        target="_blank"
                         class="modalOrginalArticle"
                         :href="modalArticle.source_url"
                         >View original article</a
@@ -121,25 +126,25 @@ export default {
         close(val) {
             this.show = val;
         },
-        nextImage(n) {
-            this.imageSlider((this.slideIndex += n));
+        nextImage(next) {
+            this.imageSlider((this.slideIndex += next));
         },
-        imageSlider(n) {
+        imageSlider(next) {
             let i;
-            const x = document.getElementsByClassName(`${this.modalArticle.id}modalImage`);
-            if (n > x.length) {
+            const imageArray = document.getElementsByClassName(`${this.modalArticle.id}modalImage`);
+            if (next > imageArray.length) {
                 this.slideIndex = 1;
             }
-            if (n < 1) {
-                this.slideIndex = x.length;
+            if (next < 1) {
+                this.slideIndex = imageArray.length;
             }
 
-            for (i = 0; i < x.length; i += 1) {
-                x[i].style.display = 'none';
+            for (i = 0; i < imageArray.length; i += 1) {
+                imageArray[i].style.display = 'none';
             }
 
-            if (x[this.slideIndex - 1] !== undefined) {
-                x[this.slideIndex - 1].style.display = 'block';
+            if (imageArray[this.slideIndex - 1] !== undefined) {
+                imageArray[this.slideIndex - 1].style.display = 'block';
             }
         },
         enableScroll() {

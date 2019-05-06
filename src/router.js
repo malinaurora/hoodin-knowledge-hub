@@ -14,7 +14,7 @@ export default new Router({
             children: [{ path: ':id', component: Modal, name: 'modalFavorite' }],
         },
         {
-            path: '/',
+            path: '//',
             component: Start,
             children: [{ path: ':id', component: Modal, name: 'modalStart' }],
         },

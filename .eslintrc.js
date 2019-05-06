@@ -22,5 +22,7 @@ module.exports = {
         "no-console": ["error", { "allow": ["warn", "error"] }],
         eqeqeq: ['error', 'smart'],
         "vue/eqeqeq": ['error'],
+        "id-length": ['error', { exceptions: ['i'] }],
+        camelcase: ['error'],
     }
 };
