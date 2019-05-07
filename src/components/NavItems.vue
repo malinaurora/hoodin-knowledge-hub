@@ -30,15 +30,20 @@
             <img v-else :src="searchImg.url" />
             <Search :style="{ display: isActive ? 'block' : 'none' }" @search="search($event)" />
         </li>
-        <li class="animationFix" @click="stayClosed()">
-            <span v-if="isActive" @click="toggle = !toggle">{{ filtersImgAndText.text }}</span>
+        <li @click="stayClosed()">
             <img v-if="!isActive" v-b-tooltip.hover.left="'Filters'" :src="filtersImgAndText.url" />
             <img v-else :src="filtersImgAndText.url" />
-            <FilterCategories
-                v-if="toggle"
-                :style="{ display: isActive ? 'block' : 'none' }"
-                @checkedCategories="checkedCategories($event)"
-            />
+            <span v-if="isActive" class="removeNavLable animationFix" @click="toggle = !toggle">
+                {{ filtersImgAndText.text }}
+                <img v-if="!toggle" class="arrowFix" :src="arrowRight.url" />
+                <img v-else-if="toggle" class="arrowFix" :src="arrowDown.url" />
+            </span>
+            <transition name="slide">
+                <FilterCategories
+                    :style="{ display: isActive && toggle ? 'block' : 'none' }"
+                    @checkedCategories="checkedCategories($event)"
+                />
+            </transition>
         </li>
     </ul>
 </template>
@@ -82,6 +87,12 @@ export default {
                 url: 'src/assets/icons/filter-outline.svg',
                 alt: 'Filters navigation icon',
                 text: 'Categories',
+            },
+            arrowRight: {
+                url: 'src/assets/icons/baseline-keyboard_arrow_right.svg',
+            },
+            arrowDown: {
+                url: 'src/assets/icons/baseline-arrow.svg',
             },
             close: true,
             toggle: false,
@@ -134,8 +145,46 @@ ul {
             }
         }
         span {
-            padding-left: 15px;
-            color: #000000;
+            display: block;
+            cursor: pointer;
+        }
+        .arrowFix {
+            float: right;
+            margin: 4px 20px 0px 0px;
+            width: 26px;
+        }
+        .slide-enter-active {
+            -moz-transition-duration: 0.1s;
+            -webkit-transition-duration: 0.1s;
+            -o-transition-duration: 0.1s;
+            transition-duration: 0.1s;
+            -moz-transition-timing-function: ease-in;
+            -webkit-transition-timing-function: ease-in;
+            -o-transition-timing-function: ease-in;
+            transition-timing-function: ease-in;
+        }
+
+        .slide-leave-active {
+            -moz-transition-duration: 0.1s;
+            -webkit-transition-duration: 0.1s;
+            -o-transition-duration: 0.1s;
+            transition-duration: 0.1s;
+            -moz-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+            -webkit-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+            -o-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+            transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+        }
+
+        .slide-enter-to,
+        .slide-leave {
+            max-height: 100px;
+            overflow: hidden;
+        }
+
+        .slide-enter,
+        .slide-leave-to {
+            overflow: hidden;
+            max-height: 0;
         }
     }
     /* width */
