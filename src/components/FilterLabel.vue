@@ -1,11 +1,10 @@
 <template>
-    <div class="filterLabel">
-        <span>{{ category }}</span>
-        <img
-            src="/src/assets/icons/baseline-close-24px.svg"
-            :alt="'unfilter category ' + category"
-            @click="removeFilter"
-        />
+    <div class="filterLabel" @click="removeFilter">
+        <span class="categoryFilter">{{ category }}</span>
+        <div class="removeFilter">
+            <div class="closeRight" />
+            <div class="closeLeft" />
+        </div>
     </div>
 </template>
 <script>
@@ -25,18 +24,47 @@ export default {
 </script>
 <style lang="scss">
 .filterLabel {
+    padding: 7px 5px 7px 5px;
+    margin: 0 5px 0 5px;
     border: 1px solid black;
     border-radius: 3px;
-    padding: 5px;
-    margin: 0 5px 0 5px;
     cursor: pointer;
-    span {
-        margin: 5px;
+    .categoryFilter {
+        display: inline-block;
+        font-size: 15px;
+        height: 12px;
+        line-height: 12px;
+        margin-right: 5px;
+        margin-left: 5px;
+        font-family: 'Roboto';
     }
-    img {
-        float: right;
-        width: 20px;
-        margin-top: 2px;
+    .removeFilter {
+        display: inline-block;
+        margin-bottom: -2px;
+        margin-right: 5px;
+        height: 15px;
+        width: 15px;
+        position: relative;
+        .closeRight {
+            position: absolute;
+            top: 50%;
+            -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
+            height: 1.5px;
+            background-color: black;
+            width: 15px;
+            transform: rotate(45deg);
+        }
+        .closeLeft {
+            position: absolute;
+            top: 50%;
+            -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
+            height: 1.5px;
+            background-color: black;
+            width: 15px;
+            transform: rotate(135deg);
+        }
     }
 }
 </style>

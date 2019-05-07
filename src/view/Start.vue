@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="row mb-5 mt-4">
+        <div class="row mb-5 mt-3">
             <article v-for="api of apiData" :key="api.id" class="col-lg-4 col-md-6 mt-3 mb-3">
                 <Article
                     :api-data="api"
@@ -11,7 +11,10 @@
             </article>
         </div>
         <router-view />
-        <MoreArticles v-if="apiData.length > 0" @showMore="showMore($event)" />
+        <MoreArticles
+            v-if="apiData.length >= 15 && MoreArticlesToLoad"
+            @showMore="showMore($event)"
+        />
     </div>
 </template>
 
@@ -41,6 +44,7 @@ export default {
             limit: 15,
             offset: 0,
             category: '',
+            MoreArticlesToLoad: true,
         };
     },
     watch: {
@@ -128,7 +132,7 @@ export default {
             });
         },
         showMore() {
-            this.offset += 15;
+            this.offset += this.limit;
             fetch(
                 `https://interns-test-channel.hoodin.com/api/v2/items?offset=${this.offset}&limit=${
                     this.limit
@@ -139,6 +143,9 @@ export default {
                 .then(response => response.json())
                 .then(data => {
                     this.apiData = this.apiData.concat(data.data.items);
+                    if (data.data.items.length < this.limit) {
+                        this.MoreArticlesToLoad = false;
+                    }
                 });
         },
     },

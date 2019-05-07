@@ -35,13 +35,11 @@
             <img v-if="!isActive" v-b-tooltip.hover.left="'Filters'" :src="filtersImgAndText.url" />
             <img v-else :src="filtersImgAndText.url" />
             <FilterCategories
-                v-if="toggle"
-                :style="{ display: isActive ? 'block' : 'none' }"
+                :style="{ display: isActive && toggle ? 'block' : 'none' }"
                 :removed-category="removedCategory"
                 @checkedCategories="checkedCategories($event)"
             />
         </li>
-        <li>heeej</li>
     </ul>
 </template>
 

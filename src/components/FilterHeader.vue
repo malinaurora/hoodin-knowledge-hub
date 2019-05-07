@@ -1,7 +1,7 @@
 <template>
-    <div class="container filter">
+    <div class="container filter mt-4">
         <div class="row">
-            <div v-for="category of checkedCategoriesArray" :key="category.id" class="test">
+            <div v-for="category of checkedCategoriesArray" :key="category.id" class="mt-2">
                 <FilterLabel :category="category" @removeFilter="removeFilter($event)" />
             </div>
         </div>
@@ -29,12 +29,8 @@ export default {
 </script>
 <style lang="scss">
 .filter {
-    .test {
-        margin-left: 15px;
-        transition: opacity 2s linear;
-    }
-    h2 {
-        margin-left: 15px;
+    .row {
+        padding: 0px 15px 0px 15px;
     }
 }
 </style>
