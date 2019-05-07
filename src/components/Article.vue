@@ -184,6 +184,10 @@ export default {
         display: flex;
         flex-direction: column;
         flex: 1;
+        p {
+            height: 100%;
+            white-space: pre-wrap;
+        }
     }
     .video {
         border: none;
