@@ -149,9 +149,6 @@ export default {
                 this.showShareMsg = false;
             }, 4000);
         },
-        close(val) {
-            this.show = val;
-        },
         nextImage(next) {
             this.imageSlider((this.slideIndex += next));
         },
@@ -178,7 +175,6 @@ export default {
         },
         addFavorite() {
             /* send id of favorited articel to parent component */
-            this.$emit('saveArticleId', this.apiData.id);
             this.favorite = true;
             this.showMsg = true;
             setTimeout(() => {
@@ -240,24 +236,7 @@ export default {
     max-width: 40%;
     display: flex;
     flex-direction: column;
-    @media screen and (max-width: 1195px) {
-        max-width: 60%;
-    }
-    @media screen and (max-width: 800px) {
-        max-width: 90%;
-    }
-    @media screen and (max-width: 500px) {
-        footer {
-            a {
-                font-size: 12px;
-                margin: 0 5px 0 0px !important;
-            }
-            p {
-                font-size: 12px;
-                margin: 0 0px 0 5px !important;
-            }
-        }
-    }
+
     .nextImageLeftModal {
         position: absolute;
         left: 0px;
@@ -491,6 +470,64 @@ export default {
         position: absolute;
         right: 3px;
         bottom: -8px;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .modal {
+        .modal_content {
+            max-width: 100%;
+            height: 100%;
+            max-height: 100%;
+            .modalImages {
+                img {
+                    max-height: 40%;
+                    height: 40%;
+                }
+            }
+            footer {
+                a {
+                    font-size: 12px;
+                    margin: 0 5px 0 0px !important;
+                }
+                p {
+                    font-size: 12px;
+                    margin: 0 0px 0 5px !important;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 575.98px) {
+    .modal_content {
+        max-width: 100%;
+        height: 100%;
+        max-height: 100%;
+        .modalImages {
+            img {
+                max-height: 40%;
+                height: 40%;
+            }
+        }
+        footer {
+            a {
+                font-size: 12px;
+                margin: 0 5px 0 0px !important;
+            }
+            p {
+                font-size: 12px;
+                margin: 0 0px 0 5px !important;
+            }
+            .footerInfo {
+                width: 66px;
+            }
+        }
+        .exitBtn {
+            top: 0;
+            right: 2px;
+            width: 30px;
+        }
     }
 }
 </style>
