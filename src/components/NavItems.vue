@@ -30,20 +30,36 @@
             <img v-else :src="searchImg.url" />
             <Search :style="{ display: isActive ? 'block' : 'none' }" @search="search($event)" />
         </li>
+        <li @click="stayClosed()">
+            <span v-if="isActive" @click="toggle = !toggle">{{ filtersImgAndText.text }}</span>
+            <img v-if="!isActive" v-b-tooltip.hover.left="'Filters'" :src="filtersImgAndText.url" />
+            <img v-else :src="filtersImgAndText.url" />
+            <FilterCategories
+                :style="{ display: isActive && toggle ? 'block' : 'none' }"
+                :removed-category="removedCategory"
+                @checkedCategories="checkedCategories($event)"
+            />
+        </li>
     </ul>
 </template>
 
 <script>
 import Search from './Search.vue';
+import FilterCategories from './FilterCategories.vue';
 
 export default {
     // Getting isActive props
     components: {
         Search,
+        FilterCategories,
     },
     props: {
         isActive: {
             type: Boolean,
+        },
+        removedCategory: {
+            type: String,
+            default: '',
         },
     },
     data() {
@@ -62,23 +78,17 @@ export default {
                     alt: 'Favorite navigation icon',
                 },
             ],
-            menuSort: [
-                {
-                    text: 'Search',
-                    url: 'src/assets/icons/baseline-search.svg',
-                    alt: 'Search navigation icon',
-                },
-                {
-                    text: 'Filter',
-                    url: 'src/assets/icons/filter-outline.svg',
-                    alt: 'Filter navigation icon',
-                },
-            ],
             searchImg: {
                 url: 'src/assets/icons/baseline-search.svg',
                 alt: 'Search navigation icon',
             },
+            filtersImgAndText: {
+                url: 'src/assets/icons/filter-outline.svg',
+                alt: 'Filters navigation icon',
+                text: 'Categories',
+            },
             close: true,
+            toggle: false,
         };
     },
     methods: {
@@ -87,6 +97,9 @@ export default {
         },
         search(searchString) {
             this.$emit('search', searchString);
+        },
+        checkedCategories(checkedCategories) {
+            this.$emit('checkedCategories', checkedCategories);
         },
     },
 };
@@ -121,6 +134,31 @@ ul {
                 color: #7b7b7b;
             }
         }
+        span {
+            padding-left: 15px;
+        }
+    }
+    /* width */
+    ::-webkit-scrollbar {
+        width: 5px;
+    }
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: #e6e6e6;
+        border-radius: 5px;
+        -moz-box-shadow: inset 0 -5px 5px -5px #969696, inset 0 5px 5px -5px #969696;
+        -webkit-box-shadow: inset 0 -5px 5px -5px #969696, inset 0 5px 5px -5px #969696;
+        box-shadow: inset 0 -5px 5px -5px #969696, inset 0 5px 5px -5px #969696;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 5px;
+    }
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555;
     }
 }
 </style>

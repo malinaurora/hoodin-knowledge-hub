@@ -1,5 +1,5 @@
 <template>
-    <div class="text-center m-3">
+    <div class="text-center mt-4">
         <img :src="imgSrc" class="rounded logo" alt="logo" />
     </div>
 </template>

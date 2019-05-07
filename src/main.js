@@ -39,5 +39,5 @@ Vue.filter('moment', date => moment(date).fromNow(true));
 new Vue({
     el: '#app',
     router,
-    render: h => h(App),
+    render: html => html(App),
 });

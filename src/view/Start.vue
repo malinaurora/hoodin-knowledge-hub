@@ -1,11 +1,7 @@
 <template>
     <div>
-        <div class="row mb-5 mt-4">
-            <article
-                v-for="api of searchInArticles"
-                :key="api.id"
-                class="col-lg-4 col-md-6 mt-3 mb-3"
-            >
+        <div class="row mb-4 mt-2">
+            <article v-for="api of apiData" :key="api.id" class="col-lg-4 col-md-6 mt-3 mb-3">
                 <Article
                     :api-data="api"
                     modal-route="modalStart"
@@ -15,7 +11,10 @@
             </article>
         </div>
         <router-view />
-        <MoreArticles @showMore="showMore($event)" />
+        <MoreArticles
+            v-if="apiData.length >= 15 && MoreArticlesToLoad"
+            @showMore="showMore($event)"
+        />
     </div>
 </template>
 
@@ -33,48 +32,78 @@ export default {
             type: String,
             default: '',
         },
+        checkedCategoriesArray: {
+            type: Array,
+            default: Array,
+        },
     },
     data() {
         return {
             apiData: [],
             Favorites: [],
             limit: 15,
+            offset: 0,
+            category: '',
+            MoreArticlesToLoad: true,
         };
     },
-    computed: {
-        searchInArticles() {
-            const searchLowerCase = this.searchString.toLowerCase();
-            return this.apiData.filter(
-                api =>
-                    api.title.toLowerCase().match(searchLowerCase) ||
-                    api.author.name.toLowerCase().match(searchLowerCase) ||
-                    api.subtitle.toLowerCase().match(searchLowerCase) ||
-                    api.text.toLowerCase().match(searchLowerCase),
-            );
-        },
-    },
-    mounted() {
-        fetch(
-            `https://interns-test-channel.hoodin.com/api/v2/items?limit=${
-                this.limit
-            }&&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9`,
-        )
-            .then(response => response.json())
-            .then(data => {
-                this.apiData = data.data.items;
-            });
-
-        setInterval(() => {
+    watch: {
+        searchString(searchString) {
+            document.body.scrollTop = 0;
             fetch(
                 `https://interns-test-channel.hoodin.com/api/v2/items?limit=${
                     this.limit
-                }&&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9`,
+                }&searchString=${searchString}&mediaCategories=${
+                    this.category
+                }&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9`,
             )
                 .then(response => response.json())
                 .then(data => {
                     this.apiData = data.data.items;
                 });
-        }, 60000);
+
+            this.offset = 0;
+        },
+        checkedCategoriesArray(categories) {
+            document.body.scrollTop = 0;
+            let categoryString = '';
+            categories.forEach(category => {
+                categoryString += `${category},`;
+            });
+            this.category = categoryString;
+            fetch(
+                `https://interns-test-channel.hoodin.com/api/v2/items?limit=${
+                    this.limit
+                }&searchString=${
+                    this.searchString
+                }&mediaCategories=${categoryString}&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9`,
+            )
+                .then(response => response.json())
+                .then(data => {
+                    this.apiData = data.data.items;
+                });
+
+            this.offset = 0;
+        },
+    },
+    mounted() {
+        document.body.scrollTop = 0;
+        let categoryString = '';
+        this.checkedCategoriesArray.forEach(category => {
+            categoryString += `${category},`;
+        });
+        this.category = categoryString;
+        fetch(
+            `https://interns-test-channel.hoodin.com/api/v2/items?offset=${this.offset}&limit=${
+                this.limit
+            }&searchString=${this.searchString}&mediaCategories=${
+                this.category
+            }&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9`,
+        )
+            .then(response => response.json())
+            .then(data => {
+                this.apiData = data.data.items;
+            });
 
         /* convert local Storage from string to array */
         const data = JSON.parse(localStorage.getItem('id'));
@@ -102,17 +131,21 @@ export default {
                 index += 1;
             });
         },
-        showMore(limit) {
-            this.limit = limit;
-
+        showMore() {
+            this.offset += this.limit;
             fetch(
-                `https://interns-test-channel.hoodin.com/api/v2/items?limit=${
+                `https://interns-test-channel.hoodin.com/api/v2/items?offset=${this.offset}&limit=${
                     this.limit
-                }&&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9`,
+                }&searchString=${this.searchString}&mediaCategories=${
+                    this.category
+                }&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9`,
             )
                 .then(response => response.json())
                 .then(data => {
-                    this.apiData = data.data.items;
+                    this.apiData = this.apiData.concat(data.data.items);
+                    if (data.data.items.length < this.limit) {
+                        this.MoreArticlesToLoad = false;
+                    }
                 });
         },
     },

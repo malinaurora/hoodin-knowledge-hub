@@ -164,13 +164,14 @@ export default {
 <style lang="scss">
 .content {
     height: 500px;
-    box-shadow: 0px 0px 15px gray;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
     transition: 0.2s;
     transform: scale(0.98);
     display: flex;
     flex-direction: column;
     &:hover {
         transform: scale(1);
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
         cursor: pointer;
     }
     .text {
