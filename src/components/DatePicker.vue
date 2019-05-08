@@ -1,12 +1,6 @@
 <template>
     <div class="datePicker">
-        <input
-            id="start"
-            v-model="chosenDate"
-            type="date"
-            :max="maxDate"
-            :on="getDate(chosenDate)"
-        />
+        <input v-model="chosenDate" type="date" :max="maxDate" :on="getDate(chosenDate)" />
     </div>
 </template>
 <script>
@@ -15,7 +9,6 @@ export default {
         return {
             chosenDate: '',
             maxDate: '',
-            test: {},
         };
     },
     mounted() {
