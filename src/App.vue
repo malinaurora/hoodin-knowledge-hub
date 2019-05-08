@@ -4,6 +4,7 @@
             :removed-category="removedCategory"
             @search="search($event)"
             @checkedCategories="checkedCategories($event)"
+            @chosenDate="chosenDate($event)"
         />
         <Header />
         <FilterHeader
@@ -14,6 +15,7 @@
             <router-view
                 :search-string="searchString"
                 :checked-categories-array="checkedCategoriesArray"
+                :unix-timestamp="unixTimestamp"
             />
         </main>
     </div>
@@ -35,6 +37,7 @@ export default {
             searchString: '',
             checkedCategoriesArray: [],
             removedCategory: '',
+            unixTimestamp: '',
         };
     },
     methods: {
@@ -46,6 +49,9 @@ export default {
         },
         removeFilter(category) {
             this.removedCategory = category;
+        },
+        chosenDate(date) {
+            this.unixTimestamp = date;
         },
     },
 };

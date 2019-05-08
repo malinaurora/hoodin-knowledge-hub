@@ -40,18 +40,23 @@
                 @checkedCategories="checkedCategories($event)"
             />
         </li>
+        <li :style="{ display: isActive ? 'block' : 'none' }" @click="stayClosed()">
+            <DatePicker @chosenDate="chosenDate($event)" />
+        </li>
     </ul>
 </template>
 
 <script>
 import Search from './Search.vue';
 import FilterCategories from './FilterCategories.vue';
+import DatePicker from './DatePicker.vue';
 
 export default {
     // Getting isActive props
     components: {
         Search,
         FilterCategories,
+        DatePicker,
     },
     props: {
         isActive: {
@@ -100,6 +105,9 @@ export default {
         },
         checkedCategories(checkedCategories) {
             this.$emit('checkedCategories', checkedCategories);
+        },
+        chosenDate(date) {
+            this.$emit('chosenDate', date);
         },
     },
 };

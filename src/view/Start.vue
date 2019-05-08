@@ -36,6 +36,10 @@ export default {
             type: Array,
             default: Array,
         },
+        unixTimestamp: {
+            type: String,
+            default: '',
+        },
     },
     data() {
         return {
@@ -53,8 +57,8 @@ export default {
             fetch(
                 `https://interns-test-channel.hoodin.com/api/v2/items?limit=${
                     this.limit
-                }&searchString=${searchString}&mediaCategories=${
-                    this.category
+                }&searchString=${searchString}&mediaCategories=${this.category}&ondate=${
+                    this.unixTimestamp
                 }&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9`,
             )
                 .then(response => response.json())
@@ -74,9 +78,25 @@ export default {
             fetch(
                 `https://interns-test-channel.hoodin.com/api/v2/items?limit=${
                     this.limit
-                }&searchString=${
-                    this.searchString
-                }&mediaCategories=${categoryString}&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9`,
+                }&searchString=${this.searchString}&mediaCategories=${categoryString}&ondate=${
+                    this.unixTimestamp
+                }&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9`,
+            )
+                .then(response => response.json())
+                .then(data => {
+                    this.apiData = data.data.items;
+                });
+
+            this.offset = 0;
+        },
+        unixTimestamp(date) {
+            document.body.scrollTop = 0;
+            fetch(
+                `https://interns-test-channel.hoodin.com/api/v2/items?limit=${
+                    this.limit
+                }&searchString=${this.searchString}&mediaCategories=${
+                    this.category
+                }&ondate=${date}&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9`,
             )
                 .then(response => response.json())
                 .then(data => {
@@ -96,8 +116,8 @@ export default {
         fetch(
             `https://interns-test-channel.hoodin.com/api/v2/items?offset=${this.offset}&limit=${
                 this.limit
-            }&searchString=${this.searchString}&mediaCategories=${
-                this.category
+            }&searchString=${this.searchString}&mediaCategories=${this.category}&ondate=${
+                this.unixTimestamp
             }&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9`,
         )
             .then(response => response.json())
@@ -136,8 +156,8 @@ export default {
             fetch(
                 `https://interns-test-channel.hoodin.com/api/v2/items?offset=${this.offset}&limit=${
                     this.limit
-                }&searchString=${this.searchString}&mediaCategories=${
-                    this.category
+                }&searchString=${this.searchString}&mediaCategories=${this.category}&ondate=${
+                    this.unixTimestamp
                 }&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9`,
             )
                 .then(response => response.json())
