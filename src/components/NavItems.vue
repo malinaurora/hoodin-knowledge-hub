@@ -38,12 +38,11 @@
                 <img v-if="!toggle" class="arrowFix" :src="arrowRight.url" />
                 <img v-else-if="toggle" class="arrowFix" :src="arrowDown.url" />
             </span>
-            <transition name="slide">
-                <FilterCategories
-                    :style="{ display: isActive && toggle ? 'block' : 'none' }"
-                    @checkedCategories="checkedCategories($event)"
-                />
-            </transition>
+            <FilterCategories
+                :removed-category="removedCategory"
+                :style="{ display: isActive && toggle ? 'block' : 'none' }"
+                @checkedCategories="checkedCategories($event)"
+            />
         </li>
         <li :style="{ display: isActive ? 'block' : 'none' }" @click="stayClosed()">
             <DatePicker @chosenDate="chosenDate($event)" />
