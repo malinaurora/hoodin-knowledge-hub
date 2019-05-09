@@ -44,8 +44,14 @@
                 @checkedCategories="checkedCategories($event)"
             />
         </li>
-        <li :style="{ display: isActive ? 'block' : 'none' }" @click="stayClosed()">
-            <DatePicker @chosenDate="chosenDate($event)" />
+        <li @click="stayClosed()">
+            <img v-if="!isActive" v-b-tooltip.hover.left="'Date'" :src="date.url" />
+            <img v-else :src="date.url" />
+            <DatePicker
+                :style="{ display: isActive ? 'block' : 'none' }"
+                @click="stayClosed()"
+                @chosenDate="chosenDate($event)"
+            />
         </li>
     </ul>
 </template>
@@ -101,6 +107,9 @@ export default {
             },
             arrowDown: {
                 url: 'src/assets/icons/baseline-arrow.svg',
+            },
+            date: {
+                url: 'src/assets/icons/baseline-calendar_today-24px.svg',
             },
             close: true,
             toggle: false,

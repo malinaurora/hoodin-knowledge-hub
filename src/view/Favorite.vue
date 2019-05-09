@@ -4,6 +4,9 @@
             <h2 v-if="noFavorites === true">
                 No Articles Saved To Favorites!
             </h2>
+            <h2 v-if="apiData.length <= 0">
+                No Articles Found!
+            </h2>
         </header>
         <div class="row mb-5">
             <article v-for="api of apiData" :key="api.id" class="col-lg-4 col-md-6 mt-3 mb-3">
@@ -131,13 +134,16 @@ export default {
 <style lang="scss">
 .favorite {
     header {
-        h1 {
-            text-align: center;
-            font-size: 4em;
-        }
+        position: absolute;
+        text-align: center;
+        top: 50%;
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+        width: 100%;
+        left: 0;
+        z-index: -9;
         h2 {
             text-align: center;
-            margin-top: 35vh;
             font-size: 2em;
             font-weight: 200;
         }

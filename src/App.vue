@@ -1,12 +1,12 @@
 <template>
     <div id="app">
+        <Header />
         <NavBar
             :removed-category="removedCategory"
             @search="search($event)"
             @checkedCategories="checkedCategories($event)"
             @chosenDate="chosenDate($event)"
         />
-        <Header />
         <FilterHeader
             :checked-categories-array="checkedCategoriesArray"
             @removeFilter="removeFilter($event)"

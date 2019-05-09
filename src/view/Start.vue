@@ -1,5 +1,10 @@
 <template>
-    <div>
+    <div class="start">
+        <header>
+            <h2 v-if="apiData.length <= 0">
+                No Articles Found!
+            </h2>
+        </header>
         <div class="row mb-4 mt-2">
             <article v-for="api of apiData" :key="api.id" class="col-lg-4 col-md-6 mt-3 mb-3">
                 <Article
@@ -173,6 +178,23 @@ export default {
 </script>
 
 <style lang="scss">
+.start {
+    header {
+        position: absolute;
+        text-align: center;
+        top: 50%;
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+        width: 100%;
+        left: 0;
+        z-index: -9;
+        h2 {
+            text-align: center;
+            font-size: 2em;
+            font-weight: 200;
+        }
+    }
+}
 article {
     a {
         color: black;

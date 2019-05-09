@@ -28,7 +28,30 @@ export default {
 };
 </script>
 <style lang="scss">
-.datePicker {
-    margin-left: 7.5px;
+.datepicker {
+    width: 250px;
+    input {
+        width: 65%;
+        margin-left: 15px;
+        padding-left: 3px;
+        height: 35px;
+        border: 0.5px solid lightgray;
+        font-size: 18px;
+    }
+}
+::-webkit-inner-spin-button {
+    display: none;
+}
+::-webkit-calendar-picker-indicator {
+    padding: 5px;
+    margin-right: 3px;
+}
+@media (max-width: 767.98px) {
+    .datepicker {
+        width: 100%;
+        input {
+            width: 80%;
+        }
+    }
 }
 </style>
