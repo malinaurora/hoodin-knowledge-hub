@@ -29,11 +29,16 @@ export default {
 </script>
 <style lang="scss">
 .datepicker {
-    width: 250px;
+    background-color: #e6e6e6;
+    -moz-box-shadow: inset 0 -5px 5px -5px #969696, inset 0 5px 5px -5px #969696;
+    -webkit-box-shadow: inset 0 -5px 5px -5px #969696, inset 0 5px 5px -5px #969696;
+    box-shadow: inset 0 -5px 5px -5px #969696, inset 0 5px 5px -5px #969696;
+    overflow: hidden;
+    width: 100%;
     input {
-        width: 65%;
-        margin-left: 15px;
-        padding-left: 3px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        margin-left: 30px;
         height: 35px;
         border: 0.5px solid lightgray;
         font-size: 18px;

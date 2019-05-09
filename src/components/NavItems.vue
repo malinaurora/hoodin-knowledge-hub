@@ -45,10 +45,17 @@
             />
         </li>
         <li @click="stayClosed()">
-            <img v-if="!isActive" v-b-tooltip.hover.left="'Date'" :src="date.url" />
-            <img v-else :src="date.url" />
+            <span
+                v-if="isActive"
+                class="removeNavLable animationFix"
+                @click="toggleDate = !toggleDate"
+            >
+                Date
+                <img v-if="!toggleDate" class="arrowFix" :src="arrowRight.url" />
+                <img v-else-if="toggleDate" class="arrowFix" :src="arrowDown.url" />
+            </span>
             <DatePicker
-                :style="{ display: isActive ? 'block' : 'none' }"
+                :style="{ display: isActive && toggleDate ? 'block' : 'none' }"
                 @click="stayClosed()"
                 @chosenDate="chosenDate($event)"
             />
@@ -108,11 +115,9 @@ export default {
             arrowDown: {
                 url: 'src/assets/icons/baseline-arrow.svg',
             },
-            date: {
-                url: 'src/assets/icons/baseline-calendar_today-24px.svg',
-            },
             close: true,
             toggle: false,
+            toggleDate: false,
         };
     },
     methods: {
