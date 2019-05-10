@@ -21,6 +21,7 @@
                 @close="toggleState($event)"
                 @search="search($event)"
                 @checkedCategories="checkedCategories($event)"
+                @chosenDate="chosenDate($event)"
             />
         </div>
     </nav>
@@ -58,6 +59,9 @@ export default {
         },
         checkedCategories(checkedCategories) {
             this.$emit('checkedCategories', checkedCategories);
+        },
+        chosenDate(date) {
+            this.$emit('chosenDate', date);
         },
     },
 };

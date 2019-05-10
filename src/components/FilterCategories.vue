@@ -63,15 +63,20 @@ export default {
     width: 100%;
     .dropdownItems {
         margin-top: 5px;
-        margin: 5px 0px 0px 25px;
+        margin: 5px 0px 0px 30px;
     }
     input {
         float: right;
-        margin-top: 8px;
-        margin: 8px 35px 0px 0px;
+        margin: 5px 35px 0px 0px;
+        width: 18px;
+        height: 18px;
     }
     label {
         margin-bottom: 0rem;
+        font-size: 18px;
+    }
+    li {
+        color: #000;
     }
 }
 </style>

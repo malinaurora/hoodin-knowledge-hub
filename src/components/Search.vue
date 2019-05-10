@@ -32,6 +32,7 @@ input {
     width: 65%;
     margin-left: 15px;
     padding-left: 3px;
+    height: 35px;
 }
 @media (max-width: 767.98px) {
     div {
