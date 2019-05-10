@@ -87,7 +87,7 @@
                     </div>
                     <a class="modalShare" @click="getShare()">Copy link</a>
                     <a
-                        v-if="modalArticle.source_url !== null"
+                        v-if="modalArticle.source_url !== ''"
                         target="_blank"
                         class="modalOrginalArticle"
                         rel="noopener noreferrer"
