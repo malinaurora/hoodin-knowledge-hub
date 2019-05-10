@@ -12,7 +12,7 @@
         </div>
         <router-view />
         <MoreArticles
-            v-if="apiData.length >= 15 && MoreArticlesToLoad"
+            v-if="apiData.length >= limit && MoreArticlesToLoad"
             @showMore="showMore($event)"
         />
     </div>
