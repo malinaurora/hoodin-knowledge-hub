@@ -40,7 +40,7 @@ export default {
     },
     data() {
         return {
-            apiData: null,
+            apiData: [],
             id: '',
             noFavorites: false,
             limit: 15,

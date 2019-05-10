@@ -7,12 +7,7 @@
         </header>
         <div class="row mb-4 mt-2">
             <article v-for="api of apiData" :key="api.id" class="col-lg-4 col-md-6 mt-3 mb-3">
-                <Article
-                    :api-data="api"
-                    modal-route="modalStart"
-                    @saveArticleId="saveFavorites($event)"
-                    @removeArticleId="removeFavorite($event)"
-                />
+                <Article :api-data="api" modal-route="modalStart" />
             </article>
         </div>
         <router-view />
@@ -49,7 +44,6 @@ export default {
     data() {
         return {
             apiData: [],
-            Favorites: [],
             limit: 15,
             offset: 0,
             category: '',
@@ -129,33 +123,8 @@ export default {
             .then(data => {
                 this.apiData = data.data.items;
             });
-
-        /* convert local Storage from string to array */
-        const data = JSON.parse(localStorage.getItem('id'));
-
-        /* push old favorites to favorites array */
-        data.forEach(id => {
-            this.Favorites.push(id);
-        });
     },
     methods: {
-        saveFavorites(id) {
-            /* push new favorit id to array and saves it localy */
-            this.Favorites.push(id);
-            localStorage.setItem('id', JSON.stringify(this.Favorites));
-        },
-        removeFavorite(removedId) {
-            /* removes the id from start favorites array so it doesn't
-            push same article multiple times */
-            let index = 0;
-
-            this.Favorites.forEach(id => {
-                if (removedId === id) {
-                    this.Favorites.splice(index, 1);
-                }
-                index += 1;
-            });
-        },
         showMore() {
             this.offset += this.limit;
             fetch(

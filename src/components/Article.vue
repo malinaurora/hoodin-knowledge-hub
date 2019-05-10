@@ -130,8 +130,11 @@ export default {
             }
         },
         addFavorite() {
-            /* send id of favorited articel to parent component */
-            this.$emit('saveArticleId', this.apiData.id);
+            /* gets already favorited articles and converts to array add new favorite and saves as string to local storage */
+            const oldFavorites = JSON.parse(localStorage.getItem('id'));
+            oldFavorites.push(this.apiData.id);
+            localStorage.setItem('id', JSON.stringify(oldFavorites));
+
             this.favorite = true;
             this.showMsg = true;
             setTimeout(() => {
@@ -139,7 +142,6 @@ export default {
             }, 4000);
         },
         removeFavorite() {
-            this.$emit('removeArticleId', this.apiData.id);
             /* load all favorited ids */
             const data = JSON.parse(localStorage.getItem('id'));
             let index = 0;
