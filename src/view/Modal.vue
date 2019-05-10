@@ -3,7 +3,7 @@
         <router-link :to="this.$route.matched[0]">
             <div class="overlay" @click="enableScroll()" />
         </router-link>
-        <div class="modal_content">
+        <div v-if="dataLoaded" class="modal_content">
             <router-link :to="this.$route.matched[0]">
                 <img
                     class="exitBtn"
@@ -90,7 +90,6 @@
                         v-if="modalArticle.source_url !== null"
                         target="_blank"
                         class="modalOrginalArticle"
-                        target="_blank"
                         rel="noopener noreferrer"
                         :href="modalArticle.source_url"
                         >View original article</a
@@ -233,7 +232,6 @@ export default {
     left: 50%;
     transform: translate(-50%, -50%);
     max-height: 90%;
-    max-width: 80%;
     background: rgb(255, 255, 255);
     box-sizing: border-box;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.7);
@@ -339,9 +337,6 @@ export default {
             overflow: hidden;
             display: inline-block;
             width: 200px;
-            &:hover {
-                overflow: visible;
-            }
         }
     }
     .footerLinks {
@@ -482,12 +477,21 @@ export default {
     .modal {
         .modal_content {
             max-width: 100%;
-            height: 100%;
+            height: 94%;
             max-height: 100%;
+            margin-top: 20px;
             .modalImages {
                 img {
-                    max-height: 40%;
-                    height: 40%;
+                    width: 100%;
+                }
+            }
+            .modalText {
+                padding-top: 20px;
+                padding-bottom: 0px;
+                padding-left: 15px;
+                padding-right: 15px;
+                h1 {
+                    font-size: 1.5em;
                 }
             }
             footer {
@@ -498,6 +502,9 @@ export default {
                 p {
                     font-size: 12px;
                     margin: 0 0px 0 5px !important;
+                }
+                .modalAuthor {
+                    width: 150px;
                 }
             }
         }
@@ -533,6 +540,12 @@ export default {
             right: 2px;
             width: 30px;
         }
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .modal_content {
+        max-width: 80%;
     }
 }
 </style>
