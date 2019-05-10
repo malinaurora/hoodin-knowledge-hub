@@ -127,9 +127,6 @@ export default {
                 this.dataLoaded = true;
             });
         this.imageSlider(this.slideIndex);
-        document.getElementsByTagName('body')[0].style.overflow = 'hidden';
-    },
-    mounted() {
         const data = JSON.parse(localStorage.getItem('id'));
 
         data.forEach(favorit => {
@@ -137,6 +134,7 @@ export default {
                 this.favorite = true;
             }
         });
+        document.getElementsByTagName('body')[0].style.overflow = 'hidden';
     },
     methods: {
         getShare() {
@@ -179,6 +177,9 @@ export default {
         },
         addFavorite() {
             /* send id of favorited articel to parent component */
+            const oldFavorites = JSON.parse(localStorage.getItem('id'));
+            oldFavorites.push(this.modalArticle.id);
+            localStorage.setItem('id', JSON.stringify(oldFavorites));
             this.favorite = true;
             this.showMsg = true;
             setTimeout(() => {
@@ -193,7 +194,7 @@ export default {
 
             /* find the id of the removed aricle and remove it from local storage */
             data.forEach(unFavorite => {
-                if (unFavorite === this.apiData.id) {
+                if (unFavorite === this.modalArticle.id) {
                     data.splice(index, 1);
                 }
                 index += 1;

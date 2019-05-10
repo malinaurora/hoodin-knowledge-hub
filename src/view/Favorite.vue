@@ -126,7 +126,6 @@ export default {
             .then(response => response.json())
             .then(post => {
                 this.apiData = post.data.items;
-                this.modalArticle = post.data.item;
             });
     },
 };
