@@ -8,7 +8,7 @@
                 No Articles Found!
             </h2>
         </header>
-        <div class="row mb-5">
+        <div v-if="id" class="row mb-5">
             <article v-for="api of apiData" :key="api.id" class="col-lg-4 col-md-6 mt-3 mb-3">
                 <Article :api-data="api" modal-route="modalFavorite" />
             </article>
