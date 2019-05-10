@@ -1,36 +1,71 @@
 <template>
-  <div id="app">
-    <Header />
-    <NavBar />
-    <main class="container">
-      <router-view />
-    </main>
-  </div>
+    <div id="app">
+        <Header />
+        <NavBar
+            :removed-category="removedCategory"
+            @search="search($event)"
+            @checkedCategories="checkedCategories($event)"
+            @chosenDate="chosenDate($event)"
+        />
+        <FilterHeader
+            :checked-categories-array="checkedCategoriesArray"
+            @removeFilter="removeFilter($event)"
+        />
+        <main class="container">
+            <router-view
+                :search-string="searchString"
+                :checked-categories-array="checkedCategoriesArray"
+                :unix-timestamp="unixTimestamp"
+            />
+        </main>
+    </div>
 </template>
 
 <script>
 import Header from './components/Header.vue';
 import NavBar from './components/NavBar.vue';
-
+import FilterHeader from './components/FilterHeader.vue';
 
 export default {
     components: {
         Header,
         NavBar,
+        FilterHeader,
+    },
+    data() {
+        return {
+            searchString: '',
+            checkedCategoriesArray: [],
+            removedCategory: '',
+            unixTimestamp: '',
+        };
+    },
+    methods: {
+        search(searchString) {
+            this.searchString = searchString;
+        },
+        checkedCategories(checkedCategories) {
+            this.checkedCategoriesArray = checkedCategories;
+        },
+        removeFilter(category) {
+            this.removedCategory = category;
+        },
+        chosenDate(date) {
+            this.unixTimestamp = date;
+        },
     },
 };
-
 </script>
 
 <style lang="scss">
-@import url("https://fonts.googleapis.com/css?family=Montserrat|Roboto+Slab:300,400");
+@import url('https://fonts.googleapis.com/css?family=Montserrat|Roboto+Slab|Roboto:300,400');
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-    font-family: "Montserrat";
+    font-family: 'Montserrat';
     font-style: normal;
     font-weight: bold;
     line-height: normal;
@@ -54,17 +89,17 @@ h5 {
 h6 {
     font-size: 0.7em;
 }
-nav{
-    font-family: "Roboto Slab";
+nav {
+    font-family: 'Roboto Slab';
     font-size: 1.3em;
 }
 p {
-    font-family: "Roboto Slab";
+    font-family: 'Roboto Slab';
     line-height: 25px;
     font-weight: 100;
 }
-b{
-    font-family: "Roboto Slab";
+b {
+    font-family: 'Roboto Slab';
     line-height: 25px;
 }
 
@@ -72,5 +107,4 @@ footer {
     font-weight: normal;
     line-height: normal;
 }
-
 </style>
