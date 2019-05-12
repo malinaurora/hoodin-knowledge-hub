@@ -45,6 +45,18 @@
             />
         </li>
         <li @click="stayClosed()">
+            <span v-if="isActive" class="removeNavLable animationFix" @click="toggle = !toggle">
+                Sources
+                <img v-if="!toggle" class="arrowFix" :src="arrowRight.url" />
+                <img v-else-if="toggle" class="arrowFix" :src="arrowDown.url" />
+            </span>
+            <FilterSources
+                :removed-source="removedSource"
+                :style="{ display: isActive && toggle ? 'block' : 'none' }"
+                @checkedSources="checkedSources($event)"
+            />
+        </li>
+        <li @click="stayClosed()">
             <span
                 v-if="isActive"
                 class="removeNavLable animationFix"
@@ -66,6 +78,7 @@
 <script>
 import Search from './Search.vue';
 import FilterCategories from './FilterCategories.vue';
+import FilterSources from './FilterSources.vue';
 import DatePicker from './DatePicker.vue';
 
 export default {
@@ -73,6 +86,7 @@ export default {
     components: {
         Search,
         FilterCategories,
+        FilterSources,
         DatePicker,
     },
     props: {
@@ -80,6 +94,10 @@ export default {
             type: Boolean,
         },
         removedCategory: {
+            type: String,
+            default: '',
+        },
+        removedSource: {
             type: String,
             default: '',
         },
@@ -109,6 +127,9 @@ export default {
                 alt: 'Filters navigation icon',
                 text: 'Categories',
             },
+            filterSourceText: {
+                text: 'Sources',
+            },
             arrowRight: {
                 url: 'src/assets/icons/baseline-keyboard_arrow_right.svg',
             },
@@ -129,6 +150,9 @@ export default {
         },
         checkedCategories(checkedCategories) {
             this.$emit('checkedCategories', checkedCategories);
+        },
+        checkedSources(checkedSources) {
+            this.$emit('checkedSources', checkedSources);
         },
         chosenDate(date) {
             this.$emit('chosenDate', date);

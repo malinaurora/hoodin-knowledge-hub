@@ -3,8 +3,10 @@
         <Header />
         <NavBar
             :removed-category="removedCategory"
+            :removed-source="removedSource"
             @search="search($event)"
             @checkedCategories="checkedCategories($event)"
+            @checkedSources="checkedSources($event)"
             @chosenDate="chosenDate($event)"
         />
         <FilterHeader
@@ -36,7 +38,9 @@ export default {
         return {
             searchString: '',
             checkedCategoriesArray: [],
+            checkedSourcesArray: [],
             removedCategory: '',
+            removedSource: '',
             unixTimestamp: '',
         };
     },
@@ -46,6 +50,9 @@ export default {
         },
         checkedCategories(checkedCategories) {
             this.checkedCategoriesArray = checkedCategories;
+        },
+        checkedSources(checkedSources) {
+            this.checkedSouresArray = checkedSources;
         },
         removeFilter(category) {
             this.removedCategory = category;
