@@ -77,10 +77,9 @@ export default {
 }
 nav {
     float: left;
-    height: 90%;
-    bottom: 0;
-    top: 0;
+    height: 80%;
     width: 50px;
+    top: 0;
     .sidebar {
         top: 0;
         background-color: #f6f6f6;

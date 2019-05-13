@@ -17,7 +17,7 @@ export default {
     },
     data() {
         return {
-            sourcesArray: ['User', 'Scraper', 'Facebook', 'Twitter', 'Instagram', 'Youtube'],
+            sourcesArray: ['User', 'RSS', 'Facebook', 'Twitter', 'Instagram', 'Youtube'],
             apiSources: [],
             checkedSources: [],
         };
