@@ -107,7 +107,6 @@ export default {
         },
         checkedSourcesArray(sources) {
             document.body.scrollTop = 0;
-            const categoryString = '';
             let sourceString = '';
             sources.forEach(source => {
                 sourceString += `${source.toLowerCase()},`;

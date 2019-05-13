@@ -10,7 +10,7 @@
 <script>
 export default {
     props: {
-        removedSource: {
+        removedFilter: {
             type: String,
             default: '',
         },
@@ -26,10 +26,10 @@ export default {
         checkedSources() {
             this.$emit('checkedSources', this.checkedSources);
         },
-        removedSource(removedSource) {
+        removedFilter(removedFilter) {
             let index = 0;
             this.checkedSources.forEach(source => {
-                if (source === removedSource) {
+                if (source === removedFilter) {
                     this.checkedSources.splice(index, 1);
                 }
                 index += 1;

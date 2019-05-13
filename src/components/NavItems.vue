@@ -39,7 +39,7 @@
                 <img v-else-if="toggle" class="arrowFix" :src="arrowDown.url" />
             </span>
             <FilterCategories
-                :removed-category="removedCategory"
+                :removed-filter="removedFilter"
                 :style="{ display: isActive && toggle ? 'block' : 'none' }"
                 @checkedCategories="checkedCategories($event)"
             />
@@ -55,7 +55,7 @@
                 <img v-else-if="toggleSources" class="arrowFix" :src="arrowDown.url" />
             </span>
             <FilterSources
-                :removed-source="removedSource"
+                :removed-filter="removedFilter"
                 :style="{ display: isActive && toggleSources ? 'block' : 'none' }"
                 @checkedSources="checkedSources($event)"
             />
@@ -97,11 +97,7 @@ export default {
         isActive: {
             type: Boolean,
         },
-        removedCategory: {
-            type: String,
-            default: '',
-        },
-        removedSource: {
+        removedFilter: {
             type: String,
             default: '',
         },

@@ -2,7 +2,7 @@
     <div id="app">
         <Header />
         <NavBar
-            :removed-category="removedCategory"
+            :removed-filter="removedFilter"
             :removed-source="removedSource"
             @search="search($event)"
             @checkedCategories="checkedCategories($event)"
@@ -11,6 +11,7 @@
         />
         <FilterHeader
             :checked-categories-array="checkedCategoriesArray"
+            :checked-sources-array="checkedSourcesArray"
             @removeFilter="removeFilter($event)"
         />
         <main class="container">
@@ -40,7 +41,7 @@ export default {
             searchString: '',
             checkedCategoriesArray: [],
             checkedSourcesArray: [],
-            removedCategory: '',
+            removedFilter: '',
             removedSource: '',
             unixTimestamp: '',
         };
@@ -60,8 +61,8 @@ export default {
         checkedSources(checkedSources) {
             this.checkedSourcesArray = checkedSources;
         },
-        removeFilter(category) {
-            this.removedCategory = category;
+        removeFilter(filter) {
+            this.removedFilter = filter;
         },
         chosenDate(date) {
             this.unixTimestamp = date;
