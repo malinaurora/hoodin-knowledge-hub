@@ -40,6 +40,11 @@ export default {
             unixTimestamp: '',
         };
     },
+    created() {
+        if (localStorage.id === undefined) {
+            localStorage.id = '[]';
+        }
+    },
     methods: {
         search(searchString) {
             this.searchString = searchString;
