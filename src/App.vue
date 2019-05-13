@@ -17,6 +17,7 @@
             <router-view
                 :search-string="searchString"
                 :checked-categories-array="checkedCategoriesArray"
+                :checked-sources-array="checkedSourcesArray"
                 :unix-timestamp="unixTimestamp"
             />
         </main>
@@ -52,7 +53,7 @@ export default {
             this.checkedCategoriesArray = checkedCategories;
         },
         checkedSources(checkedSources) {
-            this.checkedSouresArray = checkedSources;
+            this.checkedSourcesArray = checkedSources;
         },
         removeFilter(category) {
             this.removedCategory = category;
