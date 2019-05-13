@@ -7,10 +7,17 @@
         </header>
         <div class="row mb-4 mt-2">
             <article v-for="api of apiData" :key="api.id" class="col-lg-4 col-md-6 mt-3 mb-3">
-                <Article :api-data="api" modal-route="modalStart" />
+                <Article
+                    :api-data="api"
+                    modal-route="modalStart"
+                    :favorite-in-modal="favoriteInModal"
+                />
             </article>
         </div>
-        <router-view />
+        <router-view
+            @favoriteAddedInModal="favoriteAddedInModal($event)"
+            @favoriteRemovedInModal="favoriteRemovedInModal($event)"
+        />
         <MoreArticles
             v-if="apiData.length >= limit && MoreArticlesToLoad"
             @showMore="showMore($event)"
@@ -48,6 +55,7 @@ export default {
             offset: 0,
             category: '',
             MoreArticlesToLoad: true,
+            favoriteInModal: '',
         };
     },
     watch: {
@@ -141,6 +149,12 @@ export default {
                         this.MoreArticlesToLoad = false;
                     }
                 });
+        },
+        favoriteAddedInModal(id) {
+            this.favoriteInModal = `add ${id}`;
+        },
+        favoriteRemovedInModal(id) {
+            this.favoriteInModal = `rem ${id}`;
         },
     },
 };

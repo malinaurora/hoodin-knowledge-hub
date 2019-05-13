@@ -82,6 +82,10 @@ export default {
             type: String,
             default: 'modalStart',
         },
+        favoriteInModal: {
+            type: String,
+            default: '',
+        },
     },
     data() {
         return {
@@ -90,6 +94,14 @@ export default {
             showMsg: false,
             time: '',
         };
+    },
+    watch: {
+        favoriteInModal(idString) {
+            const id = idString.substr(4);
+            if (id === this.apiData.id) {
+                this.favorite = !this.favorite;
+            }
+        },
     },
     mounted() {
         this.imageSlider(this.slideIndex);
