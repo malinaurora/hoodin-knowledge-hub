@@ -48,6 +48,22 @@
             <span
                 v-if="isActive"
                 class="removeNavLable animationFix"
+                @click="toggleSources = !toggleSources"
+            >
+                Sources
+                <img v-if="!toggleSources" class="arrowFix" :src="arrowRight.url" />
+                <img v-else-if="toggleSources" class="arrowFix" :src="arrowDown.url" />
+            </span>
+            <FilterSources
+                :removed-source="removedSource"
+                :style="{ display: isActive && toggleSources ? 'block' : 'none' }"
+                @checkedSources="checkedSources($event)"
+            />
+        </li>
+        <li @click="stayClosed()">
+            <span
+                v-if="isActive"
+                class="removeNavLable animationFix"
                 @click="toggleDate = !toggleDate"
             >
                 Date
@@ -66,6 +82,7 @@
 <script>
 import Search from './Search.vue';
 import FilterCategories from './FilterCategories.vue';
+import FilterSources from './FilterSources.vue';
 import DatePicker from './DatePicker.vue';
 
 export default {
@@ -73,6 +90,7 @@ export default {
     components: {
         Search,
         FilterCategories,
+        FilterSources,
         DatePicker,
     },
     props: {
@@ -80,6 +98,10 @@ export default {
             type: Boolean,
         },
         removedCategory: {
+            type: String,
+            default: '',
+        },
+        removedSource: {
             type: String,
             default: '',
         },
@@ -109,6 +131,9 @@ export default {
                 alt: 'Filters navigation icon',
                 text: 'Categories',
             },
+            filterSourceText: {
+                text: 'Sources',
+            },
             arrowRight: {
                 url: 'src/assets/icons/baseline-keyboard_arrow_right.svg',
             },
@@ -118,6 +143,7 @@ export default {
             close: true,
             toggle: false,
             toggleDate: false,
+            toggleSources: false,
         };
     },
     methods: {
@@ -129,6 +155,9 @@ export default {
         },
         checkedCategories(checkedCategories) {
             this.$emit('checkedCategories', checkedCategories);
+        },
+        checkedSources(checkedSources) {
+            this.$emit('checkedSources', checkedSources);
         },
         chosenDate(date) {
             this.$emit('chosenDate', date);

@@ -17,10 +17,12 @@
             <!-- Getting NavItems from component NavItems and sending isActive to NavItems-->
             <NavItems
                 :removed-category="removedCategory"
+                :removed-source="removedSource"
                 :is-active="isActive"
                 @close="toggleState($event)"
                 @search="search($event)"
                 @checkedCategories="checkedCategories($event)"
+                @checkedSources="checkedSources($event)"
                 @chosenDate="chosenDate($event)"
             />
         </div>
@@ -37,6 +39,10 @@ export default {
     },
     props: {
         removedCategory: {
+            type: String,
+            default: '',
+        },
+        removedSource: {
             type: String,
             default: '',
         },
@@ -59,6 +65,9 @@ export default {
         },
         checkedCategories(checkedCategories) {
             this.$emit('checkedCategories', checkedCategories);
+        },
+        checkedSources(checkedSources) {
+            this.$emit('checkedSources', checkedSources);
         },
         chosenDate(date) {
             this.$emit('chosenDate', date);
