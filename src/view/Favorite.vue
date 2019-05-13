@@ -124,7 +124,6 @@ export default {
             categoryString += `${category},`;
         });
         this.category = categoryString;
-        console.log(this);
         fetch(
             `https://interns-test-channel.hoodin.com/api/v2/items?ids=${this.id}&limit=${
                 this.limit
