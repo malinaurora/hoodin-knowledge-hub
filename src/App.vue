@@ -1,11 +1,12 @@
 <template>
     <div id="app">
+        <Header />
         <NavBar
             :removed-category="removedCategory"
             @search="search($event)"
             @checkedCategories="checkedCategories($event)"
+            @chosenDate="chosenDate($event)"
         />
-        <Header />
         <FilterHeader
             :checked-categories-array="checkedCategoriesArray"
             @removeFilter="removeFilter($event)"
@@ -14,6 +15,7 @@
             <router-view
                 :search-string="searchString"
                 :checked-categories-array="checkedCategoriesArray"
+                :unix-timestamp="unixTimestamp"
             />
         </main>
     </div>
@@ -35,7 +37,13 @@ export default {
             searchString: '',
             checkedCategoriesArray: [],
             removedCategory: '',
+            unixTimestamp: '',
         };
+    },
+    created() {
+        if (localStorage.id === undefined) {
+            localStorage.id = '[]';
+        }
     },
     methods: {
         search(searchString) {
@@ -46,6 +54,9 @@ export default {
         },
         removeFilter(category) {
             this.removedCategory = category;
+        },
+        chosenDate(date) {
+            this.unixTimestamp = date;
         },
     },
 };
