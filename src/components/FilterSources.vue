@@ -1,7 +1,7 @@
 <template>
     <div class="dropdown">
         <li v-for="source in sourcesArray" :key="source.id" class="dropdownItems">
-            <input :id="source.id" v-model="checkedSources" type="checkbox" />
+            <input :id="source.id" v-model="checkedSources" :value="source" type="checkbox" />
             <label :for="source.id">{{ source }}</label>
         </li>
     </div>
@@ -17,7 +17,7 @@ export default {
     },
     data() {
         return {
-            sourcesArray: ['user', 'scraper', 'Facebook', 'twitter', 'instagram', 'youtube'],
+            sourcesArray: ['User', 'Scraper', 'Facebook', 'Twitter', 'Instagram', 'Youtube'],
             apiSources: [],
             checkedSources: [],
         };

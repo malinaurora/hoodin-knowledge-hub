@@ -45,14 +45,18 @@
             />
         </li>
         <li @click="stayClosed()">
-            <span v-if="isActive" class="removeNavLable animationFix" @click="toggle = !toggle">
+            <span
+                v-if="isActive"
+                class="removeNavLable animationFix"
+                @click="toggleSources = !toggleSources"
+            >
                 Sources
-                <img v-if="!toggle" class="arrowFix" :src="arrowRight.url" />
-                <img v-else-if="toggle" class="arrowFix" :src="arrowDown.url" />
+                <img v-if="!toggleSources" class="arrowFix" :src="arrowRight.url" />
+                <img v-else-if="toggleSources" class="arrowFix" :src="arrowDown.url" />
             </span>
             <FilterSources
                 :removed-source="removedSource"
-                :style="{ display: isActive && toggle ? 'block' : 'none' }"
+                :style="{ display: isActive && toggleSources ? 'block' : 'none' }"
                 @checkedSources="checkedSources($event)"
             />
         </li>
@@ -139,6 +143,7 @@ export default {
             close: true,
             toggle: false,
             toggleDate: false,
+            toggleSources: false,
         };
     },
     methods: {
