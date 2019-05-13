@@ -199,6 +199,7 @@ export default {
         height: 45%;
         position: relative;
         img {
+            object-fit: cover;
             height: 100%;
             width: 100%;
         }
