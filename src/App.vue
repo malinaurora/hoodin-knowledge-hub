@@ -2,6 +2,7 @@
     <div id="app">
         <Header />
         <NavBar
+            v-if="showNavbar"
             :removed-category="removedCategory"
             @search="search($event)"
             @checkedCategories="checkedCategories($event)"
@@ -16,6 +17,8 @@
                 :search-string="searchString"
                 :checked-categories-array="checkedCategoriesArray"
                 :unix-timestamp="unixTimestamp"
+                @hideNavbar="hideNavbar($event)"
+                @showNavbar="showNavbar($event)"
             />
         </main>
     </div>
@@ -38,9 +41,13 @@ export default {
             checkedCategoriesArray: [],
             removedCategory: '',
             unixTimestamp: '',
+            showNavbar: true,
         };
     },
     methods: {
+        hide(toggleNavbar) {
+            this.showNavbar = toggleNavbar;
+        },
         search(searchString) {
             this.searchString = searchString;
         },
@@ -52,6 +59,9 @@ export default {
         },
         chosenDate(date) {
             this.unixTimestamp = date;
+        },
+        hideNavbar(hide) {
+            this.showNavbar = hide;
         },
     },
 };

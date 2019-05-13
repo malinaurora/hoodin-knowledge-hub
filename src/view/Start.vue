@@ -1,16 +1,14 @@
 <template>
     <div class="start">
         <header>
-            <h2 v-if="apiData.length <= 0">
-                No Articles Found!
-            </h2>
+            <h2 v-if="apiData.length <= 0">No Articles Found!</h2>
         </header>
         <div class="row mb-4 mt-2">
             <article v-for="api of apiData" :key="api.id" class="col-lg-4 col-md-6 mt-3 mb-3">
                 <Article :api-data="api" modal-route="modalStart" />
             </article>
         </div>
-        <router-view />
+        <router-view @toggleNav="toggleNav($event)" />
         <MoreArticles
             v-if="apiData.length >= limit && MoreArticlesToLoad"
             @showMore="showMore($event)"
@@ -141,6 +139,11 @@ export default {
                         this.MoreArticlesToLoad = false;
                     }
                 });
+        },
+        toggleNav(hide) {
+            if (window.innerWidth < 575.98) {
+                this.$emit('hideNavbar', hide);
+            }
         },
     },
 };

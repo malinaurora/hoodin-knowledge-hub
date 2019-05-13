@@ -135,6 +135,7 @@ export default {
             }
         });
         document.getElementsByTagName('body')[0].style.overflow = 'hidden';
+        this.$emit('toggleNav', false);
     },
     methods: {
         getShare() {
@@ -174,6 +175,7 @@ export default {
         },
         enableScroll() {
             document.getElementsByTagName('body')[0].style.overflow = 'auto';
+            this.$emit('toggleNav', true);
         },
         addFavorite() {
             /* send id of favorited articel to parent component */
@@ -478,9 +480,8 @@ export default {
     .modal {
         .modal_content {
             max-width: 100%;
-            height: 94%;
+            height: 100%;
             max-height: 100%;
-            margin-top: 20px;
             .modalImages {
                 img {
                     width: 100%;
@@ -514,13 +515,13 @@ export default {
 
 @media only screen and (max-width: 575.98px) {
     .modal_content {
+        overflow: auto;
         max-width: 100%;
         height: 100%;
         max-height: 100%;
         .modalImages {
             img {
-                max-height: 40%;
-                height: 40%;
+                width: 100%;
             }
         }
         footer {
@@ -541,12 +542,6 @@ export default {
             right: 2px;
             width: 30px;
         }
-    }
-}
-
-@media only screen and (max-width: 768px) {
-    .modal_content {
-        max-width: 80%;
     }
 }
 </style>
