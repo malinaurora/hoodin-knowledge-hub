@@ -15,7 +15,7 @@
             <router-view />
         </div>
         <MoreArticles
-            v-if="apiData.length >= limit && MoreArticlesToLoad"
+            v-if="apiData.length >= limit && MoreArticlesToLoad && id"
             @showMore="showMore($event)"
         />
     </div>
@@ -124,6 +124,7 @@ export default {
             categoryString += `${category},`;
         });
         this.category = categoryString;
+        console.log(this);
         fetch(
             `https://interns-test-channel.hoodin.com/api/v2/items?ids=${this.id}&limit=${
                 this.limit
