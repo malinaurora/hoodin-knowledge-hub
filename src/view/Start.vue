@@ -116,7 +116,7 @@ export default {
             fetch(
                 `https://interns-test-channel.hoodin.com/api/v2/items?limit=${
                     this.limit
-                }&searchString=${this.searchString}&mediaCategories=${categoryString}&ondate=${
+                }&searchString=${this.searchString}&mediaCategories=${this.category}&ondate=${
                     this.unixTimestamp
                 }&sources=${
                     this.source
