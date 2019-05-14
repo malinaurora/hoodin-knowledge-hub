@@ -1,37 +1,31 @@
 <template>
-  <nav
-    :class="{toggleSidebar:isActive}"
-  >
-    <div
-      class="responsiveMenu"
-      :class="{removeResponsiveMenu:isActive}"
-      @click="toggleState"
-    >
-      <div />
-      <div />
-      <div />
-    </div>
+    <nav :class="{ toggleSidebar: isActive }">
+        <div
+            class="responsiveMenu"
+            :class="{ removeResponsiveMenu: isActive }"
+            @click="toggleState"
+        >
+            <div />
+            <div />
+            <div />
+        </div>
 
-    <!-- When clicking the sidebar it will make the isActive true
+        <!-- When clicking the sidebar it will make the isActive true
      and change the DOM element class to toggled -->
-    <div
-      class="sidebar"
-      :class="{toggleSidebar:isActive}"
-      @click="toggleState"
-    >
-      <img
-        v-if="isActive"
-        class="closeNavBarImage"
-        :src="closeImg"
-        @click="!toggleState"
-      >
-      <!-- Getting NavItems from component NavItems and sending isActive to NavItems-->
-      <NavItems
-        :is-active="isActive"
-        @close="toggleState($event)"
-      />
-    </div>
-  </nav>
+        <div class="sidebar" :class="{ toggleSidebar: isActive }" @click="toggleState">
+            <img v-if="isActive" class="closeNavBarImage" :src="closeImg" @click="!toggleState" />
+            <!-- Getting NavItems from component NavItems and sending isActive to NavItems-->
+            <NavItems
+                :removed-filter="removedFilter"
+                :is-active="isActive"
+                @close="toggleState($event)"
+                @search="search($event)"
+                @checkedCategories="checkedCategories($event)"
+                @checkedSources="checkedSources($event)"
+                @chosenDate="chosenDate($event)"
+            />
+        </div>
+    </nav>
 </template>
 
 <script>
@@ -41,6 +35,12 @@ export default {
     name: 'NavBar',
     components: {
         NavItems,
+    },
+    props: {
+        removedFilter: {
+            type: String,
+            default: '',
+        },
     },
     data() {
         return {
@@ -55,79 +55,90 @@ export default {
                 this.isActive = !this.isActive;
             }
         },
+        search(searchString) {
+            this.$emit('search', searchString);
+        },
+        checkedCategories(checkedCategories) {
+            this.$emit('checkedCategories', checkedCategories);
+        },
+        checkedSources(checkedSources) {
+            this.$emit('checkedSources', checkedSources);
+        },
+        chosenDate(date) {
+            this.$emit('chosenDate', date);
+        },
     },
 };
 </script>
 
 <style lang="scss">
-    .toggleSidebar{
-        width:250px;
-    }
-    nav{
-        float:left;
-        height: 90%;
-        bottom:0;
-        top:0;
+.toggleSidebar {
+    width: 250px;
+}
+nav {
+    float: left;
+    height: 80%;
+    width: 50px;
+    top: 0;
+    .sidebar {
+        top: 0;
+        background-color: #f6f6f6;
+        box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.25);
+        bottom: 0;
         width: 50px;
-        .sidebar{
-            top:0;
-            background-color: #F6F6F6;
-            box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.25);
-            bottom:0;
-            width: 50px;
-            position: fixed;
-            transition: .4s;
+        position: fixed;
+        transition: 0.4s;
+    }
+    .toggleSidebar {
+        width: 250px;
+    }
+    .closeNavBarImage {
+        float: right;
+        margin: 5px 2px 0px 0px;
+        width: 35px;
+        cursor: pointer;
+    }
+    .responsiveMenu {
+        display: none;
+    }
+}
+@media (max-width: 767.98px) {
+    .toggleSidebar {
+        width: 100vw;
+        height: 100vh;
+    }
+    nav {
+        position: fixed;
+        width: 100vw;
+        height: 40px;
+        z-index: 9999999;
+        background-color: #f6f6f6;
+        box-shadow: 2px 2px #f6f6f6;
+        .sidebar {
+            width: 0px;
+            transition: none;
         }
-        .toggleSidebar{
-            width:250px;
+        .toggleSidebar {
+            width: 100vw;
         }
-        .closeNavBarImage{
-            float: right;
-            margin: 5px 2px 0px 0px;
-            width: 35px;
-            cursor: pointer;
+        .responsiveMenu {
+            display: block;
+            margin: 5px;
+            div {
+                width: 35px;
+                height: 4px;
+                border-radius: 3px;
+                background-color: #000;
+                margin: 6px 0;
+            }
         }
-        .responsiveMenu{
-            display:none;
+        .removeResponsiveMenu {
+            display: none;
+        }
+        .closeNavBarImage {
+            width: 45px;
+            margin: 0px;
         }
     }
-    @media (max-width: 767.98px) {
-        .toggleSidebar{
-            width: 100vw;
-            height: 100vh;
-        }
-        nav{
-            position: fixed;
-            width: 100vw;
-            height: 40px;
-            z-index: 9999999;
-            background-color: #F6F6F6;
-            box-shadow: 2px 2px #F6F6F6;
-            .sidebar{
-                width: 0px;
-                transition: none;
-            }
-              .toggleSidebar{
-                width: 100vw;
-            }
-            .responsiveMenu{
-                display:block;
-                margin: 5px;
-                div{
-                    width: 35px;
-                    height: 4px;
-                    border-radius: 3px;
-                    background-color: #000;
-                    margin: 6px 0;
-                }
-            }
-            .removeResponsiveMenu{
-                display:none;
-            }
-            .closeNavBarImage{
-                width: 45px;
-                margin: 0px;
-            }
-        }
-    }
+}
 </style>

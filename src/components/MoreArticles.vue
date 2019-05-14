@@ -1,38 +1,20 @@
-
 <template>
-  <div class="text-center col-md-12 m-3 mt-5">
-    <a
-      class="load-more-btn btn"
-      role="button"
-      aria-disabled="true"
-      @click="loadData"
-    >
-      <img
-        class="icon"
-        src="/src/assets/icons/baseline-arrow.svg"
-        alt="load more"
-      >
-    </a>
-  </div>
+    <div class="text-center col-12 mb-4">
+        <a class="load-more-btn btn" role="button" aria-disabled="true" @click="loadData">
+            <img class="icon" src="/src/assets/icons/baseline-arrow.svg" alt="load more" />
+        </a>
+    </div>
 </template>
-
 
 <script>
 export default {
-    data() {
-        return {
-            limit: 15,
-        };
-    },
     methods: {
         loadData() {
-            this.limit += 15;
-            this.$emit('showMore', this.limit);
+            this.$emit('showMore');
         },
     },
 };
 </script>
-
 
 <style lang="scss">
 .load-more-btn {

@@ -11,16 +11,12 @@ export default new Router({
         {
             path: '/favorite',
             component: Favorite,
-            children: [
-                { path: ':id', component: Modal, name: 'modalFavorite' },
-            ],
+            children: [{ path: ':id', component: Modal, name: 'modalFavorite' }],
         },
         {
-            path: '/',
+            path: '//',
             component: Start,
-            children: [
-                { path: ':id', component: Modal, name: 'modalStart' },
-            ],
+            children: [{ path: ':id', component: Modal, name: 'modalStart' }],
         },
     ],
 });
