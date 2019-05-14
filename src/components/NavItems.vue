@@ -25,24 +25,31 @@
             </router-link>
         </li>
         <!-- Looping out all data from menuSort-->
-        <li @click="stayClosed()">
+        <li>
             <img v-if="!isActive" v-b-tooltip.hover.left="'Search'" :src="searchImg.url" />
             <img v-else :src="searchImg.url" />
-            <Search :style="{ display: isActive ? 'block' : 'none' }" @search="search($event)" />
+            <div @click="stayClosed()">
+                <Search
+                    :style="{ display: isActive ? 'block' : 'none' }"
+                    @search="search($event)"
+                />
+            </div>
         </li>
-        <li @click="stayClosed()">
+        <li>
             <img v-if="!isActive" v-b-tooltip.hover.left="'Filters'" :src="filtersImgAndText.url" />
             <img v-else :src="filtersImgAndText.url" />
-            <span v-if="isActive" class="removeNavLable animationFix" @click="toggle = !toggle">
-                {{ filtersImgAndText.text }}
-                <img v-if="!toggle" class="arrowFix" :src="arrowRight.url" />
-                <img v-else-if="toggle" class="arrowFix" :src="arrowDown.url" />
-            </span>
-            <FilterCategories
-                :removed-filter="removedFilter"
-                :style="{ display: isActive && toggle ? 'block' : 'none' }"
-                @checkedCategories="checkedCategories($event)"
-            />
+            <div @click="stayClosed()">
+                <span v-if="isActive" class="removeNavLable animationFix" @click="toggle = !toggle">
+                    {{ filtersImgAndText.text }}
+                    <img v-if="!toggle" class="arrowFix" :src="arrowRight.url" />
+                    <img v-else-if="toggle" class="arrowFix" :src="arrowDown.url" />
+                </span>
+                <FilterCategories
+                    :removed-filter="removedFilter"
+                    :style="{ display: isActive && toggle ? 'block' : 'none' }"
+                    @checkedCategories="checkedCategories($event)"
+                />
+            </div>
         </li>
         <li @click="stayClosed()">
             <span
