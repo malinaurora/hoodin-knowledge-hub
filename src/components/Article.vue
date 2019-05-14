@@ -1,86 +1,70 @@
 <template>
     <div class="content">
-        <div v-if="apiData.imageObjects.images.length > 0 && apiData.video === null" class="images">
-            <router-link :to="{ name: modalRoute, params: { id: apiData.id } }">
-                <img
-                    v-for="image of apiData.imageObjects.images"
-                    :key="image.url"
-                    :src="image.url"
-                    alt="Article picture."
-                    :class="apiData.id + 'Image'"
-                />
-            </router-link>
-            <button
-                v-if="apiData.imageObjects.images.length > 1"
-                class="nextImageLeft"
-                @click="nextImage(-1)"
-            >
-                &#10094;
-            </button>
-            <button
-                v-if="apiData.imageObjects.images.length > 1"
-                class="nextImageRight"
-                @click="nextImage(1)"
-            >
-                &#10095;
-            </button>
-        </div>
         <iframe
-            v-if="apiData.video !== null"
+            v-if="article.video"
             class="video"
             width="100%"
             height="50%"
-            :src="'https://www.youtube.com/embed/' + apiData.video.video_id"
+            :src="'https://www.youtube.com/embed/' + article.video.video_id"
         />
-        <router-link :to="{ name: modalRoute, params: { id: apiData.id } }" class="text">
-            <h2 v-if="apiData.title !== ''">
-                {{ apiData.title }}
+        <ImageSlider
+            v-else-if="article.imageObjects.images.length"
+            :modal-route="modalRoute"
+            :article-id="article.id"
+            :images="article.imageObjects.images"
+        />
+        <router-link :to="{ name: modalRoute, params: { id: article.id } }" class="text">
+            <h2 v-if="article.title">
+                {{ article.title }}
             </h2>
-            <b v-if="apiData.section !== ''">{{ apiData.section }}</b>
-            <p>{{ apiData.text | striphtml }}</p>
+            <b v-if="article.section">{{ article.section }}</b>
+            <p>{{ article.text | striphtml }}</p>
         </router-link>
         <footer>
             <p class="time">
-                {{ apiData.published | moment }}
+                {{ article.published | moment }}
             </p>
             <br />
             <p>
-                {{ apiData.author.name }}
+                {{ article.author.name }}
             </p>
-            <div v-if="showMsg === true" class="msg">
+            <div v-if="showMsg" class="msg">
                 <p>Favorites are only stored locally on this device!</p>
                 <div class="arrow-down" />
             </div>
             <img
-                v-if="favorite === false"
-                class="favoriteIcon"
-                src="/src/assets/icons/baseline-favorite-border.svg"
-                alt="Add to favorites."
-                @click="addFavorite()"
-            />
-            <img
-                v-if="favorite === true"
+                v-if="favorite"
                 class="favoriteIcon"
                 src="/src/assets/icons/baseline-favorite.svg"
                 alt="Remove from favorites."
                 @click="removeFavorite()"
+            />
+            <img
+                v-else
+                class="favoriteIcon"
+                src="/src/assets/icons/baseline-favorite-border.svg"
+                alt="Add to favorites."
+                @click="addFavorite()"
             />
         </footer>
     </div>
 </template>
 
 <script>
+import ImageSlider from './ImageSlider.vue';
+
 export default {
+    components: {
+        ImageSlider,
+    },
     props: {
-        apiData: {
+        article: {
             type: Object,
-            default() {
-                return { message: 'Api Data' };
-            },
+            default: () => ({}),
         },
         modalRoute: {
             type: String,
-            default: 'modalStart',
+            required: true,
         },
         favoriteInModal: {
             type: String,
@@ -89,7 +73,6 @@ export default {
     },
     data() {
         return {
-            slideIndex: 1,
             favorite: false,
             showMsg: false,
             time: '',
@@ -98,53 +81,32 @@ export default {
     watch: {
         favoriteInModal(idString) {
             const id = idString.substr(4);
-            if (id === this.apiData.id) {
+            if (id === this.article.id) {
                 this.favorite = !this.favorite;
             }
         },
     },
     mounted() {
-        this.imageSlider(this.slideIndex);
-        /* load all favorites as an array and loop thru it comparing ids
-        if they match the heart gets a different icon */
+        /**
+         * load all favorites as an array and loop thru it comparing ids
+         * if they match the heart gets a different icon
+         */
         const data = JSON.parse(localStorage.getItem('id'));
 
         data.forEach(favorit => {
-            if (this.apiData.id === favorit) {
+            if (this.article.id === favorit) {
                 this.favorite = true;
             }
         });
         this.time = new Date();
     },
     methods: {
-        /* next image in slider */
-        nextImage(next) {
-            this.imageSlider((this.slideIndex += next));
-        },
-
-        /* if the article contains more than one picture it shows a slider */
-        imageSlider(next) {
-            let i;
-            const imageArray = document.getElementsByClassName(`${this.apiData.id}Image`);
-            if (next > imageArray.length) {
-                this.slideIndex = 1;
-            }
-            if (next < 1) {
-                this.slideIndex = imageArray.length;
-            }
-
-            for (i = 0; i < imageArray.length; i += 1) {
-                imageArray[i].style.display = 'none';
-            }
-
-            if (imageArray[this.slideIndex - 1] !== undefined) {
-                imageArray[this.slideIndex - 1].style.display = 'block';
-            }
-        },
         addFavorite() {
-            /* gets already favorited articles and converts to array add new favorite and saves as string to local storage */
+            /**
+             * gets already favorited articles and converts to array add new favorite and saves as string to local storage
+             */
             const oldFavorites = JSON.parse(localStorage.getItem('id'));
-            oldFavorites.push(this.apiData.id);
+            oldFavorites.push(this.article.id);
             localStorage.setItem('id', JSON.stringify(oldFavorites));
 
             this.favorite = true;
@@ -154,20 +116,24 @@ export default {
             }, 4000);
         },
         removeFavorite() {
-            /* load all favorited ids */
+            /**
+             * load all favorited ids
+             */
             const data = JSON.parse(localStorage.getItem('id'));
-            let index = 0;
             this.showMsg = false;
 
-            /* find the id of the removed aricle and remove it from local storage */
+            /**
+             * find the id of the removed aricle and remove it from local storage
+             */
             data.forEach(unFavorite => {
-                if (unFavorite === this.apiData.id) {
-                    data.splice(index, 1);
+                if (unFavorite === this.article.id) {
+                    data.splice(data.indexOf(this.article.id), 1);
                 }
-                index += 1;
             });
 
-            /* convert array to string and save it in local storage */
+            /**
+             * convert array to string and save it in local storage
+             */
             localStorage.setItem('id', JSON.stringify(data));
             this.favorite = false;
         },
@@ -183,11 +149,13 @@ export default {
     transform: scale(0.98);
     display: flex;
     flex-direction: column;
+
     &:hover {
         transform: scale(1);
         box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
         cursor: pointer;
     }
+
     .text {
         overflow: hidden;
         margin: 10px;
@@ -198,69 +166,28 @@ export default {
         display: flex;
         flex-direction: column;
         flex: 1;
+
         p {
             height: 100%;
             white-space: pre-wrap;
         }
     }
+
     .video {
         border: none;
         height: 45%;
     }
-    .images {
-        height: 45%;
-        position: relative;
-        img {
-            height: 100%;
-            width: 100%;
-        }
-        .nextImageRight {
-            position: absolute;
-            right: 0;
-            top: 50%;
-            -ms-transform: translateY(-50%);
-            transform: translateY(-50%);
-            padding: 0px 10px 0px 10px;
-            border: none;
-            background: none;
-            font-size: 25px;
-            background-color: rgba(255, 255, 255, 0.5);
-            transition: 0.2s;
-            &:hover {
-                background-color: rgba(211, 211, 211, 0.85);
-            }
-            &:focus {
-                outline: 0;
-            }
-        }
-        .nextImageLeft {
-            position: absolute;
-            left: 0px;
-            top: 50%;
-            -ms-transform: translateY(-50%);
-            transform: translateY(-50%);
-            padding: 0px 10px 0px 10px;
-            border: none;
-            background: none;
-            font-size: 25px;
-            background-color: rgba(255, 255, 255, 0.5);
-            transition: 0.2s;
-            &:hover {
-                background-color: rgba(211, 211, 211, 0.85);
-            }
-            &:focus {
-                outline: 0;
-            }
-        }
-    }
+
     footer {
         background-color: white;
         width: 100%;
         padding: 5px 10px 5px 10px;
         position: relative;
+
         .time {
             line-height: normal;
         }
+
         .msg {
             position: absolute;
             top: -10px;
@@ -269,6 +196,7 @@ export default {
             border: 1px solid black;
             padding: 5px;
             border-radius: 2px;
+
             p {
                 max-width: 100%;
                 font-size: 13px;
@@ -278,6 +206,7 @@ export default {
                 font-weight: normal;
                 line-height: normal;
             }
+
             .arrow-down {
                 width: 0;
                 height: 0;
@@ -289,6 +218,7 @@ export default {
                 bottom: -8px;
             }
         }
+
         p {
             margin: 0;
             font-size: 11px;

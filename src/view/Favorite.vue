@@ -1,7 +1,7 @@
 <template>
     <div clasS="favorite">
         <header>
-            <h2 v-if="noFavorites === true">
+            <h2 v-if="noFavorites">
                 No Articles Saved To Favorites!
             </h2>
             <h2 v-if="apiData.length <= 0">
@@ -11,7 +11,7 @@
         <div v-if="id" class="row mb-5">
             <article v-for="api of apiData" :key="api.id" class="col-lg-4 col-md-6 mt-3 mb-3">
                 <Article
-                    :api-data="api"
+                    :article="api"
                     modal-route="modalFavorite"
                     :favorite-in-modal="favoriteInModal"
                 />

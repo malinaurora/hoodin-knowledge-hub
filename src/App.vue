@@ -73,6 +73,10 @@ export default {
 
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css?family=Montserrat|Roboto+Slab|Roboto:300,400');
+body {
+    font-family: 'Roboto Slab';
+}
+
 h1,
 h2,
 h3,
@@ -104,16 +108,13 @@ h6 {
     font-size: 0.7em;
 }
 nav {
-    font-family: 'Roboto Slab';
     font-size: 1.3em;
 }
 p {
-    font-family: 'Roboto Slab';
     line-height: 25px;
     font-weight: 100;
 }
 b {
-    font-family: 'Roboto Slab';
     line-height: 25px;
 }
 
