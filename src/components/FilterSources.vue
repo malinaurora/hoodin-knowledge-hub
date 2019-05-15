@@ -40,8 +40,10 @@ export default {
 </script>
 
 <style style lang="scss">
+@import 'src/assets/styles/sass/_variables.scss';
+
 .dropdown {
-    background-color: #e6e6e6;
+    background-color: $dropdown-color;
     -moz-box-shadow: inset 0 -5px 5px -5px #969696, inset 0 5px 5px -5px #969696;
     -webkit-box-shadow: inset 0 -5px 5px -5px #969696, inset 0 5px 5px -5px #969696;
     box-shadow: inset 0 -5px 5px -5px #969696, inset 0 5px 5px -5px #969696;
@@ -63,7 +65,7 @@ export default {
         font-size: 18px;
     }
     li {
-        color: #000;
+        color: $text-color;
     }
 }
 </style>

@@ -72,6 +72,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import 'src/assets/styles/sass/_variables.scss';
 .toggleSidebar {
     width: 250px;
 }
@@ -82,7 +83,7 @@ nav {
     top: 0;
     .sidebar {
         top: 0;
-        background-color: #f6f6f6;
+        background-color: $secondary-color;
         box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.25);
         bottom: 0;
         width: 50px;
@@ -112,8 +113,8 @@ nav {
         width: 100vw;
         height: 40px;
         z-index: 9999999;
-        background-color: #f6f6f6;
-        box-shadow: 2px 2px #f6f6f6;
+        background-color: $secondary-color;
+        box-shadow: 2px 2px $secondary-color;
         .sidebar {
             width: 0px;
             transition: none;

@@ -199,6 +199,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import 'src/assets/styles/sass/_variables.scss';
 .start {
     header {
         position: absolute;
@@ -218,9 +219,9 @@ export default {
 }
 article {
     a {
-        color: black;
+        color: $text-color;
         &:hover {
-            color: black;
+            color: $text-color;
             text-decoration: none;
         }
     }

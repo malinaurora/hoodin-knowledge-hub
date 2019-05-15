@@ -1,5 +1,5 @@
 <template>
-    <div clasS="favorite">
+    <div class="favorite">
         <header>
             <h2 v-if="noFavorites">
                 No Articles Saved To Favorites!

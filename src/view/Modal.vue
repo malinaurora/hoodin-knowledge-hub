@@ -211,6 +211,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import 'src/assets/styles/sass/_variables.scss';
 @import url('https://fonts.googleapis.com/css?family=Montserrat|Roboto+Slab:300,400');
 .modal {
     display: block;
@@ -307,6 +308,8 @@ export default {
         display: flex;
         flex-direction: column;
         flex: 1;
+        color: $text-color;
+
     }
     .exitBtn {
         background-color: white;
@@ -330,6 +333,7 @@ export default {
     .footerInfo {
         float: left;
         vertical-align: bottom;
+        color: $text-color;
         p {
             display: block;
             margin: 0 15px 0 15px;
@@ -483,6 +487,7 @@ export default {
             height: 94%;
             max-height: 100%;
             margin-top: 20px;
+            background-color: $article-color;
             .modalImages {
                 img {
                     width: 100%;

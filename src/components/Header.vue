@@ -1,15 +1,17 @@
 <template>
     <div class="text-center mt-4">
-        <img :src="imgSrc" class="rounded logo" alt="logo" />
+        <img :src="'/src/assets/logo/' + jsonLogo.logo" class="rounded logo" alt="logo" />
     </div>
 </template>
 
 <script>
+import config from '../config.json';
+
 export default {
     name: 'Header',
     data() {
         return {
-            imgSrc: '/src/assets/images/hoodin-logo.png',
+            jsonLogo: config,
         };
     },
 };

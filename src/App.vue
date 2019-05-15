@@ -29,6 +29,7 @@
 import Header from './components/Header.vue';
 import NavBar from './components/NavBar.vue';
 import FilterHeader from './components/FilterHeader.vue';
+import config from './config.json';
 
 export default {
     components: {
@@ -38,6 +39,7 @@ export default {
     },
     data() {
         return {
+            jsonStyling: config,
             searchString: '',
             checkedCategoriesArray: [],
             checkedSourcesArray: [],
@@ -73,8 +75,12 @@ export default {
 
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css?family=Montserrat|Roboto+Slab|Roboto:300,400');
+@import 'src/assets/styles/sass/_variables.scss';
+
 body {
-    font-family: 'Roboto Slab';
+    font-family: $body-font;
+    background-color: $primary-color;
+
 }
 
 h1,
@@ -83,7 +89,7 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: 'Montserrat';
+    font-family: $header-font;
     font-style: normal;
     font-weight: bold;
     line-height: normal;
