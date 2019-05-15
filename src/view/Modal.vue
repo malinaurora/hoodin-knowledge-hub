@@ -484,6 +484,8 @@ export default {
             max-height: 100%;
             .modalImages {
                 img {
+                    height: 50%;
+                    object-fit: cover;
                     width: 100%;
                 }
             }
@@ -541,6 +543,24 @@ export default {
             top: 0;
             right: 2px;
             width: 30px;
+        }
+    }
+}
+
+@media only screen and (min-width: 576px) and (max-width: 850px) {
+    .modal_content {
+        max-width: 80%;
+        .img {
+            height: 50%;
+        }
+    }
+}
+
+@media only screen and (min-width: 851px) and (max-width: 1200px) {
+    .modal_content {
+        max-width: 65%;
+        .img {
+            height: 50%;
         }
     }
 }
