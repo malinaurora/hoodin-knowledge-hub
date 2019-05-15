@@ -12,34 +12,14 @@
                     @click="enableScroll()"
                 />
             </router-link>
-            <div
-                v-if="modalArticle.imageObjects.images.length > 0 && modalArticle.video === null"
-                class="modalImages"
-            >
-                <img
-                    v-for="image of modalArticle.imageObjects.images"
-                    :key="image.url"
-                    :src="image.url"
-                    alt="Article picture."
-                    :class="modalArticle.id + 'modalImage'"
-                />
-                <button
-                    v-if="modalArticle.imageObjects.images.length > 1"
-                    class="nextImageLeftModal"
-                    @click="nextImage(-1)"
-                >
-                    &#10094;
-                </button>
-                <button
-                    v-if="modalArticle.imageObjects.images.length > 1"
-                    class="nextImageRightModal"
-                    @click="nextImage(1)"
-                >
-                    &#10095;
-                </button>
-            </div>
+            <ImageSlider
+                v-if="modalArticle.imageObjects.images.lenght"
+                :modal-route="modalRoute"
+                :modalarticle-id="modalArticle.id"
+                :images="modalArticle.imageObjects.images"
+            />
             <iframe
-                v-if="modalArticle.video !== null"
+                v-if="modalArticle.video"
                 class="modalVideo"
                 width="100%"
                 height="100%"
@@ -101,12 +81,16 @@
 </template>
 
 <script>
+import ImageSlider from '../components/ImageSlider.vue';
+
 export default {
     name: 'Modal',
+    components: {
+        ImageSlider,
+    },
     data() {
         return {
             id: this.$route.params.id,
-            slideIndex: 1,
             modalArticle: {},
             favorite: false,
             showMsg: false,
@@ -126,7 +110,6 @@ export default {
                 this.modalArticle = data.data.item;
                 this.dataLoaded = true;
             });
-        this.imageSlider(this.slideIndex);
         const data = JSON.parse(localStorage.getItem('id'));
 
         data.forEach(favorit => {
@@ -151,27 +134,6 @@ export default {
             setTimeout(() => {
                 this.showShareMsg = false;
             }, 4000);
-        },
-        nextImage(next) {
-            this.imageSlider((this.slideIndex += next));
-        },
-        imageSlider(next) {
-            let i;
-            const imageArray = document.getElementsByClassName(`${this.modalArticle.id}modalImage`);
-            if (next > imageArray.length) {
-                this.slideIndex = 1;
-            }
-            if (next < 1) {
-                this.slideIndex = imageArray.length;
-            }
-
-            for (i = 0; i < imageArray.length; i += 1) {
-                imageArray[i].style.display = 'none';
-            }
-
-            if (imageArray[this.slideIndex - 1] !== undefined) {
-                imageArray[this.slideIndex - 1].style.display = 'block';
-            }
         },
         enableScroll() {
             document.getElementsByTagName('body')[0].style.overflow = 'auto';
@@ -244,45 +206,6 @@ export default {
     max-width: 40%;
     display: flex;
     flex-direction: column;
-
-    .nextImageLeftModal {
-        position: absolute;
-        left: 0px;
-        top: 50%;
-        -ms-transform: translateY(-50%);
-        transform: translateY(-50%);
-        padding: 0px 10px 0px 10px;
-        border: none;
-        background: none;
-        font-size: 25px;
-        background-color: rgba(255, 255, 255, 0.5);
-        transition: 0.2s;
-        &:hover {
-            background-color: rgba(211, 211, 211, 0.85);
-        }
-        &:focus {
-            outline: 0;
-        }
-    }
-    .nextImageRightModal {
-        position: absolute;
-        right: 0;
-        top: 50%;
-        -ms-transform: translateY(-50%);
-        transform: translateY(-50%);
-        padding: 0px 10px 0px 10px;
-        border: none;
-        background: none;
-        font-size: 25px;
-        background-color: rgba(255, 255, 255, 0.5);
-        transition: 0.2s;
-        &:hover {
-            background-color: rgba(211, 211, 211, 0.85);
-        }
-        &:focus {
-            outline: 0;
-        }
-    }
     h2 {
         font-size: 28px;
         font-weight: 200;
