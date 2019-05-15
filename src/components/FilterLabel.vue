@@ -1,6 +1,6 @@
 <template>
     <div class="filterLabel" @click="removeFilter">
-        <span class="categoryFilter">{{ category }}</span>
+        <span class="filter">{{ filter }}</span>
         <div class="removeFilter">
             <div class="closeRight" />
             <div class="closeLeft" />
@@ -10,14 +10,14 @@
 <script>
 export default {
     props: {
-        category: {
+        filter: {
             type: String,
             default: '',
         },
     },
     methods: {
         removeFilter() {
-            this.$emit('removeFilter', this.category);
+            this.$emit('removeFilter', this.filter);
         },
     },
 };
@@ -29,7 +29,7 @@ export default {
     border: 1px solid black;
     border-radius: 3px;
     cursor: pointer;
-    .categoryFilter {
+    .filter {
         display: inline-block;
         font-size: 15px;
         height: 12px;

@@ -1,8 +1,15 @@
 <template>
     <div class="container filter mt-4">
+        <h2 v-if="checkedCategoriesArray.length > 0" class="mt-4 row">Filter on Category</h2>
         <div class="row">
             <div v-for="category of checkedCategoriesArray" :key="category.id" class="mt-2">
-                <FilterLabel :category="category" @removeFilter="removeFilter($event)" />
+                <FilterLabel :filter="category" @removeFilter="removeFilter($event)" />
+            </div>
+        </div>
+        <h2 v-if="checkedSourcesArray.length > 0" class="mt-4 row">Filter on Sources</h2>
+        <div class="row">
+            <div v-for="source of checkedSourcesArray" :key="source.id" class="mt-2">
+                <FilterLabel :filter="source" @removeFilter="removeFilter($event)" />
             </div>
         </div>
     </div>
@@ -16,6 +23,10 @@ export default {
     },
     props: {
         checkedCategoriesArray: {
+            type: Array,
+            default: Array,
+        },
+        checkedSourcesArray: {
             type: Array,
             default: Array,
         },

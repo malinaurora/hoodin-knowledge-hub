@@ -4,18 +4,23 @@
         <NavBar
             v-if="showNavbar"
             :removed-category="removedCategory"
+            :removed-filter="removedFilter"
+            :removed-source="removedSource"
             @search="search($event)"
             @checkedCategories="checkedCategories($event)"
+            @checkedSources="checkedSources($event)"
             @chosenDate="chosenDate($event)"
         />
         <FilterHeader
             :checked-categories-array="checkedCategoriesArray"
+            :checked-sources-array="checkedSourcesArray"
             @removeFilter="removeFilter($event)"
         />
         <main class="container">
             <router-view
                 :search-string="searchString"
                 :checked-categories-array="checkedCategoriesArray"
+                :checked-sources-array="checkedSourcesArray"
                 :unix-timestamp="unixTimestamp"
                 @hideNavbar="hideNavbar($event)"
                 @showNavbar="showNavbar($event)"
@@ -39,10 +44,17 @@ export default {
         return {
             searchString: '',
             checkedCategoriesArray: [],
-            removedCategory: '',
+            checkedSourcesArray: [],
+            removedFilter: '',
+            removedSource: '',
             unixTimestamp: '',
             showNavbar: true,
         };
+    },
+    created() {
+        if (localStorage.id === undefined) {
+            localStorage.id = '[]';
+        }
     },
     methods: {
         hide(toggleNavbar) {
@@ -54,8 +66,11 @@ export default {
         checkedCategories(checkedCategories) {
             this.checkedCategoriesArray = checkedCategories;
         },
-        removeFilter(category) {
-            this.removedCategory = category;
+        checkedSources(checkedSources) {
+            this.checkedSourcesArray = checkedSources;
+        },
+        removeFilter(filter) {
+            this.removedFilter = filter;
         },
         chosenDate(date) {
             this.unixTimestamp = date;
@@ -69,6 +84,10 @@ export default {
 
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css?family=Montserrat|Roboto+Slab|Roboto:300,400');
+body {
+    font-family: 'Roboto Slab';
+}
+
 h1,
 h2,
 h3,
@@ -100,16 +119,13 @@ h6 {
     font-size: 0.7em;
 }
 nav {
-    font-family: 'Roboto Slab';
     font-size: 1.3em;
 }
 p {
-    font-family: 'Roboto Slab';
     line-height: 25px;
     font-weight: 100;
 }
 b {
-    font-family: 'Roboto Slab';
     line-height: 25px;
 }
 

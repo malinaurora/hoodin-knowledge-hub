@@ -15,7 +15,7 @@
 <script>
 export default {
     props: {
-        removedCategory: {
+        removedFilter: {
             type: String,
             default: '',
         },
@@ -30,10 +30,10 @@ export default {
         checkedCategories() {
             this.$emit('checkedCategories', this.checkedCategories);
         },
-        removedCategory(removedCategory) {
+        removedFilter(removedFilter) {
             let index = 0;
             this.checkedCategories.forEach(category => {
-                if (category === removedCategory) {
+                if (category === removedFilter) {
                     this.checkedCategories.splice(index, 1);
                 }
                 index += 1;

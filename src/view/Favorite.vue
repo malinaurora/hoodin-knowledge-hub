@@ -1,7 +1,7 @@
 <template>
     <div clasS="favorite">
         <header>
-            <h2 v-if="noFavorites === true">
+            <h2 v-if="noFavorites">
                 No Articles Saved To Favorites!
             </h2>
             <h2 v-if="apiData.length <= 0">
@@ -10,12 +10,19 @@
         </header>
         <div v-if="id" class="row mb-5">
             <article v-for="api of apiData" :key="api.id" class="col-lg-4 col-md-6 mt-3 mb-3">
-                <Article :api-data="api" modal-route="modalFavorite" />
+                <Article
+                    :article="api"
+                    modal-route="modalFavorite"
+                    :favorite-in-modal="favoriteInModal"
+                />
             </article>
-            <router-view />
+            <router-view
+                @favoriteAddedInModal="favoriteAddedInModal($event)"
+                @favoriteRemovedInModal="favoriteRemovedInModal($event)"
+            />
         </div>
         <MoreArticles
-            v-if="apiData.length >= limit && MoreArticlesToLoad"
+            v-if="apiData.length >= limit && MoreArticlesToLoad && id"
             @showMore="showMore($event)"
         />
     </div>
@@ -39,6 +46,10 @@ export default {
             type: Array,
             default: Array,
         },
+        checkedSourcesArray: {
+            type: Array,
+            default: Array,
+        },
         unixTimestamp: {
             type: String,
             default: '',
@@ -53,6 +64,8 @@ export default {
             offset: 0,
             category: '',
             MoreArticlesToLoad: true,
+            favoriteInModal: '',
+            source: '',
         };
     },
     watch: {
@@ -63,6 +76,8 @@ export default {
                     this.limit
                 }&searchString=${searchString}&mediaCategories=${this.category}&ondate=${
                     this.unixTimestamp
+                }&sources=${
+                    this.source
                 }&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9`,
             )
                 .then(response => response.json())
@@ -84,6 +99,31 @@ export default {
                     this.limit
                 }&searchString=${this.searchString}&mediaCategories=${categoryString}&ondate=${
                     this.unixTimestamp
+                }&sources=${
+                    this.source
+                }&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9`,
+            )
+                .then(response => response.json())
+                .then(data => {
+                    this.apiData = data.data.items;
+                });
+
+            this.offset = 0;
+        },
+        checkedSourcesArray(sources) {
+            document.body.scrollTop = 0;
+            let sourceString = '';
+            sources.forEach(source => {
+                sourceString += `${source.toLowerCase()},`;
+            });
+            this.source = sourceString.slice(0, sourceString.length - 1);
+            fetch(
+                `https://interns-test-channel.hoodin.com/api/v2/items?ids=${this.id}&limit=${
+                    this.limit
+                }&searchString=${this.searchString}&mediaCategories=${this.category}&ondate=${
+                    this.unixTimestamp
+                }&sources=${
+                    this.source
                 }&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9`,
             )
                 .then(response => response.json())
@@ -100,7 +140,9 @@ export default {
                     this.limit
                 }&searchString=${this.searchString}&mediaCategories=${
                     this.category
-                }&ondate=${date}&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9`,
+                }&ondate=${date}&sources=${
+                    this.source
+                }&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9`,
             )
                 .then(response => response.json())
                 .then(data => {
@@ -129,6 +171,8 @@ export default {
                 this.limit
             }&searchString=${this.searchString}&mediaCategories=${this.category}&ondate=${
                 this.unixTimestamp
+            }&sources=${
+                this.source
             }&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9`,
         )
             .then(response => response.json())
@@ -144,8 +188,8 @@ export default {
                     this.offset
                 }&limit=${this.limit}&searchString=${this.searchString}&mediaCategories=${
                     this.category
-                }&ondate=${
-                    this.unixTimestamp
+                }&ondate=${this.unixTimestamp}&sources=${
+                    this.source
                 }&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9`,
             )
                 .then(response => response.json())
@@ -155,6 +199,12 @@ export default {
                         this.MoreArticlesToLoad = false;
                     }
                 });
+        },
+        favoriteAddedInModal(id) {
+            this.favoriteInModal = `add ${id}`;
+        },
+        favoriteRemovedInModal(id) {
+            this.favoriteInModal = `rem ${id}`;
         },
     },
 };
