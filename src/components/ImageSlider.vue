@@ -80,11 +80,11 @@ export default {
 </script>
 <style lang="scss">
 .images {
-    height: 45%;
+    max-height: 65%;
     position: relative;
+    overflow: hidden;
 
     img {
-        height: 100%;
         width: 100%;
     }
 

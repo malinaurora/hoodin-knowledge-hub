@@ -1,14 +1,21 @@
 <template>
     <div clasS="favorite">
         <header>
-            <h2 v-if="noFavorites">
+            <div v-if="error" class="error">
+                <img :src="errorImage" />
+                <h2>
+                    Något gick fel på grund av oss, försök gärna igen och kontakta vår support om
+                    felet kvarstår.
+                </h2>
+            </div>
+            <h2 v-else-if="noFavorites">
                 No Articles Saved To Favorites!
             </h2>
-            <h2 v-if="apiData.length <= 0">
+            <h2 v-else-if="apiData.length <= 0">
                 No Articles Found!
             </h2>
         </header>
-        <div v-if="id" class="row mb-5">
+        <div v-if="queryString.ids" class="row mb-5">
             <article v-for="api of apiData" :key="api.id" class="col-lg-4 col-md-6 mt-3 mb-3">
                 <Article
                     :article="api"
@@ -22,8 +29,8 @@
             />
         </div>
         <MoreArticles
-            v-if="apiData.length >= limit && MoreArticlesToLoad && id"
-            @showMore="showMore($event)"
+            v-if="apiData.length >= queryString.limit && MoreArticlesToLoad && queryString.ids"
+            @showMore="showMore(queryString)"
         />
     </div>
 </template>
@@ -31,6 +38,7 @@
 <script>
 import Article from '../components/Article.vue';
 import MoreArticles from '../components/MoreArticles.vue';
+import Helper from '../helpers';
 
 export default {
     components: {
@@ -58,98 +66,34 @@ export default {
     data() {
         return {
             apiData: [],
-            id: '',
-            noFavorites: false,
-            limit: 15,
-            offset: 0,
-            category: '',
+            queryString: {
+                ids: '',
+                offset: 0,
+                limit: 15,
+                mediaCategories: '',
+                sources: '',
+                ondate: '',
+                searchString: '',
+            },
+            error: false,
+            errorImage: '/src/assets/images/error.svg',
             MoreArticlesToLoad: true,
             favoriteInModal: '',
-            source: '',
+            noFavorites: false,
         };
     },
     watch: {
-        searchString(searchString) {
-            document.body.scrollTop = 0;
-            fetch(
-                `https://interns-test-channel.hoodin.com/api/v2/items?ids=${this.id}&limit=${
-                    this.limit
-                }&searchString=${searchString}&mediaCategories=${this.category}&ondate=${
-                    this.unixTimestamp
-                }&sources=${
-                    this.source
-                }&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9`,
-            )
-                .then(response => response.json())
-                .then(data => {
-                    this.apiData = data.data.items;
-                });
-
-            this.offset = 0;
+        searchString() {
+            this.getSearchString();
         },
         checkedCategoriesArray(categories) {
-            document.body.scrollTop = 0;
-            let categoryString = '';
-            categories.forEach(category => {
-                categoryString += `${category},`;
-            });
-            this.category = categoryString;
-            fetch(
-                `https://interns-test-channel.hoodin.com/api/v2/items?ids=${this.id}&limit=${
-                    this.limit
-                }&searchString=${this.searchString}&mediaCategories=${categoryString}&ondate=${
-                    this.unixTimestamp
-                }&sources=${
-                    this.source
-                }&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9`,
-            )
-                .then(response => response.json())
-                .then(data => {
-                    this.apiData = data.data.items;
-                });
-
-            this.offset = 0;
+            this.getCategories(categories);
         },
         checkedSourcesArray(sources) {
-            document.body.scrollTop = 0;
-            let sourceString = '';
-            sources.forEach(source => {
-                sourceString += `${source.toLowerCase()},`;
-            });
-            this.source = sourceString.slice(0, sourceString.length - 1);
-            fetch(
-                `https://interns-test-channel.hoodin.com/api/v2/items?ids=${this.id}&limit=${
-                    this.limit
-                }&searchString=${this.searchString}&mediaCategories=${this.category}&ondate=${
-                    this.unixTimestamp
-                }&sources=${
-                    this.source
-                }&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9`,
-            )
-                .then(response => response.json())
-                .then(data => {
-                    this.apiData = data.data.items;
-                });
-
-            this.offset = 0;
+            this.getSources(sources);
         },
         unixTimestamp(date) {
-            document.body.scrollTop = 0;
-            fetch(
-                `https://interns-test-channel.hoodin.com/api/v2/items?ids=${this.id}&limit=${
-                    this.limit
-                }&searchString=${this.searchString}&mediaCategories=${
-                    this.category
-                }&ondate=${date}&sources=${
-                    this.source
-                }&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9`,
-            )
-                .then(response => response.json())
-                .then(data => {
-                    this.apiData = data.data.items;
-                });
-
-            this.offset = 0;
+            this.getDate(date);
         },
     },
     mounted() {
@@ -159,47 +103,18 @@ export default {
             this.noFavorites = true;
         }
         data.forEach(idString => {
-            this.id += `${idString},`;
+            this.queryString.ids += `${idString},`;
         });
-        let categoryString = '';
-        this.checkedCategoriesArray.forEach(category => {
-            categoryString += `${category},`;
-        });
-        this.category = categoryString;
-        fetch(
-            `https://interns-test-channel.hoodin.com/api/v2/items?ids=${this.id}&limit=${
-                this.limit
-            }&searchString=${this.searchString}&mediaCategories=${this.category}&ondate=${
-                this.unixTimestamp
-            }&sources=${
-                this.source
-            }&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9`,
-        )
-            .then(response => response.json())
-            .then(post => {
-                this.apiData = post.data.items;
-            });
+        this.getData(this.queryString);
     },
     methods: {
-        showMore() {
-            this.offset += this.limit;
-            fetch(
-                `https://interns-test-channel.hoodin.com/api/v2/items?ids=${this.id}&offset=${
-                    this.offset
-                }&limit=${this.limit}&searchString=${this.searchString}&mediaCategories=${
-                    this.category
-                }&ondate=${this.unixTimestamp}&sources=${
-                    this.source
-                }&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9`,
-            )
-                .then(response => response.json())
-                .then(data => {
-                    this.apiData = this.apiData.concat(data.data.items);
-                    if (data.data.items.length < this.limit) {
-                        this.MoreArticlesToLoad = false;
-                    }
-                });
-        },
+        getData: Helper.getData,
+        showMore: Helper.showMoreData,
+        getSearchString: Helper.getSearchString,
+        getCategories: Helper.getCategories,
+        getSources: Helper.getSources,
+        getDate: Helper.getDate,
+
         favoriteAddedInModal(id) {
             this.favoriteInModal = `add ${id}`;
         },
@@ -216,15 +131,25 @@ export default {
         position: absolute;
         text-align: center;
         top: 50%;
-        -ms-transform: translateY(-50%);
-        transform: translateY(-50%);
-        width: 100%;
-        left: 0;
+        left: 50%;
+        margin-top: 50px;
+        -ms-transform: translateY(-50%) translateX(-50%);
+        transform: translateY(-50%) translateX(-50%);
+        width: 80%;
         z-index: -9;
         h2 {
             text-align: center;
             font-size: 2em;
             font-weight: 200;
+            max-width: 900px;
+            margin: auto;
+        }
+        .error {
+            img {
+                width: 100%;
+                max-width: 700px;
+                margin-bottom: 20px;
+            }
         }
     }
 }
