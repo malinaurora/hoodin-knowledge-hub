@@ -48,7 +48,7 @@
             </p>
             <br />
             <p>
-                {{ article.author.name }}
+                {{ source }}
             </p>
             <div v-if="showMsg" class="msg">
                 <p>Favorites are only stored locally on this device!</p>
@@ -98,6 +98,7 @@ export default {
             favorite: false,
             showMsg: false,
             time: '',
+            source: 'instagram',
         };
     },
     watch: {
@@ -121,6 +122,7 @@ export default {
             }
         });
         this.time = new Date();
+        this.getSource();
     },
     methods: {
         addFavorite() {
@@ -158,6 +160,18 @@ export default {
              */
             localStorage.setItem('id', JSON.stringify(data));
             this.favorite = false;
+        },
+        getSource() {
+            const url = this.article.source_url;
+            if (url === null) {
+                this.source = this.article.author.name;
+            } else {
+                const source = url
+                    .replace('http://www.', '')
+                    .replace('https://www.', '')
+                    .split(/[/?#.]/)[0];
+                this.source = source;
+            }
         },
     },
 };
@@ -307,6 +321,11 @@ export default {
 
         .favoriteIcon {
             float: right;
+        }
+
+        .sourceLogo {
+            width: 30px;
+            margin: 15px;
         }
     }
 }
