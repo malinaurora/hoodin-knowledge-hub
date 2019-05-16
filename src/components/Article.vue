@@ -13,11 +13,33 @@
             :article-id="article.id"
             :images="article.imageObjects.images"
         />
-        <router-link :to="{ name: modalRoute, params: { id: article.id } }" class="text">
+        <router-link
+            v-if="article.imageObjects.images.length"
+            :to="{ name: modalRoute, params: { id: article.id } }"
+            class="text"
+        >
             <h2 v-if="article.title">
                 {{ article.title }}
             </h2>
             <b v-if="article.section">{{ article.section }}</b>
+            <p>{{ article.text | striphtml }}</p>
+        </router-link>
+        <router-link
+            v-else-if="article.title"
+            :to="{ name: modalRoute, params: { id: article.id } }"
+            class="noImage"
+        >
+            <h2 v-if="article.title">
+                {{ article.title }}
+            </h2>
+            <b v-if="article.section">{{ article.section }}</b>
+            <p>{{ article.text | striphtml }}</p>
+        </router-link>
+        <router-link
+            v-else
+            :to="{ name: modalRoute, params: { id: article.id } }"
+            :class="article.text.length < 200 ? 'noTitle' : 'noTitleFill'"
+        >
             <p>{{ article.text | striphtml }}</p>
         </router-link>
         <footer>
@@ -26,7 +48,7 @@
             </p>
             <br />
             <p>
-                {{ article.author.name }}
+                {{ source }}
             </p>
             <div v-if="showMsg" class="msg">
                 <p>Favorites are only stored locally on this device!</p>
@@ -76,6 +98,7 @@ export default {
             favorite: false,
             showMsg: false,
             time: '',
+            source: 'instagram',
         };
     },
     watch: {
@@ -99,6 +122,7 @@ export default {
             }
         });
         this.time = new Date();
+        this.getSource();
     },
     methods: {
         addFavorite() {
@@ -137,6 +161,18 @@ export default {
             localStorage.setItem('id', JSON.stringify(data));
             this.favorite = false;
         },
+        getSource() {
+            const url = this.article.source_url;
+            if (url === null) {
+                this.source = this.article.author.name;
+            } else {
+                const source = url
+                    .replace('http://www.', '')
+                    .replace('https://www.', '')
+                    .split(/[/?#.]/)[0];
+                this.source = source;
+            }
+        },
     },
 };
 </script>
@@ -170,6 +206,57 @@ export default {
         p {
             height: 100%;
             white-space: pre-wrap;
+        }
+    }
+
+    .noImage {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-around;
+        margin: 35px;
+        flex: 1;
+        overflow: hidden;
+        color: var(--test);
+        h2 {
+            font-size: 1.7em;
+            margin-bottom: 25px;
+            width: 100%;
+        }
+        b {
+            width: 100%;
+        }
+        p {
+            width: 100%;
+            line-height: 27px;
+        }
+    }
+
+    .noTitle {
+        display: flex;
+        justify-content: space-evenly;
+        margin: 30px;
+        margin-top: 40px;
+        flex-direction: column;
+        overflow: hidden;
+        flex: 1;
+        white-space: pre-wrap;
+        p {
+            font-size: 1.5em;
+            line-height: 29px;
+        }
+    }
+    .noTitleFill {
+        display: flex;
+        justify-content: flex-start;
+        margin: 30px;
+        margin-top: 40px;
+        flex-direction: column;
+        overflow: hidden;
+        flex: 1;
+        white-space: pre-wrap;
+        p {
+            font-size: 1.5em;
+            line-height: 29px;
         }
     }
 
@@ -233,6 +320,11 @@ export default {
 
         .favoriteIcon {
             float: right;
+        }
+
+        .sourceLogo {
+            width: 30px;
+            margin: 15px;
         }
     }
 }
