@@ -118,7 +118,7 @@ export default {
     },
     async created() {
         // fetch the data from the api.
-        await fetch(`https://${config.baseRoute}/${this.id}?&&token=${config.token}`)
+        await fetch(`https://${config.baseRoute}/api/v2/items/${this.id}?&&token=${config.token}`)
             .then(response => response.json())
             .then(data => {
                 this.modalArticle = data.data.item;
