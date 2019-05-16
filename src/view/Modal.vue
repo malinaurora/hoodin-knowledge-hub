@@ -12,38 +12,16 @@
                     @click="enableScroll()"
                 />
             </router-link>
-            <div
-                v-if="modalArticle.imageObjects.images.length > 0 && modalArticle.video === null"
-                class="modalImages"
-            >
-                <img
-                    v-for="image of modalArticle.imageObjects.images"
-                    :key="image.url"
-                    :src="image.url"
-                    alt="Article picture."
-                    :class="modalArticle.id + 'modalImage'"
-                />
-                <button
-                    v-if="modalArticle.imageObjects.images.length > 1"
-                    class="nextImageLeftModal"
-                    @click="nextImage(-1)"
-                >
-                    &#10094;
-                </button>
-                <button
-                    v-if="modalArticle.imageObjects.images.length > 1"
-                    class="nextImageRightModal"
-                    @click="nextImage(1)"
-                >
-                    &#10095;
-                </button>
-            </div>
             <iframe
-                v-if="modalArticle.video !== null"
+                v-if="modalArticle.video"
                 class="modalVideo"
                 width="100%"
                 height="100%"
                 :src="'https://www.youtube.com/embed/' + modalArticle.video.video_id"
+            />
+            <ImageSlider
+                v-else-if="modalArticle.imageObjects.images"
+                :images="modalArticle.imageObjects.images"
             />
 
             <section class="modalText">
@@ -101,8 +79,13 @@
 </template>
 
 <script>
+import ImageSlider from '../components/ImageSlider.vue';
+
 export default {
     name: 'Modal',
+    components: {
+        ImageSlider,
+    },
     data() {
         return {
             id: this.$route.params.id,
@@ -128,7 +111,6 @@ export default {
             });
         this.imageSlider(this.slideIndex);
         const data = JSON.parse(localStorage.getItem('id'));
-
         data.forEach(favorit => {
             if (this.modalArticle.id === favorit) {
                 this.favorite = true;
@@ -221,7 +203,6 @@ export default {
     top: 0;
     width: 100%;
 }
-
 .overlay {
     position: fixed;
     left: 0;
@@ -230,7 +211,6 @@ export default {
     height: 100%;
     background: rgba(0, 0, 0, 0.6);
 }
-
 .modal_content {
     position: relative;
     top: 50%;
@@ -244,45 +224,6 @@ export default {
     max-width: 40%;
     display: flex;
     flex-direction: column;
-
-    .nextImageLeftModal {
-        position: absolute;
-        left: 0px;
-        top: 50%;
-        -ms-transform: translateY(-50%);
-        transform: translateY(-50%);
-        padding: 0px 10px 0px 10px;
-        border: none;
-        background: none;
-        font-size: 25px;
-        background-color: rgba(255, 255, 255, 0.5);
-        transition: 0.2s;
-        &:hover {
-            background-color: rgba(211, 211, 211, 0.85);
-        }
-        &:focus {
-            outline: 0;
-        }
-    }
-    .nextImageRightModal {
-        position: absolute;
-        right: 0;
-        top: 50%;
-        -ms-transform: translateY(-50%);
-        transform: translateY(-50%);
-        padding: 0px 10px 0px 10px;
-        border: none;
-        background: none;
-        font-size: 25px;
-        background-color: rgba(255, 255, 255, 0.5);
-        transition: 0.2s;
-        &:hover {
-            background-color: rgba(211, 211, 211, 0.85);
-        }
-        &:focus {
-            outline: 0;
-        }
-    }
     h2 {
         font-size: 28px;
         font-weight: 200;
@@ -326,7 +267,6 @@ export default {
         }
     }
 }
-
 .modalFooter {
     padding: 10px;
     .footerInfo {
@@ -380,47 +320,6 @@ export default {
         float: left;
     }
 }
-
-.nextImageRightModal {
-    position: absolute;
-    right: 0;
-    top: 50%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-    padding: 0px 10px 0px 10px;
-    border: none;
-    background: none;
-    font-size: 25px;
-    background-color: rgba(255, 255, 255, 0.5);
-    transition: 0.2s;
-    &:hover {
-        background-color: rgba(211, 211, 211, 0.85);
-    }
-    &:focus {
-        outline: 0;
-    }
-}
-
-.nextImageLeftModal {
-    position: absolute;
-    left: 0px;
-    top: 50%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-    padding: 0px 10px 0px 10px;
-    border: none;
-    background: none;
-    font-size: 25px;
-    background-color: rgba(255, 255, 255, 0.5);
-    transition: 0.2s;
-    &:hover {
-        background-color: rgba(211, 211, 211, 0.85);
-    }
-    &:focus {
-        outline: 0;
-    }
-}
-
 .popupmsg {
     position: absolute;
     bottom: 60px;
@@ -477,7 +376,6 @@ export default {
         bottom: -8px;
     }
 }
-
 @media only screen and (max-width: 480px) {
     .modal {
         .modal_content {
@@ -516,7 +414,6 @@ export default {
         }
     }
 }
-
 @media only screen and (max-width: 575.98px) {
     .modal_content {
         overflow: auto;
@@ -548,7 +445,6 @@ export default {
         }
     }
 }
-
 @media only screen and (min-width: 576px) and (max-width: 850px) {
     .modal_content {
         max-width: 80%;
@@ -557,7 +453,6 @@ export default {
         }
     }
 }
-
 @media only screen and (min-width: 851px) and (max-width: 1200px) {
     .modal_content {
         max-width: 65%;

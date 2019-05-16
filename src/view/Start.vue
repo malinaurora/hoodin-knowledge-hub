@@ -21,9 +21,11 @@
                 />
             </article>
         </div>
-        <router-view @toggleNav="toggleNav($event)" />
+        <router-view
+            @toggleNav="toggleNav($event)"
             @favoriteAddedInModal="favoriteAddedInModal($event)"
             @favoriteRemovedInModal="favoriteRemovedInModal($event)"
+        />
         <MoreArticles
             v-if="apiData.length >= queryString.limit && moreArticlesToLoad"
             @showMore="showMore(queryString)"
