@@ -235,7 +235,7 @@ export default {
     left: 50%;
     transform: translate(-50%, -50%);
     max-height: 90%;
-    background: rgb(255, 255, 255);
+    background: var(--article-color);
     box-sizing: border-box;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.7);
     border-radius: 4px;
