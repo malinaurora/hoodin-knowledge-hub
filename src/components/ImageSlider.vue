@@ -71,7 +71,9 @@ export default {
          *  if the article contains more than one picture it shows a slider
          */
         imageSlider(next) {
-            const imageArray = document.getElementsByClassName(`${this.articleId}Image`);
+            const imageArray = document.getElementsByClassName(
+                `${this.articleId + this.imageLocation}`,
+            );
             if (next > imageArray.length) {
                 this.slideIndex = 1;
             }
