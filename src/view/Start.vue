@@ -131,6 +131,7 @@ export default {
             font-weight: 200;
             max-width: 900px;
             margin: auto;
+            font-family: var(--filter-box-font);
         }
         .error {
             img {

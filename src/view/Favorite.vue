@@ -141,6 +141,7 @@ export default {
             font-size: 2em;
             font-weight: 200;
             max-width: 900px;
+            font-family: var(--filter-box-font);
             margin: auto;
         }
         .error {
