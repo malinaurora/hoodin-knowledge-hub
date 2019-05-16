@@ -93,7 +93,7 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: var(--header-font);
+    font-family: var(--heading-font);
     font-style: normal;
     font-weight: bold;
     line-height: normal;

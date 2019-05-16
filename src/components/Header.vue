@@ -1,7 +1,7 @@
 <template>
-    <div class="text-center mt-4">
+    <header>
         <img :src="'/src/assets/logo/' + jsonLogo.logo" class="rounded logo" alt="logo" />
-    </div>
+    </header>
 </template>
 
 <script>
@@ -18,12 +18,17 @@ export default {
 </script>
 
 <style lang="scss">
-.logo {
-    width: 20%;
+header {
+    margin-top: 30px;
+    text-align: center;
+    .logo {
+        width: 80%;
+        max-width: 300px;
+    }
 }
 @media (max-width: 767.98px) {
-    .logo {
-        margin-top: 45px;
+    header {
+        margin-top: 70px;
     }
 }
 </style>
