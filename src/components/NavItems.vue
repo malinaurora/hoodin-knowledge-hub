@@ -170,7 +170,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import 'src/assets/styles/sass/_variables.scss';
 ul {
     padding: 0;
     margin: 0;
@@ -187,7 +186,7 @@ ul {
         }
         .removeNavLable {
             padding-left: 60px;
-            color: $text-color;
+            color: var(--text-color);
         }
         img {
             margin: auto;
@@ -199,7 +198,7 @@ ul {
             text-decoration: none;
             display: block;
             &:hover {
-                color: $text-hover-color;
+                color: var(--text-hover-color);
             }
         }
         span {

@@ -1,3 +1,15 @@
 {
-    "logo": "hoodin-logo.png"
+    "logo": "hoodin-logo.png",
+    "styling":{
+        "--body-font": "Roboto Slab",
+        "--heading-font": "Montserrat",
+        "--filter-box-font": "Roboto",
+        "--text-color": "black",
+        "--text-hover-color": "#7b7b7b",
+        "--primary-color": "white",
+        "--secondary-color":"#f6f6f6",
+        "--article-color": "white",
+        "--article-footer-color": "white",
+        "--dropdown-color": "#e6e6e6"
+    }
 }

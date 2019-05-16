@@ -19,8 +19,7 @@ export default {
 
 <style lang="scss">
 .logo {
-    width: 200px;
-    height: 50px;
+    width: 20%;
 }
 @media (max-width: 767.98px) {
     .logo {

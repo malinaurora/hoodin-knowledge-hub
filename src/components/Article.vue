@@ -142,8 +142,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import 'src/assets/styles/sass/_variables.scss';
-
 .content {
     height: 500px;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
@@ -151,7 +149,7 @@ export default {
     transform: scale(0.98);
     display: flex;
     flex-direction: column;
-    background-color: $article-color;
+    background-color: var(--article-color);
     &:hover {
         transform: scale(1);
         box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
@@ -184,8 +182,8 @@ export default {
         width: 100%;
         padding: 5px 10px 5px 10px;
         position: relative;
-        color:$text-color;
-        background-color: $article-footer-color;
+        color: var(--text-color);
+        background-color: var(--article-footer-color);
         .time {
             line-height: normal;
         }

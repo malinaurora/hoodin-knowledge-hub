@@ -23,7 +23,6 @@ export default {
 };
 </script>
 <style lang="scss">
-@import 'src/assets/styles/sass/_variables.scss';
 .filterLabel {
     padding: 7px 5px 7px 5px;
     margin: 0 5px 0 5px;
@@ -37,7 +36,6 @@ export default {
         line-height: 12px;
         margin-right: 5px;
         margin-left: 5px;
-        font-family: $filter-box-font;
     }
     .removeFilter {
         display: inline-block;

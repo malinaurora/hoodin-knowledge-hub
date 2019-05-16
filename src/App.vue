@@ -39,7 +39,7 @@ export default {
     },
     data() {
         return {
-            jsonStyling: config,
+            json: config,
             searchString: '',
             checkedCategoriesArray: [],
             checkedSourcesArray: [],
@@ -52,6 +52,7 @@ export default {
         if (localStorage.id === undefined) {
             localStorage.id = '[]';
         }
+        this.stylingFromJson();
     },
     methods: {
         search(searchString) {
@@ -69,18 +70,21 @@ export default {
         chosenDate(date) {
             this.unixTimestamp = date;
         },
+        stylingFromJson() {
+            const jsonStyle = this.json.styling;
+            Object.keys(jsonStyle).forEach(key => {
+                document.documentElement.style.setProperty(key, jsonStyle[key]);
+            });
+        },
     },
 };
 </script>
 
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css?family=Montserrat|Roboto+Slab|Roboto:300,400');
-@import 'src/assets/styles/sass/_variables.scss';
-
 body {
-    font-family: $body-font;
-    background-color: $primary-color;
-
+    font-family: var(--body-font);
+    background-color: var(--primary-color);
 }
 
 h1,
@@ -89,7 +93,7 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: $header-font;
+    font-family: var(--header-font);
     font-style: normal;
     font-weight: bold;
     line-height: normal;
@@ -123,9 +127,11 @@ p {
 b {
     line-height: 25px;
 }
-
 footer {
     font-weight: normal;
     line-height: normal;
+}
+.filter {
+    font-family: var(--filter-box-font);
 }
 </style>
