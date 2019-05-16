@@ -186,6 +186,7 @@ export default {
     display: flex;
     flex-direction: column;
     background-color: var(--article-color);
+    color: var(--text-color);
     &:hover {
         transform: scale(1);
         box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
