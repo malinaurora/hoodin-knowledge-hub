@@ -27,13 +27,13 @@
             />
 
             <section class="modalText">
-                <h1 v-if="modalArticle.title !== ''">{{ modalArticle.title }}</h1>
-                <b v-if="modalArticle.section !== ''">{{ modalArticle.section }}</b>
+                <h1 v-if="modalArticle.title">{{ modalArticle.title }}</h1>
+                <b v-if="modalArticle.section">{{ modalArticle.section }}</b>
                 <p>{{ modalArticle.text | striphtml }}</p>
             </section>
             <footer class="modalFooter">
                 <img
-                    v-if="modalArticle.author.avatar !== null"
+                    v-if="modalArticle.author.avatar"
                     class="avatarImage"
                     :src="modalArticle.author.avatar.url"
                     alt="Author avatar picture."
@@ -42,32 +42,32 @@
                     <p class="modalTime">{{ modalArticle.published.split('T')[0] }}</p>
                     <p class="modalAuthor">{{ modalArticle.author.name }}</p>
                 </div>
-                <div v-if="showMsg === true" class="popupmsg">
+                <div v-if="showMsg" class="popupmsg">
                     <p>Favorites are only stored locally on this device!</p>
                     <div class="arrow-down" />
                 </div>
                 <img
-                    v-if="favorite === false"
+                    v-if="favorite"
+                    class="favoritesIcon"
+                    src="/src/assets/icons/baseline-favorite.svg"
+                    alt="Remove from favorites."
+                    @click="removeFavorite()"
+                />
+                <img
+                    v-else
                     class="favoritesIcon"
                     src="/src/assets/icons/baseline-favorite-border.svg"
                     alt="Add to favorites."
                     @click="addFavorite()"
                 />
-                <img
-                    v-if="favorite === true"
-                    class="removeFavoriteIcon"
-                    src="/src/assets/icons/baseline-favorite.svg"
-                    alt="Remove from favorites."
-                    @click="removeFavorite()"
-                />
                 <div class="footerLinks">
-                    <div v-if="showShareMsg === true" class="shareMsg">
+                    <div v-if="showShareMsg" class="shareMsg">
                         <p>Link copied!</p>
                         <div class="arrow-down" />
                     </div>
                     <a class="modalShare" @click="getShare()">Copy link</a>
                     <a
-                        v-if="modalArticle.source_url !== ''"
+                        v-if="modalArticle.source_url"
                         target="_blank"
                         class="modalOrginalArticle"
                         rel="noopener noreferrer"
@@ -111,7 +111,6 @@ export default {
                 this.modalArticle = data.data.item;
                 this.dataLoaded = true;
             });
-        this.imageSlider(this.slideIndex);
         const data = JSON.parse(localStorage.getItem('id'));
         data.forEach(favorit => {
             if (this.modalArticle.id === favorit) {
@@ -125,7 +124,6 @@ export default {
         getShare() {
             const url = document.createElement('input');
             const text = window.location.href;
-
             document.body.appendChild(url);
             url.value = text;
             url.select();
@@ -135,27 +133,6 @@ export default {
             setTimeout(() => {
                 this.showShareMsg = false;
             }, 4000);
-        },
-        nextImage(next) {
-            this.imageSlider((this.slideIndex += next));
-        },
-        imageSlider(next) {
-            let i;
-            const imageArray = document.getElementsByClassName(`${this.modalArticle.id}modalImage`);
-            if (next > imageArray.length) {
-                this.slideIndex = 1;
-            }
-            if (next < 1) {
-                this.slideIndex = imageArray.length;
-            }
-
-            for (i = 0; i < imageArray.length; i += 1) {
-                imageArray[i].style.display = 'none';
-            }
-
-            if (imageArray[this.slideIndex - 1] !== undefined) {
-                imageArray[this.slideIndex - 1].style.display = 'block';
-            }
         },
         enableScroll() {
             document.getElementsByTagName('body')[0].style.overflow = 'auto';
@@ -179,7 +156,6 @@ export default {
             const data = JSON.parse(localStorage.getItem('id'));
             let index = 0;
             this.showMsg = false;
-
             /* find the id of the removed aricle and remove it from local storage */
             data.forEach(unFavorite => {
                 if (unFavorite === this.modalArticle.id) {
@@ -187,7 +163,6 @@ export default {
                 }
                 index += 1;
             });
-
             /* convert array to string and save it in local storage */
             localStorage.setItem('id', JSON.stringify(data));
             this.favorite = false;
@@ -232,26 +207,21 @@ export default {
         margin: 20px 0 40px;
         text-align: center;
     }
-    .modalImages {
-        position: relative;
-        img {
-            max-height: 60%;
-            height: 60%;
-            width: 100%;
-        }
-    }
     iframe {
         height: 400px;
         border: none;
     }
     .modalText {
-        padding-top: 45px;
+        overflow: auto;
+        padding-top: 25px;
         padding-right: 20px;
         padding-left: 25px;
-        padding-bottom: 25px;
         display: flex;
         flex-direction: column;
         flex: 1;
+        b {
+            padding-bottom: 10px;
+        }
     }
     .exitBtn {
         background-color: white;
@@ -267,6 +237,27 @@ export default {
         &:hover {
             transform: scale(1);
         }
+    }
+    ::-webkit-scrollbar {
+        width: 5px;
+    }
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: #e6e6e6;
+        border-radius: 5px;
+        -moz-box-shadow: inset 0 -5px 5px -5px #969696, inset 0 5px 5px -5px #969696;
+        -webkit-box-shadow: inset 0 -5px 5px -5px #969696, inset 0 5px 5px -5px #969696;
+        box-shadow: inset 0 -5px 5px -5px #969696, inset 0 5px 5px -5px #969696;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 5px;
+    }
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555;
     }
 }
 .modalFooter {
@@ -308,12 +299,7 @@ export default {
         width: 40px;
         float: right;
     }
-    .removeFavoriteIcon {
-        margin-top: 5px;
-        vertical-align: bottom;
-        width: 40px;
-        float: right;
-    }
+
     .avatarImage {
         width: 50px;
         height: 50px;
