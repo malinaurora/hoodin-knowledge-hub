@@ -25,23 +25,46 @@
             </router-link>
         </li>
         <!-- Looping out all data from menuSort-->
-        <li @click="stayClosed()">
+        <li>
             <img v-if="!isActive" v-b-tooltip.hover.left="'Search'" :src="searchImg.url" />
             <img v-else :src="searchImg.url" />
-            <Search :style="{ display: isActive ? 'block' : 'none' }" @search="search($event)" />
+            <div @click="stayClosed()">
+                <Search
+                    :style="{ display: isActive ? 'block' : 'none' }"
+                    @search="search($event)"
+                />
+            </div>
         </li>
-        <li @click="stayClosed()">
+        <li>
             <img v-if="!isActive" v-b-tooltip.hover.left="'Filters'" :src="filtersImgAndText.url" />
             <img v-else :src="filtersImgAndText.url" />
-            <span v-if="isActive" class="removeNavLable animationFix" @click="toggle = !toggle">
-                {{ filtersImgAndText.text }}
-                <img v-if="!toggle" class="arrowFix" :src="arrowRight.url" />
-                <img v-else-if="toggle" class="arrowFix" :src="arrowDown.url" />
+            <div @click="stayClosed()">
+                <span v-if="isActive" class="removeNavLable animationFix" @click="toggle = !toggle">
+                    {{ filtersImgAndText.text }}
+                    <img v-if="!toggle" class="arrowFix" :src="arrowRight.url" />
+                    <img v-else-if="toggle" class="arrowFix" :src="arrowDown.url" />
+                </span>
+                <FilterCategories
+                    :removed-filter="removedFilter"
+                    :style="{ display: isActive && toggle ? 'block' : 'none' }"
+                    @checkedCategories="checkedCategories($event)"
+                />
+            </div>
+        </li>
+        <li @click="stayClosed()">
+            <span
+                v-if="isActive"
+                class="removeNavLable animationFix"
+                @click="toggleSources = !toggleSources"
+            >
+                Sources
+                <img v-if="!toggleSources" class="arrowFix" :src="arrowRight.url" />
+                <img v-else-if="toggleSources" class="arrowFix" :src="arrowDown.url" />
             </span>
-            <FilterCategories
-                :removed-category="removedCategory"
-                :style="{ display: isActive && toggle ? 'block' : 'none' }"
-                @checkedCategories="checkedCategories($event)"
+            <FilterSources
+                :removed-filter="removedFilter"
+                :style="{ display: isActive && toggleSources ? 'block' : 'none' }"
+                @checkedSources="checkedSources($event)"
             />
         </li>
         <li @click="stayClosed()">
@@ -66,6 +89,7 @@
 <script>
 import Search from './Search.vue';
 import FilterCategories from './FilterCategories.vue';
+import FilterSources from './FilterSources.vue';
 import DatePicker from './DatePicker.vue';
 
 export default {
@@ -73,13 +97,14 @@ export default {
     components: {
         Search,
         FilterCategories,
+        FilterSources,
         DatePicker,
     },
     props: {
         isActive: {
             type: Boolean,
         },
-        removedCategory: {
+        removedFilter: {
             type: String,
             default: '',
         },
@@ -109,6 +134,9 @@ export default {
                 alt: 'Filters navigation icon',
                 text: 'Categories',
             },
+            filterSourceText: {
+                text: 'Sources',
+            },
             arrowRight: {
                 url: 'src/assets/icons/baseline-keyboard_arrow_right.svg',
             },
@@ -118,6 +146,7 @@ export default {
             close: true,
             toggle: false,
             toggleDate: false,
+            toggleSources: false,
         };
     },
     methods: {
@@ -129,6 +158,9 @@ export default {
         },
         checkedCategories(checkedCategories) {
             this.$emit('checkedCategories', checkedCategories);
+        },
+        checkedSources(checkedSources) {
+            this.$emit('checkedSources', checkedSources);
         },
         chosenDate(date) {
             this.$emit('chosenDate', date);

@@ -178,6 +178,7 @@ export default {
             this.$emit('toggleNav', true);
         },
         addFavorite() {
+            this.$emit('favoriteAddedInModal', this.id);
             /* send id of favorited articel to parent component */
             const oldFavorites = JSON.parse(localStorage.getItem('id'));
             oldFavorites.push(this.modalArticle.id);
@@ -189,6 +190,7 @@ export default {
             }, 4000);
         },
         removeFavorite() {
+            this.$emit('favoriteRemovedInModal', this.id);
             /* load all favorited ids */
             const data = JSON.parse(localStorage.getItem('id'));
             let index = 0;

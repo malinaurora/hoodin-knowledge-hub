@@ -16,11 +16,12 @@
             <img v-if="isActive" class="closeNavBarImage" :src="closeImg" @click="!toggleState" />
             <!-- Getting NavItems from component NavItems and sending isActive to NavItems-->
             <NavItems
-                :removed-category="removedCategory"
+                :removed-filter="removedFilter"
                 :is-active="isActive"
                 @close="toggleState($event)"
                 @search="search($event)"
                 @checkedCategories="checkedCategories($event)"
+                @checkedSources="checkedSources($event)"
                 @chosenDate="chosenDate($event)"
             />
         </div>
@@ -36,7 +37,7 @@ export default {
         NavItems,
     },
     props: {
-        removedCategory: {
+        removedFilter: {
             type: String,
             default: '',
         },
@@ -60,6 +61,9 @@ export default {
         checkedCategories(checkedCategories) {
             this.$emit('checkedCategories', checkedCategories);
         },
+        checkedSources(checkedSources) {
+            this.$emit('checkedSources', checkedSources);
+        },
         chosenDate(date) {
             this.$emit('chosenDate', date);
         },
@@ -73,10 +77,9 @@ export default {
 }
 nav {
     float: left;
-    height: 90%;
-    bottom: 0;
-    top: 0;
+    height: 80%;
     width: 50px;
+    top: 0;
     .sidebar {
         top: 0;
         background-color: #f6f6f6;
