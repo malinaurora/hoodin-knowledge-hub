@@ -35,7 +35,11 @@
             <b v-if="article.section">{{ article.section }}</b>
             <p>{{ article.text | striphtml }}</p>
         </router-link>
-        <router-link v-else :to="{ name: modalRoute, params: { id: article.id } }" class="noTitle">
+        <router-link
+            v-else
+            :to="{ name: modalRoute, params: { id: article.id } }"
+            :class="article.text.length < 200 ? 'noTitle' : 'noTitleFill'"
+        >
             <p>{{ article.text | striphtml }}</p>
         </router-link>
         <footer>
@@ -194,7 +198,7 @@ export default {
     .noImage {
         display: flex;
         flex-flow: row wrap;
-        justify-content: space-evenly;
+        justify-content: space-around;
         margin: 35px;
         flex: 1;
         overflow: hidden;
@@ -215,13 +219,26 @@ export default {
 
     .noTitle {
         display: flex;
-        flex-flow: row wrap;
         justify-content: space-evenly;
         margin: 30px;
         margin-top: 40px;
         flex-direction: column;
-        flex: 1;
         overflow: hidden;
+        flex: 1;
+        white-space: pre-wrap;
+        p {
+            font-size: 1.5em;
+            line-height: 29px;
+        }
+    }
+    .noTitleFill {
+        display: flex;
+        justify-content: flex-start;
+        margin: 30px;
+        margin-top: 40px;
+        flex-direction: column;
+        overflow: hidden;
+        flex: 1;
         white-space: pre-wrap;
         p {
             font-size: 1.5em;

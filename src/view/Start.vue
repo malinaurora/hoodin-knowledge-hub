@@ -74,7 +74,7 @@ export default {
             },
             error: false,
             errorImage: '/src/assets/images/error.svg',
-            moreArticlesToLoad: true,
+            moreArticlesToLoad: false,
             favoriteInModal: '',
         };
     },
