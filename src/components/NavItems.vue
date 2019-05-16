@@ -210,61 +210,28 @@ ul {
             margin: 4px 20px 0px 0px;
             width: 26px;
         }
-        .slide-enter-active {
-            -moz-transition-duration: 0.1s;
-            -webkit-transition-duration: 0.1s;
-            -o-transition-duration: 0.1s;
-            transition-duration: 0.1s;
-            -moz-transition-timing-function: ease-in;
-            -webkit-transition-timing-function: ease-in;
-            -o-transition-timing-function: ease-in;
-            transition-timing-function: ease-in;
+        /* width */
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+        /* Track */
+        ::-webkit-scrollbar-track {
+            background: #e6e6e6;
+            border-radius: 5px;
+            -moz-box-shadow: inset 0 -5px 5px -5px #969696, inset 0 5px 5px -5px #969696;
+            -webkit-box-shadow: inset 0 -5px 5px -5px #969696, inset 0 5px 5px -5px #969696;
+            box-shadow: inset 0 -5px 5px -5px #969696, inset 0 5px 5px -5px #969696;
         }
 
-        .slide-leave-active {
-            -moz-transition-duration: 0.1s;
-            -webkit-transition-duration: 0.1s;
-            -o-transition-duration: 0.1s;
-            transition-duration: 0.1s;
-            -moz-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
-            -webkit-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
-            -o-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
-            transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 5px;
         }
-
-        .slide-enter-to,
-        .slide-leave {
-            max-height: 100px;
-            overflow: hidden;
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
         }
-
-        .slide-enter,
-        .slide-leave-to {
-            overflow: hidden;
-            max-height: 0;
-        }
-    }
-    /* width */
-    ::-webkit-scrollbar {
-        width: 5px;
-    }
-    /* Track */
-    ::-webkit-scrollbar-track {
-        background: #e6e6e6;
-        border-radius: 5px;
-        -moz-box-shadow: inset 0 -5px 5px -5px #969696, inset 0 5px 5px -5px #969696;
-        -webkit-box-shadow: inset 0 -5px 5px -5px #969696, inset 0 5px 5px -5px #969696;
-        box-shadow: inset 0 -5px 5px -5px #969696, inset 0 5px 5px -5px #969696;
-    }
-
-    /* Handle */
-    ::-webkit-scrollbar-thumb {
-        background: #888;
-        border-radius: 5px;
-    }
-    /* Handle on hover */
-    ::-webkit-scrollbar-thumb:hover {
-        background: #555;
     }
 }
 </style>
