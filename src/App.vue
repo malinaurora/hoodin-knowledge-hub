@@ -113,6 +113,7 @@ nav {
 p {
     line-height: 25px;
     font-weight: 100;
+    font-size: 18px;
 }
 b {
     line-height: 25px;

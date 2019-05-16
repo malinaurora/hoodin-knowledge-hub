@@ -42,10 +42,9 @@ module.exports = {
     getSearchString() {
         document.body.scrollTop = 0;
         this.queryString.searchString = this.searchString;
+        this.queryString.offset = 0;
 
         this.getData(this.queryString);
-
-        this.queryString.offset = 0;
     },
 
     getCategories(categories) {
@@ -55,10 +54,9 @@ module.exports = {
             categoryString += `${category},`;
         });
         this.queryString.mediaCategories = categoryString;
+        this.queryString.offset = 0;
 
         this.getData(this.queryString);
-
-        this.queryString.offset = 0;
     },
 
     getSources(sources) {
@@ -68,16 +66,15 @@ module.exports = {
             sourceString += `${source.toLowerCase()},`;
         });
         this.queryString.sources = sourceString.slice(0, sourceString.length - 1);
+        this.queryString.offset = 0;
 
         this.getData(this.queryString);
-
-        this.queryString.offset = 0;
     },
 
     getDate(date) {
         document.body.scrollTop = 0;
         this.queryString.ondate = date;
-        this.getData(this.queryString);
         this.queryString.offset = 0;
+        this.getData(this.queryString);
     },
 };

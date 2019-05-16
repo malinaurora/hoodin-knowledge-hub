@@ -132,7 +132,6 @@ export default {
         text-align: center;
         top: 50%;
         left: 50%;
-        margin-top: 50px;
         -ms-transform: translateY(-50%) translateX(-50%);
         transform: translateY(-50%) translateX(-50%);
         width: 80%;
@@ -146,6 +145,7 @@ export default {
         }
         .error {
             img {
+                margin-top: 50px;
                 width: 100%;
                 max-width: 700px;
                 margin-bottom: 20px;

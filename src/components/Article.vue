@@ -13,11 +13,29 @@
             :article-id="article.id"
             :images="article.imageObjects.images"
         />
-        <router-link :to="{ name: modalRoute, params: { id: article.id } }" class="text">
+        <router-link
+            v-if="article.imageObjects.images.length"
+            :to="{ name: modalRoute, params: { id: article.id } }"
+            class="text"
+        >
             <h2 v-if="article.title">
                 {{ article.title }}
             </h2>
             <b v-if="article.section">{{ article.section }}</b>
+            <p>{{ article.text | striphtml }}</p>
+        </router-link>
+        <router-link
+            v-else-if="article.title"
+            :to="{ name: modalRoute, params: { id: article.id } }"
+            class="noImage"
+        >
+            <h2 v-if="article.title">
+                {{ article.title }}
+            </h2>
+            <b v-if="article.section">{{ article.section }}</b>
+            <p>{{ article.text | striphtml }}</p>
+        </router-link>
+        <router-link v-else :to="{ name: modalRoute, params: { id: article.id } }" class="noTitle">
             <p>{{ article.text | striphtml }}</p>
         </router-link>
         <footer>
@@ -170,6 +188,44 @@ export default {
         p {
             height: 100%;
             white-space: pre-wrap;
+        }
+    }
+
+    .noImage {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-evenly;
+        margin: 35px;
+        flex: 1;
+        overflow: hidden;
+        color: var(--test);
+        h2 {
+            font-size: 1.7em;
+            margin-bottom: 25px;
+            width: 100%;
+        }
+        b {
+            width: 100%;
+        }
+        p {
+            width: 100%;
+            line-height: 27px;
+        }
+    }
+
+    .noTitle {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-evenly;
+        margin: 30px;
+        margin-top: 40px;
+        flex-direction: column;
+        flex: 1;
+        overflow: hidden;
+        white-space: pre-wrap;
+        p {
+            font-size: 1.5em;
+            line-height: 29px;
         }
     }
 
