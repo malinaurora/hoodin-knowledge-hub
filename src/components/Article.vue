@@ -288,6 +288,7 @@ export default {
                 max-width: 100%;
                 font-size: 13px;
                 margin: 0;
+                color: white;
                 overflow: visible;
                 font-weight: normal;
                 line-height: normal;
