@@ -21,6 +21,8 @@
             />
             <ImageSlider
                 v-else-if="modalArticle.imageObjects.images"
+                :article-id="modalArticle.id"
+                image-location="modal"
                 :images="modalArticle.imageObjects.images"
             />
 

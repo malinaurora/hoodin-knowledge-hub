@@ -1,14 +1,22 @@
 <template>
     <div class="images">
-        <router-link :to="{ name: modalRoute, params: { id: articleId } }">
+        <router-link v-if="modalRoute" :to="{ name: modalRoute, params: { id: articleId } }">
             <img
                 v-for="image of images"
                 :key="image.url"
                 :src="image.url"
                 alt="Article picture."
-                :class="articleId + 'Image'"
+                :class="articleId + imageLocation"
             />
         </router-link>
+        <img
+            v-for="image of images"
+            v-else
+            :key="image.url"
+            :src="image.url"
+            alt="Article picture."
+            :class="articleId + imageLocation"
+        />
         <button v-if="images.length > 1" class="nextImageLeft" @click="previousImage()">
             &#10094;
         </button>
@@ -29,6 +37,10 @@ export default {
             required: true,
         },
         modalRoute: {
+            type: String,
+            default: '',
+        },
+        imageLocation: {
             type: String,
             required: true,
         },

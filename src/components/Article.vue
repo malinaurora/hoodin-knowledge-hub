@@ -11,6 +11,7 @@
             v-else-if="article.imageObjects.images.length"
             :modal-route="modalRoute"
             :article-id="article.id"
+            image-location="article"
             :images="article.imageObjects.images"
         />
         <router-link
