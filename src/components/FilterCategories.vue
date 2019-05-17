@@ -64,16 +64,23 @@ export default {
     .dropdownItems {
         margin-top: 5px;
         margin: 5px 0px 0px 30px;
+        position: relative;
     }
     input {
         float: right;
         margin: 5px 35px 0px 0px;
         width: 18px;
         height: 18px;
+        position: absolute;
+        top: 0px;
+        right: 0px;
     }
     label {
         margin-bottom: 0rem;
         font-size: 18px;
+        display: block;
+        cursor: pointer;
+        user-select: none;
     }
     li {
         color: var(--text-color);

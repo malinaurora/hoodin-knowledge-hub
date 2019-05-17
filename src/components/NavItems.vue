@@ -180,6 +180,7 @@ ul {
         list-style-type: none;
         margin-top: 15px;
         overflow: hidden;
+        user-select: none;
         .navLable {
             position: absolute;
             visibility: hidden;
@@ -193,6 +194,7 @@ ul {
             width: 35px;
             margin-left: 7.5px;
             float: left;
+            cursor: pointer;
         }
         .anchorFix {
             text-decoration: none;
