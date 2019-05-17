@@ -51,7 +51,7 @@
                 {{ source }}
             </p>
             <div v-if="showMsg" class="msg">
-                <p>Favorites are only stored locally on this device!</p>
+                <p>{{ $t('likedmsg') }}</p>
                 <div class="arrow-down" />
             </div>
             <img

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <input v-model="search" placeholder="Search..." @input="sendSearch(search)" />
+        <input v-model="search" :placeholder="$t('navitemSearch')" @input="sendSearch(search)" />
     </div>
 </template>
 

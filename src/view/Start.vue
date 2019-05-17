@@ -2,13 +2,12 @@
     <div class="start">
         <header>
             <h2 v-if="apiData.length <= 0 && !error">
-                No Articles Found!
+                {{ $t('articlesfound') }}
             </h2>
             <div v-if="error" class="error">
                 <img :src="errorImage" />
                 <h2>
-                    Något gick fel på grund av oss, försök gärna igen och kontakta vår support om
-                    felet kvarstår.
+                    {{ $t('errormsg') }}
                 </h2>
             </div>
         </header>
@@ -36,7 +35,6 @@
 import Article from '../components/Article.vue';
 import MoreArticles from '../components/MoreArticles.vue';
 import Helper from '../helpers';
-import config from '../config.json';
 
 export default {
     components: {
@@ -67,7 +65,7 @@ export default {
             queryString: {
                 ids: '',
                 offset: 0,
-                limit: config.articleLimit,
+                limit: 15,
                 mediaCategories: '',
                 sources: '',
                 ondate: '',

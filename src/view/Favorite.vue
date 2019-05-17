@@ -4,15 +4,14 @@
             <div v-if="error" class="error">
                 <img :src="errorImage" />
                 <h2>
-                    Något gick fel på grund av oss, försök gärna igen och kontakta vår support om
-                    felet kvarstår.
+                    {{ $t('errormsg') }}
                 </h2>
             </div>
             <h2 v-else-if="noFavorites">
-                No Articles Saved To Favorites!
+                {{ $t('favoritText') }}
             </h2>
             <h2 v-else-if="apiData.length <= 0">
-                No Articles Found!
+                {{ $t('articlesfound') }}
             </h2>
         </header>
         <div v-if="queryString.ids" class="row mb-5">
