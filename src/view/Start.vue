@@ -36,6 +36,7 @@
 import Article from '../components/Article.vue';
 import MoreArticles from '../components/MoreArticles.vue';
 import Helper from '../helpers';
+import config from '../config.json';
 
 export default {
     components: {
@@ -66,7 +67,7 @@ export default {
             queryString: {
                 ids: '',
                 offset: 0,
-                limit: 15,
+                limit: config.articleLimit,
                 mediaCategories: '',
                 sources: '',
                 ondate: '',
