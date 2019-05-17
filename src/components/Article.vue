@@ -170,7 +170,7 @@ export default {
                     .replace('http://www.', '')
                     .replace('https://www.', '')
                     .split(/[/?#.]/)[0];
-                this.source = source;
+                this.source = source.charAt(0).toUpperCase() + source.slice(1);
             }
         },
     },
@@ -215,6 +215,7 @@ export default {
         justify-content: space-around;
         margin: 35px;
         flex: 1;
+        white-space: pre-line;
         overflow: hidden;
         color: var(--test);
         h2 {
