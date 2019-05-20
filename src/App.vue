@@ -32,7 +32,6 @@ import Header from './components/Header.vue';
 import NavBar from './components/NavBar.vue';
 import FilterHeader from './components/FilterHeader.vue';
 import config from './config.json';
-import language from './language.json';
 
 export default {
     components: {
