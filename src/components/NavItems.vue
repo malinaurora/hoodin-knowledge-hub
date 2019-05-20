@@ -268,6 +268,7 @@ ul {
         list-style-type: none;
         margin-top: 15px;
         overflow: hidden;
+
         .navLable {
             position: absolute;
             visibility: hidden;
@@ -280,6 +281,7 @@ ul {
             margin: auto;
             margin-left: 7.5px;
             float: left;
+            fill: var(--navbar-svg);
         }
         .anchorFix {
             text-decoration: none;
@@ -291,10 +293,15 @@ ul {
         span {
             display: block;
             cursor: pointer;
+
+            &:hover {
+                color: var(--text-hover-color);
+            }
         }
         .arrowFix {
             float: right;
             margin: 4px 20px 0px 0px;
+            fill: var(--text-color);
         }
         /* width */
         ::-webkit-scrollbar {

@@ -109,6 +109,7 @@ nav {
         margin: 5px 2px 0px 0px;
         width: 35px;
         cursor: pointer;
+        fill: var(--navbar-close-and-hamburger);
     }
     .responsiveMenu {
         display: none;
@@ -140,7 +141,7 @@ nav {
                 width: 33px;
                 border-radius: 1.5px;
                 height: 3px;
-                background-color: #000;
+                background-color: var(--navbar-close-and-hamburger);
                 margin: 5px 0;
             }
         }
@@ -149,6 +150,7 @@ nav {
         }
         .closeNavBarImage {
             margin: 0px;
+            fill: var(--navbar-close-and-hamburger);
         }
     }
 }

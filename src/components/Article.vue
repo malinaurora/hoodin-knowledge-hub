@@ -77,7 +77,7 @@
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"
-                class="favoriteIcon"
+                class="favoriteIcon empty"
                 alt="Add to favorites."
                 @click="addFavorite()"
             >
@@ -354,8 +354,12 @@ export default {
             margin-top: 10px;
         }
 
+        .empty {
+            fill: var(--favorite-svg-empty-color);
+        }
+
         svg {
-            fill: red;
+            fill: var(--favorite-svg-fill-color);
         }
     }
 }
