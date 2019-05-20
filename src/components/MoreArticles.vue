@@ -29,7 +29,7 @@ export default {
         margin: auto;
         cursor: pointer;
     }
-    img {
+    svg {
         border-radius: 4px;
         &:hover {
             box-sizing: border-box;
