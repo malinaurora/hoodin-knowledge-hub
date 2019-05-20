@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueI18n from 'vue-i18n';
+import config from '../config.json';
 
 Vue.use(VueI18n);
 
@@ -36,7 +37,7 @@ const messages = {
     },
 };
 const i18n = new VueI18n({
-    locale: 'sv', // set locale
+    locale: config.lang, // set locale
     messages, // set locale messages
 });
 
