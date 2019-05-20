@@ -1,32 +1,57 @@
 <template>
     <ul class="mt-5">
         <!-- Looping out all data from menuLinks -->
-        <li v-for="items in menuLinks" :key="items.id">
+        <li>
             <!-- Condition for the tooltip -->
-            <router-link :to="items.to">
+            <router-link :to="home.to">
                 <img
                     v-if="!isActive"
-                    v-b-tooltip.hover.html.left="items.text"
-                    :src="items.url"
-                    :alt="items.alt"
+                    v-b-tooltip.hover.html.left="$t('navitemHome')"
+                    :src="home.url"
+                    :alt="home.alt"
+                    @click="stayClosed()"
+                />
+                <img v-else :src="home.url" :alt="home.alt" />
+            </router-link>
+            <!-- Added two more classes to fix router-link styling -->
+            <router-link
+                class="anchorFix"
+                :class="{ navLable: !isActive, removeNavLable: isActive }"
+                :to="home.to"
+            >
+                {{ $t('navitemHome') }}
+            </router-link>
+        </li>
+        <li>
+            <!-- Condition for the tooltip -->
+            <router-link :to="favorites.to">
+                <img
+                    v-if="!isActive"
+                    v-b-tooltip.hover.html.left="$t('navitemFavorites')"
+                    :src="favorites.url"
+                    :alt="favorites.alt"
                     @click="stayClosed()"
                 />
 
-                <img v-else :src="items.url" :alt="items.alt" />
+                <img v-else :src="favorites.url" :alt="favorites.alt" />
             </router-link>
 
             <!-- Added two more classes to fix router-link styling -->
             <router-link
                 class="anchorFix"
                 :class="{ navLable: !isActive, removeNavLable: isActive }"
-                :to="items.to"
+                :to="home.to"
             >
-                {{ items.text }}
+                {{ $t('navitemFavorites') }}
             </router-link>
         </li>
         <!-- Looping out all data from menuSort-->
         <li>
-            <img v-if="!isActive" v-b-tooltip.hover.left="'Search'" :src="searchImg.url" />
+            <img
+                v-if="!isActive"
+                v-b-tooltip.hover.left="$t('navitemSearchDotFree')"
+                :src="searchImg.url"
+            />
             <img v-else :src="searchImg.url" />
             <div @click="stayClosed()">
                 <Search
@@ -36,11 +61,15 @@
             </div>
         </li>
         <li>
-            <img v-if="!isActive" v-b-tooltip.hover.left="'Filters'" :src="filtersImgAndText.url" />
+            <img
+                v-if="!isActive"
+                v-b-tooltip.hover.left="$t('navitemFilter')"
+                :src="filtersImgAndText.url"
+            />
             <img v-else :src="filtersImgAndText.url" />
             <div @click="stayClosed()">
                 <span v-if="isActive" class="removeNavLable animationFix" @click="toggle = !toggle">
-                    {{ filtersImgAndText.text }}
+                    {{ $t('navitemCategories') }}
                     <img v-if="!toggle" class="arrowFix" :src="arrowRight.url" />
                     <img v-else-if="toggle" class="arrowFix" :src="arrowDown.url" />
                 </span>
@@ -57,7 +86,7 @@
                 class="removeNavLable animationFix"
                 @click="toggleSources = !toggleSources"
             >
-                Sources
+                {{ $t('navitemSources') }}
                 <img v-if="!toggleSources" class="arrowFix" :src="arrowRight.url" />
                 <img v-else-if="toggleSources" class="arrowFix" :src="arrowDown.url" />
             </span>
@@ -73,7 +102,7 @@
                 class="removeNavLable animationFix"
                 @click="toggleDate = !toggleDate"
             >
-                Date
+                {{ $t('navitemDate') }}
                 <img v-if="!toggleDate" class="arrowFix" :src="arrowRight.url" />
                 <img v-else-if="toggleDate" class="arrowFix" :src="arrowDown.url" />
             </span>
@@ -111,20 +140,16 @@ export default {
     },
     data() {
         return {
-            menuLinks: [
-                {
-                    text: 'Home',
-                    to: '/',
-                    url: '/src/assets/icons/baseline-home.svg',
-                    alt: 'Home navigation icon',
-                },
-                {
-                    text: 'Favorite',
-                    to: '/favorite',
-                    url: 'src/assets/icons/baseline-favorite-border.svg',
-                    alt: 'Favorite navigation icon',
-                },
-            ],
+            home: {
+                to: '/',
+                url: '/src/assets/icons/baseline-home.svg',
+                alt: 'Home navigation icon',
+            },
+            favorites: {
+                to: '/favorite',
+                url: 'src/assets/icons/baseline-favorite-border.svg',
+                alt: 'Favorite navigation icon',
+            },
             searchImg: {
                 url: 'src/assets/icons/baseline-search.svg',
                 alt: 'Search navigation icon',
@@ -132,10 +157,6 @@ export default {
             filtersImgAndText: {
                 url: 'src/assets/icons/filter-outline.svg',
                 alt: 'Filters navigation icon',
-                text: 'Categories',
-            },
-            filterSourceText: {
-                text: 'Sources',
             },
             arrowRight: {
                 url: 'src/assets/icons/baseline-keyboard_arrow_right.svg',
@@ -186,7 +207,7 @@ ul {
         }
         .removeNavLable {
             padding-left: 60px;
-            color: #000;
+            color: var(--text-color);
         }
         img {
             margin: auto;
@@ -198,7 +219,7 @@ ul {
             text-decoration: none;
             display: block;
             &:hover {
-                color: #7b7b7b;
+                color: var(--text-hover-color);
             }
         }
         span {
@@ -210,61 +231,28 @@ ul {
             margin: 4px 20px 0px 0px;
             width: 26px;
         }
-        .slide-enter-active {
-            -moz-transition-duration: 0.1s;
-            -webkit-transition-duration: 0.1s;
-            -o-transition-duration: 0.1s;
-            transition-duration: 0.1s;
-            -moz-transition-timing-function: ease-in;
-            -webkit-transition-timing-function: ease-in;
-            -o-transition-timing-function: ease-in;
-            transition-timing-function: ease-in;
+        /* width */
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+        /* Track */
+        ::-webkit-scrollbar-track {
+            background: #e6e6e6;
+            border-radius: 5px;
+            -moz-box-shadow: inset 0 -5px 5px -5px #969696, inset 0 5px 5px -5px #969696;
+            -webkit-box-shadow: inset 0 -5px 5px -5px #969696, inset 0 5px 5px -5px #969696;
+            box-shadow: inset 0 -5px 5px -5px #969696, inset 0 5px 5px -5px #969696;
         }
 
-        .slide-leave-active {
-            -moz-transition-duration: 0.1s;
-            -webkit-transition-duration: 0.1s;
-            -o-transition-duration: 0.1s;
-            transition-duration: 0.1s;
-            -moz-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
-            -webkit-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
-            -o-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
-            transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 5px;
         }
-
-        .slide-enter-to,
-        .slide-leave {
-            max-height: 100px;
-            overflow: hidden;
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
         }
-
-        .slide-enter,
-        .slide-leave-to {
-            overflow: hidden;
-            max-height: 0;
-        }
-    }
-    /* width */
-    ::-webkit-scrollbar {
-        width: 5px;
-    }
-    /* Track */
-    ::-webkit-scrollbar-track {
-        background: #e6e6e6;
-        border-radius: 5px;
-        -moz-box-shadow: inset 0 -5px 5px -5px #969696, inset 0 5px 5px -5px #969696;
-        -webkit-box-shadow: inset 0 -5px 5px -5px #969696, inset 0 5px 5px -5px #969696;
-        box-shadow: inset 0 -5px 5px -5px #969696, inset 0 5px 5px -5px #969696;
-    }
-
-    /* Handle */
-    ::-webkit-scrollbar-thumb {
-        background: #888;
-        border-radius: 5px;
-    }
-    /* Handle on hover */
-    ::-webkit-scrollbar-thumb:hover {
-        background: #555;
     }
 }
 </style>

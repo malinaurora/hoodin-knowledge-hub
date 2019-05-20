@@ -82,7 +82,7 @@ nav {
     top: 0;
     .sidebar {
         top: 0;
-        background-color: #f6f6f6;
+        background-color: var(--secondary-color);
         box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.25);
         bottom: 0;
         width: 50px;
@@ -110,10 +110,10 @@ nav {
     nav {
         position: fixed;
         width: 100vw;
-        height: 40px;
+        height: 39px;
         z-index: 9999999;
-        background-color: #f6f6f6;
-        box-shadow: 2px 2px #f6f6f6;
+        background-color: var(--secondary-color);
+        box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.25);
         .sidebar {
             width: 0px;
             transition: none;
@@ -123,13 +123,13 @@ nav {
         }
         .responsiveMenu {
             display: block;
-            margin: 5px;
+            margin: 10px;
             div {
-                width: 35px;
-                height: 4px;
-                border-radius: 3px;
+                width: 33px;
+                border-radius: 1.5px;
+                height: 3px;
                 background-color: #000;
-                margin: 6px 0;
+                margin: 5px 0;
             }
         }
         .removeResponsiveMenu {

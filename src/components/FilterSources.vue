@@ -41,7 +41,7 @@ export default {
 
 <style style lang="scss">
 .dropdown {
-    background-color: #e6e6e6;
+    background-color: var(--dropdown-color);
     -moz-box-shadow: inset 0 -5px 5px -5px #969696, inset 0 5px 5px -5px #969696;
     -webkit-box-shadow: inset 0 -5px 5px -5px #969696, inset 0 5px 5px -5px #969696;
     box-shadow: inset 0 -5px 5px -5px #969696, inset 0 5px 5px -5px #969696;
@@ -63,7 +63,7 @@ export default {
         font-size: 18px;
     }
     li {
-        color: #000;
+        color: var(--text-color);
     }
 }
 </style>

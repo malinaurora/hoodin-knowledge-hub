@@ -6,6 +6,7 @@ import moment from 'moment';
 import router from './router';
 import App from './App.vue';
 import 'babel-polyfill';
+import i18n from './plugins/i18n';
 
 Vue.use(BootstrapVue);
 
@@ -39,5 +40,6 @@ Vue.filter('moment', date => moment(date).fromNow(true));
 new Vue({
     el: '#app',
     router,
+    i18n,
     render: html => html(App),
-});
+}).$mount('#app');

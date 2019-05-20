@@ -2,13 +2,12 @@
     <div class="start">
         <header>
             <h2 v-if="apiData.length <= 0 && !error">
-                No Articles Found!
+                {{ $t('articlesfound') }}
             </h2>
             <div v-if="error" class="error">
                 <img :src="errorImage" />
                 <h2>
-                    Något gick fel på grund av oss, försök gärna igen och kontakta vår support om
-                    felet kvarstår.
+                    {{ $t('errormsg') }}
                 </h2>
             </div>
         </header>
@@ -74,7 +73,7 @@ export default {
             },
             error: false,
             errorImage: '/src/assets/images/error.svg',
-            moreArticlesToLoad: true,
+            moreArticlesToLoad: false,
             favoriteInModal: '',
         };
     },
@@ -121,7 +120,6 @@ export default {
         text-align: center;
         top: 50%;
         left: 50%;
-        margin-top: 50px;
         -ms-transform: translateY(-50%) translateX(-50%);
         transform: translateY(-50%) translateX(-50%);
         width: 80%;
@@ -132,9 +130,11 @@ export default {
             font-weight: 200;
             max-width: 900px;
             margin: auto;
+            font-family: var(--filter-box-font);
         }
         .error {
             img {
+                margin-top: 50px;
                 width: 100%;
                 max-width: 700px;
                 margin-bottom: 20px;
@@ -144,9 +144,9 @@ export default {
 }
 article {
     a {
-        color: black;
+        color: var(--text-color);
         &:hover {
-            color: black;
+            color: var(--text-color);
             text-decoration: none;
         }
     }

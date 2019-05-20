@@ -13,6 +13,8 @@
 </template>
 
 <script>
+import config from '../config.json';
+
 export default {
     props: {
         removedFilter: {
@@ -41,9 +43,7 @@ export default {
         },
     },
     mounted() {
-        fetch(
-            'https://interns-test-channel.hoodin.com/api/v2/categories/media?token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9',
-        )
+        fetch(`https://${config.baseRoute}/api/v2/categories/media?token=${config.token}`)
             .then(response => response.json())
             .then(categories => {
                 this.apiCategories = categories.data.items;
@@ -54,7 +54,7 @@ export default {
 
 <style style lang="scss">
 .dropdown {
-    background-color: #e6e6e6;
+    background-color: var(--dropdown-color);
     -moz-box-shadow: inset 0 -5px 5px -5px #969696, inset 0 5px 5px -5px #969696;
     -webkit-box-shadow: inset 0 -5px 5px -5px #969696, inset 0 5px 5px -5px #969696;
     box-shadow: inset 0 -5px 5px -5px #969696, inset 0 5px 5px -5px #969696;
@@ -64,19 +64,26 @@ export default {
     .dropdownItems {
         margin-top: 5px;
         margin: 5px 0px 0px 30px;
+        position: relative;
     }
     input {
         float: right;
         margin: 5px 35px 0px 0px;
         width: 18px;
         height: 18px;
+        position: absolute;
+        top: 0px;
+        right: 0px;
     }
     label {
         margin-bottom: 0rem;
         font-size: 18px;
+        display: block;
+        cursor: pointer;
+        user-select: none;
     }
     li {
-        color: #000;
+        color: var(--text-color);
     }
 }
 </style>

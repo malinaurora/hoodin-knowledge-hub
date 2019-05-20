@@ -36,7 +36,6 @@ export default {
         line-height: 12px;
         margin-right: 5px;
         margin-left: 5px;
-        font-family: 'Roboto';
     }
     .removeFilter {
         display: inline-block;

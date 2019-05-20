@@ -1,18 +1,17 @@
 <template>
-    <div clasS="favorite">
+    <div class="favorite">
         <header>
             <div v-if="error" class="error">
                 <img :src="errorImage" />
                 <h2>
-                    Något gick fel på grund av oss, försök gärna igen och kontakta vår support om
-                    felet kvarstår.
+                    {{ $t('errormsg') }}
                 </h2>
             </div>
             <h2 v-else-if="noFavorites">
-                No Articles Saved To Favorites!
+                {{ $t('favoritText') }}
             </h2>
             <h2 v-else-if="apiData.length <= 0">
-                No Articles Found!
+                {{ $t('articlesfound') }}
             </h2>
         </header>
         <div v-if="queryString.ids" class="row mb-5">
@@ -39,6 +38,7 @@
 import Article from '../components/Article.vue';
 import MoreArticles from '../components/MoreArticles.vue';
 import Helper from '../helpers';
+import config from '../config.json';
 
 export default {
     components: {
@@ -69,7 +69,7 @@ export default {
             queryString: {
                 ids: '',
                 offset: 0,
-                limit: 15,
+                limit: config.articleLimit,
                 mediaCategories: '',
                 sources: '',
                 ondate: '',
@@ -132,7 +132,6 @@ export default {
         text-align: center;
         top: 50%;
         left: 50%;
-        margin-top: 50px;
         -ms-transform: translateY(-50%) translateX(-50%);
         transform: translateY(-50%) translateX(-50%);
         width: 80%;
@@ -142,10 +141,12 @@ export default {
             font-size: 2em;
             font-weight: 200;
             max-width: 900px;
+            font-family: var(--filter-box-font);
             margin: auto;
         }
         .error {
             img {
+                margin-top: 50px;
                 width: 100%;
                 max-width: 700px;
                 margin-bottom: 20px;

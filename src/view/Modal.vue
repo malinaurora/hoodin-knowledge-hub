@@ -101,6 +101,8 @@
 </template>
 
 <script>
+import config from '../config.json';
+
 export default {
     name: 'Modal',
     data() {
@@ -116,11 +118,7 @@ export default {
     },
     async created() {
         // fetch the data from the api.
-        await fetch(
-            `https://interns-test-channel.hoodin.com/api/v2/items/${
-                this.id
-            }?&&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9`,
-        )
+        await fetch(`https://${config.baseRoute}/api/v2/items/${this.id}?&&token=${config.token}`)
             .then(response => response.json())
             .then(data => {
                 this.modalArticle = data.data.item;
@@ -235,7 +233,7 @@ export default {
     left: 50%;
     transform: translate(-50%, -50%);
     max-height: 90%;
-    background: rgb(255, 255, 255);
+    background: var(--article-color);
     box-sizing: border-box;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.7);
     border-radius: 4px;
@@ -307,6 +305,7 @@ export default {
         display: flex;
         flex-direction: column;
         flex: 1;
+        color: var(--text-color);
     }
     .exitBtn {
         background-color: white;
@@ -330,6 +329,7 @@ export default {
     .footerInfo {
         float: left;
         vertical-align: bottom;
+        color: var(--text-color);
         p {
             display: block;
             margin: 0 15px 0 15px;
@@ -483,6 +483,7 @@ export default {
             height: 94%;
             max-height: 100%;
             margin-top: 20px;
+            background-color: var(--article-color);
             .modalImages {
                 img {
                     width: 100%;

@@ -29,6 +29,8 @@
 import Header from './components/Header.vue';
 import NavBar from './components/NavBar.vue';
 import FilterHeader from './components/FilterHeader.vue';
+import config from './config.json';
+import language from './language.json';
 
 export default {
     components: {
@@ -38,6 +40,7 @@ export default {
     },
     data() {
         return {
+            json: config,
             searchString: '',
             checkedCategoriesArray: [],
             checkedSourcesArray: [],
@@ -50,6 +53,7 @@ export default {
         if (localStorage.id === undefined) {
             localStorage.id = '[]';
         }
+        this.stylingFromJson();
     },
     methods: {
         search(searchString) {
@@ -67,6 +71,12 @@ export default {
         chosenDate(date) {
             this.unixTimestamp = date;
         },
+        stylingFromJson() {
+            const jsonStyle = this.json.styling;
+            Object.keys(jsonStyle).forEach(key => {
+                document.documentElement.style.setProperty(key, jsonStyle[key]);
+            });
+        },
     },
 };
 </script>
@@ -74,7 +84,8 @@ export default {
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css?family=Montserrat|Roboto+Slab|Roboto:300,400');
 body {
-    font-family: 'Roboto Slab';
+    font-family: var(--body-font);
+    background-color: var(--primary-color);
 }
 
 h1,
@@ -83,7 +94,7 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: 'Montserrat';
+    font-family: var(--heading-font);
     font-style: normal;
     font-weight: bold;
     line-height: normal;
@@ -113,13 +124,16 @@ nav {
 p {
     line-height: 25px;
     font-weight: 100;
+    font-size: 18px;
 }
 b {
     line-height: 25px;
 }
-
 footer {
     font-weight: normal;
     line-height: normal;
+}
+.filter {
+    font-family: var(--filter-box-font);
 }
 </style>
