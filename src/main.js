@@ -3,12 +3,15 @@ import BootstrapVue from 'bootstrap-vue';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import moment from 'moment';
+import Vuetify from 'vuetify';
+import 'vuetify/dist/vuetify.min.css';
 import router from './router';
 import App from './App.vue';
 import 'babel-polyfill';
 import i18n from './plugins/i18n';
 
 Vue.use(BootstrapVue);
+Vue.use(Vuetify);
 
 Vue.filter('striphtml', value => {
     const div = document.createElement('div');

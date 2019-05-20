@@ -1,9 +1,19 @@
 <template>
-    <div class="datePicker">
-        <input v-model="chosenDate" type="date" :max="maxDate" :on="getDate(chosenDate)" />
-    </div>
+    <v-date-picker
+        v-model="chosenDate"
+        class="primary"
+        :show-current="maxDate"
+        :on="getDate(chosenDate)"
+        no-title
+        scrollable
+        width="250px"
+        background-color="red"
+    />
 </template>
+
 <script>
+import 'vuetify/dist/vuetify.min.css';
+
 export default {
     data() {
         return {
@@ -27,36 +37,14 @@ export default {
     },
 };
 </script>
+
 <style lang="scss">
-.datepicker {
-    background-color: #e6e6e6;
-    -moz-box-shadow: inset 0 -5px 5px -5px #969696, inset 0 5px 5px -5px #969696;
-    -webkit-box-shadow: inset 0 -5px 5px -5px #969696, inset 0 5px 5px -5px #969696;
-    box-shadow: inset 0 -5px 5px -5px #969696, inset 0 5px 5px -5px #969696;
-    overflow: hidden;
-    width: 100%;
-    input {
-        margin-top: 5px;
-        margin-bottom: 5px;
-        margin-left: 30px;
-        height: 35px;
-        border: 0.5px solid lightgray;
-        font-size: 18px;
-    }
+.v-picker__body {
+    background-color: var(--dropdown-color) !important;
+    -moz-box-shadow: inset 0 -5px 5px -5px #969696, inset 0 5px 5px -5px #969696 !important;
+    -webkit-box-shadow: inset 0 -5px 5px -5px #969696, inset 0 5px 5px -5px #969696 !important;
 }
-::-webkit-inner-spin-button {
-    display: none;
-}
-::-webkit-calendar-picker-indicator {
-    padding: 5px;
-    margin-right: 3px;
-}
-@media (max-width: 767.98px) {
-    .datepicker {
-        width: 100%;
-        input {
-            width: 80%;
-        }
-    }
+.v-btn__content {
+    color: black !important;
 }
 </style>
