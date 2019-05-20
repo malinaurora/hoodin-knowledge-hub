@@ -1,6 +1,6 @@
 <template>
-    <div class="text-center col-12 mb-4">
-        <a class="load-more-btn btn" role="button" aria-disabled="true" @click="loadData">
+    <div class="moreArticles">
+        <a @click="loadData">
             <img class="icon" src="/src/assets/icons/baseline-arrow.svg" alt="load more" />
         </a>
     </div>
@@ -17,16 +17,26 @@ export default {
 </script>
 
 <style lang="scss">
-.load-more-btn {
-    background: rgb(255, 255, 255);
-    &:hover {
-        box-sizing: border-box;
-        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.7);
+.moreArticles {
+    margin-bottom: 40px;
+    width: 100%;
+    align-content: center;
+    display: flex;
+    a {
+        margin: auto;
+        cursor: pointer;
     }
-}
+    img {
+        border-radius: 4px;
+        &:hover {
+            box-sizing: border-box;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.7);
+        }
+    }
 
-.icon {
-    width: 35px;
-    height: 35px;
+    .icon {
+        width: 35px;
+        height: 35px;
+    }
 }
 </style>

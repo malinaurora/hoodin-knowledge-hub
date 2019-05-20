@@ -14,14 +14,16 @@
             :checked-sources-array="checkedSourcesArray"
             @removeFilter="removeFilter($event)"
         />
-        <main class="container">
-            <router-view
-                :search-string="searchString"
-                :checked-categories-array="checkedCategoriesArray"
-                :checked-sources-array="checkedSourcesArray"
-                :unix-timestamp="unixTimestamp"
-            />
-        </main>
+        <div>
+            <main class="container">
+                <router-view
+                    :search-string="searchString"
+                    :checked-categories-array="checkedCategoriesArray"
+                    :checked-sources-array="checkedSourcesArray"
+                    :unix-timestamp="unixTimestamp"
+                />
+            </main>
+        </div>
     </div>
 </template>
 
@@ -83,9 +85,65 @@ export default {
 
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css?family=Montserrat|Roboto+Slab|Roboto:300,400');
+
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
 body {
     font-family: var(--body-font);
     background-color: var(--primary-color);
+    margin: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+@media screen and (max-width: 1300px) {
+    .container {
+        max-width: 850px;
+    }
+}
+
+@media screen and (max-width: 765px) {
+    .container {
+        max-width: 600px;
+    }
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.column {
+    box-sizing: border-box;
+    margin-bottom: 30px;
+    margin-left: 15px;
+    margin-right: 15px;
+    width: calc(33.333% - 30px);
+}
+
+@media screen and (max-width: 1300px) {
+    .column {
+        width: calc(50% - 30px);
+    }
+}
+
+@media screen and (max-width: 765px) {
+    .column {
+        width: calc(100% - 30px);
+    }
+}
+
+input {
+    font-family: var(--filter-box-font);
+    font-size: 1em;
 }
 
 h1,

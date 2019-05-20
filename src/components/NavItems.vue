@@ -1,19 +1,15 @@
 <template>
-    <ul class="mt-5">
+    <ul>
         <!-- Looping out all data from menuLinks -->
         <li>
             <!-- Condition for the tooltip -->
-            <router-link :to="home.to">
-                <img
-                    v-if="!isActive"
-                    v-b-tooltip.hover.html.left="$t('navitemHome')"
-                    :src="home.url"
-                    :alt="home.alt"
-                    @click="stayClosed()"
-                />
-                <img v-else :src="home.url" :alt="home.alt" />
+            <router-link :to="home.to" class="navLink">
+                <img :src="home.url" :alt="home.alt" @click="stayClosed()" />
+                <div v-if="!isActive" class="tooltip">
+                    <p>{{ $t('navitemHome') }}</p>
+                    <div class="arrow-down" />
+                </div>
             </router-link>
-            <!-- Added two more classes to fix router-link styling -->
             <router-link
                 class="anchorFix"
                 :class="{ navLable: !isActive, removeNavLable: isActive }"
@@ -21,38 +17,32 @@
             >
                 {{ $t('navitemHome') }}
             </router-link>
-        </li>
-        <li>
-            <!-- Condition for the tooltip -->
-            <router-link :to="favorites.to">
-                <img
-                    v-if="!isActive"
-                    v-b-tooltip.hover.html.left="$t('navitemFavorites')"
-                    :src="favorites.url"
-                    :alt="favorites.alt"
-                    @click="stayClosed()"
-                />
-
-                <img v-else :src="favorites.url" :alt="favorites.alt" />
-            </router-link>
 
             <!-- Added two more classes to fix router-link styling -->
+        </li>
+        <li>
+            <router-link :to="favorites.to" class="navLink">
+                <img :src="favorites.url" :alt="favorites.alt" @click="stayClosed()" />
+                <div v-if="!isActive" class="tooltip">
+                    <p>{{ $t('navitemFavorites') }}</p>
+                    <div class="arrow-down" />
+                </div>
+            </router-link>
             <router-link
                 class="anchorFix"
                 :class="{ navLable: !isActive, removeNavLable: isActive }"
-                :to="home.to"
+                :to="favorites.to"
             >
                 {{ $t('navitemFavorites') }}
             </router-link>
         </li>
         <!-- Looping out all data from menuSort-->
-        <li>
-            <img
-                v-if="!isActive"
-                v-b-tooltip.hover.left="$t('navitemSearchDotFree')"
-                :src="searchImg.url"
-            />
-            <img v-else :src="searchImg.url" />
+        <li class="navLink">
+            <img :src="searchImg.url" />
+            <div v-if="!isActive" class="tooltip">
+                <p>{{ $t('navitemSearchDotFree') }}</p>
+                <div class="arrow-down" />
+            </div>
             <div @click="stayClosed()">
                 <Search
                     :style="{ display: isActive ? 'block' : 'none' }"
@@ -60,13 +50,12 @@
                 />
             </div>
         </li>
-        <li>
-            <img
-                v-if="!isActive"
-                v-b-tooltip.hover.left="$t('navitemFilter')"
-                :src="filtersImgAndText.url"
-            />
-            <img v-else :src="filtersImgAndText.url" />
+        <li class="navLink">
+            <img :src="filtersImgAndText.url" />
+            <div v-if="!isActive" class="tooltip">
+                <p>{{ $t('navitemFilter') }}</p>
+                <div class="arrow-down" />
+            </div>
             <div @click="stayClosed()">
                 <span v-if="isActive" class="removeNavLable animationFix" @click="toggle = !toggle">
                     {{ $t('navitemCategories') }}
@@ -193,7 +182,7 @@ export default {
 <style lang="scss">
 ul {
     padding: 0;
-    margin: 0;
+    margin-top: 50px;
     .animationFix {
         width: 250px;
     }
@@ -252,6 +241,47 @@ ul {
         /* Handle on hover */
         ::-webkit-scrollbar-thumb:hover {
             background: #555;
+        }
+    }
+    .navLink {
+        &:hover {
+            .tooltip {
+                opacity: 1;
+                transition: 0.25s;
+            }
+        }
+    }
+    .tooltip {
+        opacity: 0;
+        position: absolute;
+        left: 45px;
+        background-color: black;
+        border: 1px solid black;
+        padding: 3px;
+        border-radius: 3px;
+        margin-top: 5px;
+
+        p {
+            max-width: 100%;
+            font-size: 11px;
+            margin: 0;
+            color: white;
+            overflow: visible;
+            font-weight: normal;
+            line-height: normal;
+        }
+
+        .arrow-down {
+            width: 0;
+            height: 0;
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+
+            border-right: 5px solid black;
+            position: absolute;
+            left: -5px;
+            top: 50%;
+            transform: translate(0, -50%);
         }
     }
 }

@@ -11,8 +11,8 @@
                 </h2>
             </div>
         </header>
-        <div class="row mb-4 mt-2">
-            <article v-for="api of apiData" :key="api.id" class="col-lg-4 col-md-6 mt-3 mb-3">
+        <div class="row">
+            <article v-for="api of apiData" :key="api.id" class="column">
                 <Article
                     :article="api"
                     modal-route="modalStart"
@@ -124,6 +124,7 @@ export default {
         transform: translateY(-50%) translateX(-50%);
         width: 80%;
         z-index: -9;
+
         h2 {
             text-align: center;
             font-size: 2em;
@@ -132,6 +133,7 @@ export default {
             margin: auto;
             font-family: var(--filter-box-font);
         }
+
         .error {
             img {
                 margin-top: 50px;
@@ -141,10 +143,17 @@ export default {
             }
         }
     }
+
+    .row {
+        margin-top: 40px;
+        margin-bottom: 20px;
+    }
 }
 article {
     a {
         color: var(--text-color);
+        margin-top: 30px;
+        margin-bottom: 30px;
         &:hover {
             color: var(--text-color);
             text-decoration: none;

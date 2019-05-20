@@ -85,6 +85,7 @@ nav {
         background-color: var(--secondary-color);
         box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.25);
         bottom: 0;
+        left: 0;
         width: 50px;
         position: fixed;
         transition: 0.4s;
