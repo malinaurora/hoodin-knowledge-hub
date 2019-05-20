@@ -1,14 +1,14 @@
 <template>
-    <v-date-picker
-        v-model="chosenDate"
-        class="primary"
-        :show-current="maxDate"
-        :on="getDate(chosenDate)"
-        no-title
-        scrollable
-        width="250px"
-        background-color="red"
-    />
+    <div class="datepicker">
+        <v-date-picker
+            v-model="chosenDate"
+            :show-current="maxDate"
+            :on="getDate(chosenDate)"
+            no-title
+            scrollable
+            width="250px"
+        />
+    </div>
 </template>
 
 <script>
@@ -46,5 +46,10 @@ export default {
 }
 .v-btn__content {
     color: black !important;
+}
+@media (max-width: 767.98px) {
+    .v-picker__body {
+        width: 100% !important;
+    }
 }
 </style>
