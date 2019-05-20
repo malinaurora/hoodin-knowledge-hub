@@ -31,6 +31,7 @@ export default {
     }
     svg {
         border-radius: 4px;
+        fill: var(--show-more-articles-svg);
         &:hover {
             box-sizing: border-box;
             box-shadow: 0 1px 5px rgba(0, 0, 0, 0.7);
