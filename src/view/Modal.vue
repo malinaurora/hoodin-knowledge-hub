@@ -3,14 +3,26 @@
         <router-link :to="this.$route.matched[0]">
             <div class="overlay" @click="enableScroll()" />
         </router-link>
-        <div v-if="dataLoaded" class="modal_content">
+        <div
+            v-if="dataLoaded"
+            class="modal_content"
+            :class="modalArticle.imageObjects.images.length ? '' : 'noImages'"
+        >
             <router-link :to="this.$route.matched[0]">
-                <img
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="35"
+                    height="35"
+                    viewBox="0 0 24 24"
                     class="exitBtn"
-                    src="/src/assets/icons/baseline-close-24px.svg"
                     alt="closeModal"
                     @click="enableScroll()"
-                />
+                >
+                    <path
+                        d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                    />
+                    <path d="M0 0h24v24H0z" fill="none" />
+                </svg>
             </router-link>
             <iframe
                 v-if="modalArticle.video"
@@ -25,55 +37,116 @@
                 image-location="modal"
                 :images="modalArticle.imageObjects.images"
             />
-
             <section class="modalText">
-                <h1 v-if="modalArticle.title">{{ modalArticle.title }}</h1>
-                <b v-if="modalArticle.section">{{ modalArticle.section }}</b>
-                <p>{{ modalArticle.text | striphtml }}</p>
+                <div class="styleText">
+                    <h1 v-if="modalArticle.title">{{ modalArticle.title }}</h1>
+                    <b v-if="modalArticle.section">{{ modalArticle.section }}</b>
+                    <p>{{ modalArticle.text | striphtml }}</p>
+                </div>
             </section>
             <footer class="modalFooter">
-                <img
-                    v-if="modalArticle.author.avatar"
-                    class="avatarImage"
-                    :src="modalArticle.author.avatar.url"
-                    alt="Author avatar picture."
-                />
                 <div class="footerInfo">
-                    <p class="modalTime">{{ modalArticle.published.split('T')[0] }}</p>
-                    <p class="modalAuthor">{{ modalArticle.author.name }}</p>
+                    <img
+                        v-if="modalArticle.author.avatar"
+                        class="avatarImage"
+                        :src="modalArticle.author.avatar.url"
+                        alt="Author avatar picture."
+                    />
+                    <div class="timeAndAuthor">
+                        <p class="modalTime">{{ modalArticle.published.split('T')[0] }}</p>
+                        <p class="modalAuthor">{{ modalArticle.author.name }}</p>
+                    </div>
                 </div>
                 <div v-if="showMsg" class="popupmsg">
                     <p>Favorites are only stored locally on this device!</p>
                     <div class="arrow-down" />
                 </div>
-                <img
-                    v-if="favorite"
-                    class="favoritesIcon"
-                    src="/src/assets/icons/baseline-favorite.svg"
-                    alt="Remove from favorites."
-                    @click="removeFavorite()"
-                />
-                <img
-                    v-else
-                    class="favoritesIcon"
-                    src="/src/assets/icons/baseline-favorite-border.svg"
-                    alt="Add to favorites."
-                    @click="addFavorite()"
-                />
-                <div class="footerLinks">
+                <div v-if="modalArticle.source_url" class="footerLinks">
+                    <div v-if="showShareMsg" class="shareMsg">
+                        <p>Link copied!</p>
+                        <div class="arrow-down" />
+                    </div>
+                    <div class="links">
+                        <a class="modalShare" @click="getShare()">Copy link</a>
+                        <a
+                            target="_blank"
+                            class="modalOrginalArticle"
+                            rel="noopener noreferrer"
+                            :href="modalArticle.source_url"
+                            >View original article</a
+                        >
+                    </div>
+                    <div class="favIcon">
+                        <svg
+                            v-if="favorite"
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="35"
+                            height="35"
+                            viewBox="0 0 24 24"
+                            class="favoritesIcon"
+                            alt="Remove from favorites."
+                            @click="removeFavorite()"
+                        >
+                            <path d="M0 0h24v24H0z" fill="none" />
+                            <path
+                                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                            />
+                        </svg>
+                        <svg
+                            v-else
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="35"
+                            height="35"
+                            viewBox="0 0 24 24"
+                            class="favoritesIcon"
+                            alt="Add to favorites."
+                            @click="addFavorite()"
+                        >
+                            <path d="M0 0h24v24H0z" fill="none" />
+                            <path
+                                d="M16.5 3c-1.74 0-3.41.81-4.5 2.09C10.91 3.81 9.24 3 7.5 3 4.42 3 2 5.42 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3zm-4.4 15.55l-.1.1-.1-.1C7.14 14.24 4 11.39 4 8.5 4 6.5 5.5 5 7.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5 0 2.89-3.14 5.74-7.9 10.05z"
+                            />
+                        </svg>
+                    </div>
+                </div>
+                <div v-else class="footerLinks" style="padding-top: 25px">
                     <div v-if="showShareMsg" class="shareMsg">
                         <p>Link copied!</p>
                         <div class="arrow-down" />
                     </div>
                     <a class="modalShare" @click="getShare()">Copy link</a>
-                    <a
-                        v-if="modalArticle.source_url"
-                        target="_blank"
-                        class="modalOrginalArticle"
-                        rel="noopener noreferrer"
-                        :href="modalArticle.source_url"
-                        >View original article</a
-                    >
+                    <div class="favIcon">
+                        <svg
+                            v-if="favorite"
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="35"
+                            height="35"
+                            viewBox="0 0 24 24"
+                            class="favoritesIcon"
+                            alt="Remove from favorites."
+                            @click="removeFavorite()"
+                        >
+                            <path d="M0 0h24v24H0z" fill="none" />
+                            <path
+                                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                            />
+                        </svg>
+                        <svg
+                            v-else
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="35"
+                            height="35"
+                            viewBox="0 0 24 24"
+                            class="favoritesIcon"
+                            alt="Add to favorites."
+                            @click="addFavorite()"
+                        >
+                            <path d="M0 0h24v24H0z" fill="none" />
+                            <path
+                                d="M16.5 3c-1.74 0-3.41.81-4.5 2.09C10.91 3.81 9.24 3 7.5 3 4.42 3 2 5.42 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3zm-4.4 15.55l-.1.1-.1-.1C7.14 14.24 4 11.39 4 8.5 4 6.5 5.5 5 7.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5 0 2.89-3.14 5.74-7.9 10.05z"
+                            />
+                        </svg>
+                    </div>
                 </div>
             </footer>
         </div>
@@ -207,20 +280,35 @@ export default {
         margin: 20px 0 40px;
         text-align: center;
     }
+    .images {
+        img {
+            width: 100%;
+        }
+    }
     iframe {
         height: 400px;
         border: none;
     }
     .modalText {
         overflow: auto;
-        padding-top: 25px;
-        padding-right: 20px;
-        padding-left: 25px;
+        min-height: 100px;
         display: flex;
         flex-direction: column;
         flex: 1;
-        b {
-            padding-bottom: 10px;
+        .styleText {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            margin-right: 25px;
+            margin-left: 25px;
+            h1 {
+                margin-bottom: 20px;
+            }
+            p {
+                margin: 0;
+            }
+            b {
+                padding-bottom: 10px;
+            }
         }
     }
     .exitBtn {
@@ -229,6 +317,7 @@ export default {
         position: absolute;
         top: -20px;
         right: -20px;
+        fill: blue;
         width: 40px;
         cursor: pointer;
         transform: scale(0.8);
@@ -260,52 +349,69 @@ export default {
         background: #555;
     }
 }
+.noImages {
+    max-width: 50%;
+}
 .modalFooter {
     padding: 10px;
+    display: flex;
+    justify-content: space-between;
     .footerInfo {
-        float: left;
+        display: flex;
+        align-self: flex-end;
         vertical-align: bottom;
         p {
-            display: block;
             margin: 0 15px 0 15px;
         }
         .modalAuthor {
+            display: flex;
             white-space: nowrap;
             text-overflow: ellipsis;
             overflow: hidden;
-            display: inline-block;
             width: 200px;
+        }
+        .timeAndAuthor {
+            flex-direction: column;
         }
     }
     .footerLinks {
-        float: right;
-        vertical-align: bottom;
-        a {
-            display: block;
-            margin: 0 15px 0 15px;
-            color: #007bff;
-            text-align: right;
-            line-height: 25px;
-            &:hover {
-                text-decoration: underline;
+        display: flex;
+        .links {
+            flex-direction: column;
+            align-self: flex-end;
+            display: flex;
+            a {
+                line-height: 25px;
+                font-size: 18px;
+                align-self: flex-end;
+                margin: 0 15px 0 15px;
                 color: #007bff;
-                cursor: pointer;
+                &:hover {
+                    text-decoration: underline;
+                    color: #007bff;
+                    cursor: pointer;
+                }
+            }
+        }
+        .modalShare {
+            align-self: flex-end;
+        }
+        .favIcon {
+            cursor: pointer;
+            display: flex;
+            align-self: flex-end;
+            .favoritesIcon {
+                margin-top: 5px;
+                fill: red;
             }
         }
     }
-    .favoritesIcon {
-        margin-top: 5px;
-        vertical-align: bottom;
-        width: 40px;
-        float: right;
-    }
-
     .avatarImage {
         width: 50px;
         height: 50px;
         border-radius: 50%;
         box-shadow: 0px 0px 10px gray;
-        float: left;
+        display: flex;
     }
 }
 .popupmsg {
@@ -378,15 +484,18 @@ export default {
                 }
             }
             .modalText {
+                display: flex;
+                align-items: center;
                 padding-top: 20px;
                 padding-bottom: 0px;
                 padding-left: 15px;
                 padding-right: 15px;
                 h1 {
+                    margin-bottom: 20px;
                     font-size: 1.5em;
                 }
             }
-            footer {
+            .modalFooter {
                 a {
                     font-size: 12px;
                     margin: 0 5px 0 0px !important;
@@ -398,6 +507,9 @@ export default {
                 .modalAuthor {
                     width: 150px;
                 }
+            }
+            .exitBtn {
+                margin: 3px;
             }
         }
     }

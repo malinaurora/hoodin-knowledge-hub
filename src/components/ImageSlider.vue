@@ -94,7 +94,7 @@ export default {
 </script>
 <style lang="scss">
 .images {
-    max-height: 65%;
+    max-height: 60%;
     position: relative;
     overflow: hidden;
 
