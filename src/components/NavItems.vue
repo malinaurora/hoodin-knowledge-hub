@@ -368,4 +368,13 @@ ul {
         }
     }
 }
+@media (max-width: 767.98px) {
+    ul {
+        li {
+            .arrowFix {
+                margin: 4px -90px 0px 0px;
+            }
+        }
+    }
+}
 </style>
