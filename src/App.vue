@@ -2,6 +2,7 @@
     <div id="app">
         <Header />
         <NavBar
+            v-if="showNavbar"
             :removed-filter="removedFilter"
             :removed-source="removedSource"
             @search="search($event)"
@@ -14,16 +15,15 @@
             :checked-sources-array="checkedSourcesArray"
             @removeFilter="removeFilter($event)"
         />
-        <div>
-            <main class="container">
-                <router-view
-                    :search-string="searchString"
-                    :checked-categories-array="checkedCategoriesArray"
-                    :checked-sources-array="checkedSourcesArray"
-                    :unix-timestamp="unixTimestamp"
-                />
-            </main>
-        </div>
+        <main class="container">
+            <router-view
+                :search-string="searchString"
+                :checked-categories-array="checkedCategoriesArray"
+                :checked-sources-array="checkedSourcesArray"
+                :unix-timestamp="unixTimestamp"
+                @hideNavbar="hideNavbar($event)"
+            />
+        </main>
     </div>
 </template>
 
@@ -48,6 +48,7 @@ export default {
             removedFilter: '',
             removedSource: '',
             unixTimestamp: '',
+            showNavbar: true,
         };
     },
     created() {
@@ -57,6 +58,9 @@ export default {
         this.stylingFromJson();
     },
     methods: {
+        hide(toggleNavbar) {
+            this.showNavbar = toggleNavbar;
+        },
         search(searchString) {
             this.searchString = searchString;
         },
@@ -71,6 +75,9 @@ export default {
         },
         chosenDate(date) {
             this.unixTimestamp = date;
+        },
+        hideNavbar(hide) {
+            this.showNavbar = hide;
         },
         stylingFromJson() {
             const jsonStyle = this.json.styling;

@@ -21,6 +21,7 @@
             </article>
         </div>
         <router-view
+            @toggleNav="toggleNav($event)"
             @favoriteAddedInModal="favoriteAddedInModal($event)"
             @favoriteRemovedInModal="favoriteRemovedInModal($event)"
         />
@@ -108,6 +109,11 @@ export default {
         },
         favoriteRemovedInModal(id) {
             this.favoriteInModal = `rem ${id}`;
+        },
+        toggleNav(hide) {
+            if (window.innerWidth < 575.98) {
+                this.$emit('hideNavbar', hide);
+            }
         },
     },
 };

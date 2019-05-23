@@ -3,97 +3,150 @@
         <router-link :to="this.$route.matched[0]">
             <div class="overlay" @click="enableScroll()" />
         </router-link>
-        <div v-if="dataLoaded" class="modal_content">
+        <div
+            v-if="dataLoaded"
+            class="modal_content"
+            :class="modalArticle.imageObjects.images.length ? '' : 'noImages'"
+        >
             <router-link :to="this.$route.matched[0]">
-                <img
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="35"
+                    height="35"
+                    viewBox="0 0 24 24"
                     class="exitBtn"
-                    src="/src/assets/icons/baseline-close-24px.svg"
                     alt="closeModal"
                     @click="enableScroll()"
-                />
+                >
+                    <path
+                        d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                    />
+                    <path d="M0 0h24v24H0z" fill="none" />
+                </svg>
             </router-link>
-            <div
-                v-if="modalArticle.imageObjects.images.length > 0 && modalArticle.video === null"
-                class="modalImages"
-            >
-                <img
-                    v-for="image of modalArticle.imageObjects.images"
-                    :key="image.url"
-                    :src="image.url"
-                    alt="Article picture."
-                    :class="modalArticle.id + 'modalImage'"
-                />
-                <button
-                    v-if="modalArticle.imageObjects.images.length > 1"
-                    class="nextImageLeftModal"
-                    @click="nextImage(-1)"
-                >
-                    &#10094;
-                </button>
-                <button
-                    v-if="modalArticle.imageObjects.images.length > 1"
-                    class="nextImageRightModal"
-                    @click="nextImage(1)"
-                >
-                    &#10095;
-                </button>
-            </div>
             <iframe
-                v-if="modalArticle.video !== null"
+                v-if="modalArticle.video"
                 class="modalVideo"
                 width="100%"
                 height="100%"
                 :src="'https://www.youtube.com/embed/' + modalArticle.video.video_id"
             />
-
+            <ImageSlider
+                v-else-if="modalArticle.imageObjects.images"
+                :article-id="modalArticle.id"
+                image-location="modal"
+                :images="modalArticle.imageObjects.images"
+            />
             <section class="modalText">
-                <h1 v-if="modalArticle.title !== ''">{{ modalArticle.title }}</h1>
-                <b v-if="modalArticle.section !== ''">{{ modalArticle.section }}</b>
-                <p>{{ modalArticle.text | striphtml }}</p>
+                <div class="styleText">
+                    <h1 v-if="modalArticle.title">{{ modalArticle.title }}</h1>
+                    <b v-if="modalArticle.section">{{ modalArticle.section }}</b>
+                    <p>{{ modalArticle.text | striphtml }}</p>
+                </div>
             </section>
             <footer class="modalFooter">
-                <img
-                    v-if="modalArticle.author.avatar !== null"
-                    class="avatarImage"
-                    :src="modalArticle.author.avatar.url"
-                    alt="Author avatar picture."
-                />
                 <div class="footerInfo">
-                    <p class="modalTime">{{ modalArticle.published.split('T')[0] }}</p>
-                    <p class="modalAuthor">{{ modalArticle.author.name }}</p>
+                    <img
+                        v-if="modalArticle.author.avatar"
+                        class="avatarImage"
+                        :src="modalArticle.author.avatar.url"
+                        alt="Author avatar picture."
+                    />
+                    <div class="timeAndAuthor">
+                        <p class="modalTime">{{ modalArticle.published.split('T')[0] }}</p>
+                        <p class="modalAuthor">{{ modalArticle.author.name }}</p>
+                    </div>
                 </div>
-                <div v-if="showMsg === true" class="popupmsg">
+                <div v-if="showMsg" class="popupmsg">
                     <p>Favorites are only stored locally on this device!</p>
                     <div class="arrow-down" />
                 </div>
-                <img
-                    v-if="favorite === false"
-                    class="favoritesIcon"
-                    src="/src/assets/icons/baseline-favorite-border.svg"
-                    alt="Add to favorites."
-                    @click="addFavorite()"
-                />
-                <img
-                    v-if="favorite === true"
-                    class="removeFavoriteIcon"
-                    src="/src/assets/icons/baseline-favorite.svg"
-                    alt="Remove from favorites."
-                    @click="removeFavorite()"
-                />
-                <div class="footerLinks">
-                    <div v-if="showShareMsg === true" class="shareMsg">
+                <div v-if="modalArticle.source_url" class="footerLinks">
+                    <div v-if="showShareMsg" class="shareMsg">
+                        <p>Link copied!</p>
+                        <div class="arrow-down" />
+                    </div>
+                    <div class="links">
+                        <a class="modalShare" @click="getShare()">Copy link</a>
+                        <a
+                            target="_blank"
+                            class="modalOrginalArticle"
+                            rel="noopener noreferrer"
+                            :href="modalArticle.source_url"
+                            >View original article</a
+                        >
+                    </div>
+                    <div class="favIcon">
+                        <svg
+                            v-if="favorite"
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="35"
+                            height="35"
+                            viewBox="0 0 24 24"
+                            class="favoritesIcon"
+                            alt="Remove from favorites."
+                            @click="removeFavorite()"
+                        >
+                            <path d="M0 0h24v24H0z" fill="none" />
+                            <path
+                                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                            />
+                        </svg>
+                        <svg
+                            v-else
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="35"
+                            height="35"
+                            viewBox="0 0 24 24"
+                            class="empty"
+                            alt="Add to favorites."
+                            @click="addFavorite()"
+                        >
+                            <path d="M0 0h24v24H0z" fill="none" />
+                            <path
+                                d="M16.5 3c-1.74 0-3.41.81-4.5 2.09C10.91 3.81 9.24 3 7.5 3 4.42 3 2 5.42 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3zm-4.4 15.55l-.1.1-.1-.1C7.14 14.24 4 11.39 4 8.5 4 6.5 5.5 5 7.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5 0 2.89-3.14 5.74-7.9 10.05z"
+                            />
+                        </svg>
+                    </div>
+                </div>
+                <div v-else class="footerLinks" style="padding-top: 25px">
+                    <div v-if="showShareMsg" class="onlyShare">
                         <p>Link copied!</p>
                         <div class="arrow-down" />
                     </div>
                     <a class="modalShare" @click="getShare()">Copy link</a>
-                    <a
-                        v-if="modalArticle.source_url !== null"
-                        target="_blank"
-                        class="modalOrginalArticle"
-                        rel="noopener noreferrer"
-                        :href="modalArticle.source_url"
-                        >View original article</a
-                    >
+                    <div class="favIcon">
+                        <svg
+                            v-if="favorite"
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="35"
+                            height="35"
+                            viewBox="0 0 24 24"
+                            class="favoritesIcon"
+                            alt="Remove from favorites."
+                            @click="removeFavorite()"
+                        >
+                            <path d="M0 0h24v24H0z" fill="none" />
+                            <path
+                                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                            />
+                        </svg>
+                        <svg
+                            v-else
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="35"
+                            height="35"
+                            viewBox="0 0 24 24"
+                            class="empty"
+                            alt="Add to favorites."
+                            @click="addFavorite()"
+                        >
+                            <path d="M0 0h24v24H0z" fill="none" />
+                            <path
+                                d="M16.5 3c-1.74 0-3.41.81-4.5 2.09C10.91 3.81 9.24 3 7.5 3 4.42 3 2 5.42 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3zm-4.4 15.55l-.1.1-.1-.1C7.14 14.24 4 11.39 4 8.5 4 6.5 5.5 5 7.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5 0 2.89-3.14 5.74-7.9 10.05z"
+                            />
+                        </svg>
+                    </div>
                 </div>
             </footer>
         </div>
@@ -101,10 +154,15 @@
 </template>
 
 <script>
+import ImageSlider from '../components/ImageSlider.vue';
+
 import config from '../config.json';
 
 export default {
     name: 'Modal',
+    components: {
+        ImageSlider,
+    },
     data() {
         return {
             id: this.$route.params.id,
@@ -124,21 +182,19 @@ export default {
                 this.modalArticle = data.data.item;
                 this.dataLoaded = true;
             });
-        this.imageSlider(this.slideIndex);
         const data = JSON.parse(localStorage.getItem('id'));
-
         data.forEach(favorit => {
             if (this.modalArticle.id === favorit) {
                 this.favorite = true;
             }
         });
         document.getElementsByTagName('body')[0].style.overflow = 'hidden';
+        this.$emit('toggleNav', false);
     },
     methods: {
         getShare() {
             const url = document.createElement('input');
             const text = window.location.href;
-
             document.body.appendChild(url);
             url.value = text;
             url.select();
@@ -149,29 +205,9 @@ export default {
                 this.showShareMsg = false;
             }, 4000);
         },
-        nextImage(next) {
-            this.imageSlider((this.slideIndex += next));
-        },
-        imageSlider(next) {
-            let i;
-            const imageArray = document.getElementsByClassName(`${this.modalArticle.id}modalImage`);
-            if (next > imageArray.length) {
-                this.slideIndex = 1;
-            }
-            if (next < 1) {
-                this.slideIndex = imageArray.length;
-            }
-
-            for (i = 0; i < imageArray.length; i += 1) {
-                imageArray[i].style.display = 'none';
-            }
-
-            if (imageArray[this.slideIndex - 1] !== undefined) {
-                imageArray[this.slideIndex - 1].style.display = 'block';
-            }
-        },
         enableScroll() {
             document.getElementsByTagName('body')[0].style.overflow = 'auto';
+            this.$emit('toggleNav', true);
         },
         addFavorite() {
             this.$emit('favoriteAddedInModal', this.id);
@@ -191,7 +227,6 @@ export default {
             const data = JSON.parse(localStorage.getItem('id'));
             let index = 0;
             this.showMsg = false;
-
             /* find the id of the removed aricle and remove it from local storage */
             data.forEach(unFavorite => {
                 if (unFavorite === this.modalArticle.id) {
@@ -199,7 +234,6 @@ export default {
                 }
                 index += 1;
             });
-
             /* convert array to string and save it in local storage */
             localStorage.setItem('id', JSON.stringify(data));
             this.favorite = false;
@@ -218,7 +252,6 @@ export default {
     width: 100%;
     height: 100%;
 }
-
 .overlay {
     position: fixed;
     left: 0;
@@ -227,7 +260,6 @@ export default {
     height: 100%;
     background: rgba(0, 0, 0, 0.6);
 }
-
 .modal_content {
     position: relative;
     top: 50%;
@@ -241,56 +273,14 @@ export default {
     max-width: 40%;
     display: flex;
     flex-direction: column;
-
-    .nextImageLeftModal {
-        position: absolute;
-        left: 0px;
-        top: 50%;
-        -ms-transform: translateY(-50%);
-        transform: translateY(-50%);
-        padding: 0px 10px 0px 10px;
-        border: none;
-        background: none;
-        font-size: 25px;
-        background-color: rgba(255, 255, 255, 0.5);
-        transition: 0.2s;
-        &:hover {
-            background-color: rgba(211, 211, 211, 0.85);
-        }
-        &:focus {
-            outline: 0;
-        }
-    }
-    .nextImageRightModal {
-        position: absolute;
-        right: 0;
-        top: 50%;
-        -ms-transform: translateY(-50%);
-        transform: translateY(-50%);
-        padding: 0px 10px 0px 10px;
-        border: none;
-        background: none;
-        font-size: 25px;
-        background-color: rgba(255, 255, 255, 0.5);
-        transition: 0.2s;
-        &:hover {
-            background-color: rgba(211, 211, 211, 0.85);
-        }
-        &:focus {
-            outline: 0;
-        }
-    }
     h2 {
         font-size: 28px;
         font-weight: 200;
         margin: 20px 0 40px;
         text-align: center;
     }
-    .modalImages {
-        position: relative;
+    .images {
         img {
-            max-height: 60%;
-            height: 60%;
             width: 100%;
         }
     }
@@ -299,14 +289,27 @@ export default {
         border: none;
     }
     .modalText {
-        padding-top: 45px;
-        padding-right: 20px;
-        padding-left: 25px;
-        padding-bottom: 25px;
+        overflow: auto;
+        min-height: 100px;
         display: flex;
         flex-direction: column;
         flex: 1;
         color: var(--text-color);
+        .styleText {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            margin-right: 25px;
+            margin-left: 25px;
+            h1 {
+                margin-bottom: 20px;
+            }
+            p {
+                margin: 0;
+            }
+            b {
+                padding-bottom: 10px;
+            }
+        }
     }
     .exitBtn {
         background-color: white;
@@ -314,6 +317,7 @@ export default {
         position: absolute;
         top: -20px;
         right: -20px;
+        fill: var(--navbar-close-and-hamburger);
         width: 40px;
         cursor: pointer;
         transform: scale(0.8);
@@ -323,103 +327,105 @@ export default {
             transform: scale(1);
         }
     }
-}
+    ::-webkit-scrollbar {
+        width: 5px;
+    }
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: #e6e6e6;
+        border-radius: 5px;
+        -moz-box-shadow: inset 0 -5px 5px -5px #969696, inset 0 5px 5px -5px #969696;
+        -webkit-box-shadow: inset 0 -5px 5px -5px #969696, inset 0 5px 5px -5px #969696;
+        box-shadow: inset 0 -5px 5px -5px #969696, inset 0 5px 5px -5px #969696;
+    }
 
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 5px;
+    }
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+}
+.noImages {
+    max-width: 50%;
+}
 .modalFooter {
     padding: 10px;
+    display: flex;
+    justify-content: space-between;
     .footerInfo {
-        float: left;
+        display: flex;
+        align-self: flex-end;
         vertical-align: bottom;
         color: var(--text-color);
         p {
-            display: block;
             margin: 0 15px 0 15px;
         }
         .modalAuthor {
+            display: flex;
             white-space: nowrap;
             text-overflow: ellipsis;
             overflow: hidden;
-            display: inline-block;
             width: 200px;
+        }
+        .timeAndAuthor {
+            flex-direction: column;
         }
     }
     .footerLinks {
-        float: right;
-        vertical-align: bottom;
-        a {
-            display: block;
-            margin: 0 15px 0 15px;
-            color: #007bff;
-            text-align: right;
-            line-height: 25px;
-            &:hover {
-                text-decoration: underline;
+        display: flex;
+        .links {
+            flex-direction: column;
+            align-self: flex-end;
+            display: flex;
+            a {
+                line-height: 25px;
+                font-size: 18px;
+                align-self: flex-end;
+                margin: 0 15px 0 15px;
                 color: #007bff;
-                cursor: pointer;
+                text-decoration: none;
+                &:hover {
+                    text-decoration: underline;
+                    color: #007bff;
+                    cursor: pointer;
+                }
             }
         }
-    }
-    .favoritesIcon {
-        margin-top: 5px;
-        vertical-align: bottom;
-        width: 40px;
-        float: right;
-    }
-    .removeFavoriteIcon {
-        margin-top: 5px;
-        vertical-align: bottom;
-        width: 40px;
-        float: right;
+        .modalShare {
+            align-self: flex-end;
+            color: #007bff;
+            cursor: pointer;
+
+            &:hover{
+                text-decoration: underline;
+            }
+            
+        }
+        .favIcon {
+            cursor: pointer;
+            display: flex;
+            align-self: flex-end;
+            .empty{
+                fill: var(--favorite-svg-empty-color);
+            }
+            .favoritesIcon {
+                margin-top: 5px;
+                fill: var(--favorite-svg-fill-color);
+            }
+        }
     }
     .avatarImage {
         width: 50px;
         height: 50px;
         border-radius: 50%;
         box-shadow: 0px 0px 10px gray;
-        float: left;
+        display: flex;
     }
 }
-
-.nextImageRightModal {
-    position: absolute;
-    right: 0;
-    top: 50%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-    padding: 0px 10px 0px 10px;
-    border: none;
-    background: none;
-    font-size: 25px;
-    background-color: rgba(255, 255, 255, 0.5);
-    transition: 0.2s;
-    &:hover {
-        background-color: rgba(211, 211, 211, 0.85);
-    }
-    &:focus {
-        outline: 0;
-    }
-}
-
-.nextImageLeftModal {
-    position: absolute;
-    left: 0px;
-    top: 50%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-    padding: 0px 10px 0px 10px;
-    border: none;
-    background: none;
-    font-size: 25px;
-    background-color: rgba(255, 255, 255, 0.5);
-    transition: 0.2s;
-    &:hover {
-        background-color: rgba(211, 211, 211, 0.85);
-    }
-    &:focus {
-        outline: 0;
-    }
-}
-
 .popupmsg {
     position: absolute;
     bottom: 60px;
@@ -476,26 +482,58 @@ export default {
         bottom: -8px;
     }
 }
-
+.onlyShare {
+    position: absolute;
+    bottom: 40px;
+    right: 80px;
+    background-color: black;
+    border: 1px solid black;
+    padding: 5px;
+    border-radius: 2px;
+    p {
+        max-width: 100%;
+        font-size: 13px;
+        color: white;
+        margin: 0;
+        overflow: visible;
+        font-weight: normal;
+        line-height: normal;
+    }
+    .arrow-down {
+        width: 0;
+        height: 0;
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        border-top: 8px solid black;
+        position: absolute;
+        right: 3px;
+        bottom: -8px;
+    }
+}
 @media only screen and (max-width: 480px) {
     .modal {
         .modal_content {
             max-width: 100%;
-            height: 94%;
+            height: 100%;
             max-height: 100%;
             margin-top: 20px;
             background-color: var(--article-color);
             .modalImages {
                 img {
+                    height: 50%;
+                    object-fit: cover;
                     width: 100%;
                 }
             }
             .modalText {
+                display: flex;
+                align-items: center;
                 padding-top: 20px;
                 padding-bottom: 0px;
                 padding-left: 15px;
                 padding-right: 15px;
                 h1 {
+                    margin-bottom: 20px;
                     font-size: 1.5em;
                 }
             }
@@ -512,19 +550,21 @@ export default {
                     width: 150px;
                 }
             }
+            .exitBtn {
+                margin: 3px;
+            }
         }
     }
 }
-
 @media only screen and (max-width: 575.98px) {
     .modal_content {
+        overflow: auto;
         max-width: 100%;
         height: 100%;
         max-height: 100%;
         .modalImages {
             img {
-                max-height: 40%;
-                height: 40%;
+                width: 100%;
             }
         }
         footer {
@@ -547,10 +587,20 @@ export default {
         }
     }
 }
-
-@media only screen and (max-width: 768px) {
+@media only screen and (min-width: 576px) and (max-width: 850px) {
     .modal_content {
         max-width: 80%;
+        .img {
+            height: 50%;
+        }
+    }
+}
+@media only screen and (min-width: 851px) and (max-width: 1200px) {
+    .modal_content {
+        max-width: 65%;
+        .img {
+            height: 50%;
+        }
     }
 }
 </style>
