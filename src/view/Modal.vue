@@ -363,6 +363,7 @@ export default {
         color: var(--text-color);
         p {
             margin: 0 15px 0 15px;
+            font-size: 15px;
         }
         .modalAuthor {
             display: flex;
@@ -383,7 +384,7 @@ export default {
             display: flex;
             a {
                 line-height: 25px;
-                font-size: 18px;
+                font-size: 15px;
                 align-self: flex-end;
                 margin: 0 15px 0 15px;
                 color: #007bff;
