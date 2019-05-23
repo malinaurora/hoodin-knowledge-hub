@@ -8,7 +8,8 @@
             @search="search($event)"
             @checkedCategories="checkedCategories($event)"
             @checkedSources="checkedSources($event)"
-            @chosenDate="chosenDate($event)"
+            @chosenStartDate="chosenStartDate($event)"
+            @chosenEndDate="chosenEndDate($event)"
         />
         <FilterHeader
             :checked-categories-array="checkedCategoriesArray"
@@ -20,7 +21,8 @@
                 :search-string="searchString"
                 :checked-categories-array="checkedCategoriesArray"
                 :checked-sources-array="checkedSourcesArray"
-                :unix-timestamp="unixTimestamp"
+                :start-timestamp="startTimestamp"
+                :end-timestamp="endTimestamp"
                 @hideNavbar="hideNavbar($event)"
             />
         </main>
@@ -47,7 +49,8 @@ export default {
             checkedSourcesArray: [],
             removedFilter: '',
             removedSource: '',
-            unixTimestamp: '',
+            startTimestamp: '',
+            endTimestamp: '',
             showNavbar: true,
         };
     },
@@ -73,8 +76,11 @@ export default {
         removeFilter(filter) {
             this.removedFilter = filter;
         },
-        chosenDate(date) {
-            this.unixTimestamp = date;
+        chosenStartDate(date) {
+            this.startTimestamp = date;
+        },
+        chosenEndDate(date) {
+            this.endTimestamp = date;
         },
         hideNavbar(hide) {
             this.showNavbar = hide;

@@ -35,7 +35,8 @@
                 @search="search($event)"
                 @checkedCategories="checkedCategories($event)"
                 @checkedSources="checkedSources($event)"
-                @chosenDate="chosenDate($event)"
+                @chosenStartDate="chosenStartDate($event)"
+                @chosenEndDate="chosenEndDate($event)"
             />
         </div>
     </nav>
@@ -75,8 +76,11 @@ export default {
         checkedSources(checkedSources) {
             this.$emit('checkedSources', checkedSources);
         },
-        chosenDate(date) {
-            this.$emit('chosenDate', date);
+        chosenStartDate(date) {
+            this.$emit('chosenStartDate', date);
+        },
+        chosenEndDate(date) {
+            this.$emit('chosenEndDate', date);
         },
     },
 };

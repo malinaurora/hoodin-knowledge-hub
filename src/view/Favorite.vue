@@ -58,7 +58,11 @@ export default {
             type: Array,
             default: Array,
         },
-        unixTimestamp: {
+        startTimestamp: {
+            type: String,
+            default: '',
+        },
+        endTimestamp: {
             type: String,
             default: '',
         },
@@ -72,6 +76,8 @@ export default {
                 limit: config.articleLimit,
                 mediaCategories: '',
                 sources: '',
+                after: '',
+                before: '',
                 ondate: '',
                 searchString: '',
             },
@@ -92,8 +98,11 @@ export default {
         checkedSourcesArray(sources) {
             this.getSources(sources);
         },
-        unixTimestamp(date) {
-            this.getDate(date);
+        startTimestamp() {
+            this.getDate();
+        },
+        endTimestamp() {
+            this.getDate();
         },
     },
     mounted() {

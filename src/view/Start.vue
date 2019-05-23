@@ -36,6 +36,7 @@
 import Article from '../components/Article.vue';
 import MoreArticles from '../components/MoreArticles.vue';
 import Helper from '../helpers';
+import config from '../config.json';
 
 export default {
     components: {
@@ -55,7 +56,11 @@ export default {
             type: Array,
             default: Array,
         },
-        unixTimestamp: {
+        startTimestamp: {
+            type: String,
+            default: '',
+        },
+        endTimestamp: {
             type: String,
             default: '',
         },
@@ -66,9 +71,11 @@ export default {
             queryString: {
                 ids: '',
                 offset: 0,
-                limit: 15,
+                limit: config.articleLimit,
                 mediaCategories: '',
                 sources: '',
+                after: '',
+                before: '',
                 ondate: '',
                 searchString: '',
             },
@@ -88,8 +95,11 @@ export default {
         checkedSourcesArray(sources) {
             this.getSources(sources);
         },
-        unixTimestamp(date) {
-            this.getDate(date);
+        startTimestamp() {
+            this.getDate();
+        },
+        endTimestamp() {
+            this.getDate();
         },
     },
     mounted() {

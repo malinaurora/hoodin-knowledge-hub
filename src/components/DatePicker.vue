@@ -1,13 +1,22 @@
 <template>
     <div class="datePicker">
-        <input v-model="chosenDate" type="date" :max="maxDate" :on="getDate(chosenDate)" />
+        start
+        <input
+            v-model="chosenStartDate"
+            type="date"
+            :max="maxDate"
+            :on="getStartDate(chosenStartDate)"
+        />
+        end
+        <input v-model="chosenEndDate" type="date" :max="maxDate" :on="getEndDate(chosenEndDate)" />
     </div>
 </template>
 <script>
 export default {
     data() {
         return {
-            chosenDate: '',
+            chosenStartDate: '',
+            chosenEndDate: '',
             maxDate: '',
         };
     },
@@ -15,13 +24,25 @@ export default {
         this.maxDate = new Date().toLocaleDateString();
     },
     methods: {
-        getDate(chosenDate) {
-            let unixTimestamp = +new Date(chosenDate);
+        getStartDate(chosenStartDate) {
+            let unixTimestamp = +new Date(chosenStartDate);
             unixTimestamp /= 1000;
+
             if (Number.isNaN(unixTimestamp)) {
-                this.$emit('chosenDate');
+                this.$emit('chosenStartDate');
             } else {
-                this.$emit('chosenDate', unixTimestamp.toString());
+                this.$emit('chosenStartDate', unixTimestamp.toString());
+            }
+        },
+        getEndDate(chosenEndDate) {
+            let unixTimestamp = +new Date(chosenEndDate);
+            unixTimestamp /= 1000;
+            unixTimestamp += 86400;
+
+            if (Number.isNaN(unixTimestamp)) {
+                this.$emit('chosenEndDate');
+            } else {
+                this.$emit('chosenEndDate', unixTimestamp.toString());
             }
         },
     },

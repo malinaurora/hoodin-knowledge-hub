@@ -72,9 +72,16 @@ module.exports = {
         this.getData(this.queryString);
     },
 
-    getDate(date) {
+    getDate() {
         document.body.scrollTop = 0;
-        this.queryString.ondate = date;
+        if (this.endTimestamp === '') {
+            this.queryString.after = '';
+            this.queryString.ondate = this.startTimestamp;
+        } else {
+            this.queryString.ondate = '';
+            this.queryString.after = this.startTimestamp;
+            this.queryString.before = this.endTimestamp;
+        }
         this.queryString.offset = 0;
         this.getData(this.queryString);
     },

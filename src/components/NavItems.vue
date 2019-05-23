@@ -194,7 +194,8 @@
             <DatePicker
                 :style="{ display: isActive && toggleDate ? 'block' : 'none' }"
                 @click="stayClosed()"
-                @chosenDate="chosenDate($event)"
+                @chosenStartDate="chosenStartDate($event)"
+                @chosenEndDate="chosenEndDate($event)"
             />
         </li>
     </ul>
@@ -250,8 +251,11 @@ export default {
         checkedSources(checkedSources) {
             this.$emit('checkedSources', checkedSources);
         },
-        chosenDate(date) {
-            this.$emit('chosenDate', date);
+        chosenStartDate(date) {
+            this.$emit('chosenStartDate', date);
+        },
+        chosenEndDate(date) {
+            this.$emit('chosenEndDate', date);
         },
     },
 };
