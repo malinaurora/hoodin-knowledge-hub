@@ -4,6 +4,7 @@
             v-model="chosenDate"
             :show-current="maxDate"
             :on="getDate(chosenDate)"
+            :max="maxDate"
             no-title
             scrollable
             width="250px"
@@ -47,6 +48,26 @@ export default {
 .v-btn__content {
     color: black !important;
 }
+
+.v-btn--flat {
+    &:focus {
+        outline: 0;
+    }
+}
+
+.v-btn--active {
+    background-color: grey;
+
+    &:focus {
+        outline: 0;
+    }
+}
+.v-btn--disabled {
+    .v-btn__content {
+        color: rgb(156, 156, 156) !important;
+    }
+}
+
 @media (max-width: 767.98px) {
     .v-picker__body {
         width: 100% !important;
