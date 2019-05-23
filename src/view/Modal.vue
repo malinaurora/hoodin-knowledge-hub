@@ -58,22 +58,22 @@
                     </div>
                 </div>
                 <div v-if="showMsg" class="popupmsg">
-                    <p>Favorites are only stored locally on this device!</p>
+                    <p>{{ $t('likedmsg') }}</p>
                     <div class="arrow-down" />
                 </div>
                 <div v-if="modalArticle.source_url" class="footerLinks">
                     <div v-if="showShareMsg" class="shareMsg">
-                        <p>Link copied!</p>
+                        <p>{{ $t('copy') }}</p>
                         <div class="arrow-down" />
                     </div>
                     <div class="links">
-                        <a class="modalShare" @click="getShare()">Copy link</a>
+                        <a class="modalShare" @click="getShare()">{{ $t('copyLink') }}</a>
                         <a
                             target="_blank"
                             class="modalOrginalArticle"
                             rel="noopener noreferrer"
                             :href="modalArticle.source_url"
-                            >View original article</a
+                            >{{ $t('originalArticle') }}</a
                         >
                     </div>
                     <div class="favIcon">
@@ -111,10 +111,10 @@
                 </div>
                 <div v-else class="footerLinks" style="padding-top: 25px">
                     <div v-if="showShareMsg" class="onlyShare">
-                        <p>Link copied!</p>
+                        <p>{{ $t('copy') }}</p>
                         <div class="arrow-down" />
                     </div>
-                    <a class="modalShare" @click="getShare()">Copy link</a>
+                    <a class="modalShare" @click="getShare()">{{ $t('copyLink') }}</a>
                     <div class="favIcon">
                         <svg
                             v-if="favorite"
@@ -400,16 +400,15 @@ export default {
             color: #007bff;
             cursor: pointer;
 
-            &:hover{
+            &:hover {
                 text-decoration: underline;
             }
-            
         }
         .favIcon {
             cursor: pointer;
             display: flex;
             align-self: flex-end;
-            .empty{
+            .empty {
                 fill: var(--favorite-svg-empty-color);
             }
             .favoritesIcon {

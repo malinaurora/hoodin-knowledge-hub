@@ -26,8 +26,10 @@ export default {
 .filterLabel {
     padding: 7px 5px 7px 5px;
     margin: 0 5px 0 5px;
-    border: 1px solid black;
+    border: 1px solid var(--filter-box-border);
+    background-color: var(--filter-box-background);
     border-radius: 3px;
+    color: var(--filter-box-font-color);
     cursor: pointer;
     .filter {
         display: inline-block;
@@ -50,7 +52,7 @@ export default {
             -ms-transform: translateY(-50%);
             transform: translateY(-50%);
             height: 1.5px;
-            background-color: black;
+            background-color: var(--filter-box-font-color);
             width: 15px;
             transform: rotate(45deg);
         }
@@ -60,7 +62,7 @@ export default {
             -ms-transform: translateY(-50%);
             transform: translateY(-50%);
             height: 1.5px;
-            background-color: black;
+            background-color: var(--filter-box-font-color);
             width: 15px;
             transform: rotate(135deg);
         }

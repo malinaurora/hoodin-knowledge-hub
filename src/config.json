@@ -19,6 +19,9 @@
         "--favorite-svg-fill-color": "red",
         "--favorite-svg-empty-color": "black",
         "--navbar-close-and-hamburger": "black",
-        "--show-more-articles-svg": "black"
+        "--show-more-articles-svg": "black",
+        "--filter-box-background": "none",
+        "--filter-box-border": "black",
+        "--filter-box-font-color": "pink"
     }
 }

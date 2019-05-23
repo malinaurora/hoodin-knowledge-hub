@@ -19,6 +19,9 @@ const messages = {
         errormsg:
             'Något gick fel, försök gärna igen eller kontakta våran support om felet kvarstår.',
         likedmsg: 'Artiklar sparas endast på den här enheten.',
+        copy: 'Kopierad!',
+        copyLink: 'Kopiera länk',
+        originalArticle: 'Gå till orginal artikeln',
     },
     en: {
         navitemHome: 'Home',
@@ -34,6 +37,9 @@ const messages = {
         errormsg:
             'Somthing went wrong, please try again or contact our support if the error continuous.',
         likedmsg: 'Favorites is only stored locally on this device.',
+        copy: 'Copied!',
+        copyLink: 'Copy link',
+        originalArticle: 'View orignial article',
     },
 };
 const i18n = new VueI18n({
