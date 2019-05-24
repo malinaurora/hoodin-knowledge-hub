@@ -27,12 +27,10 @@ export default {
             this.$emit('checkedSources', this.checkedSources);
         },
         removedFilter(removedFilter) {
-            let index = 0;
             this.checkedSources.forEach(source => {
                 if (source === removedFilter) {
-                    this.checkedSources.splice(index, 1);
+                    this.checkedSources.splice(this.checkedSources.indexOf(source), 1);
                 }
-                index += 1;
             });
         },
     },

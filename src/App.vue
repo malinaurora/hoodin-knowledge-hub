@@ -108,6 +108,7 @@ body {
     font-family: var(--body-font);
     background-color: var(--primary-color);
     margin: 0;
+    overflow-x: hidden;
 }
 
 .container {
