@@ -73,6 +73,7 @@ export default {
 
 <style lang="scss">
 .toggleSidebar {
+    overflow: auto;
     width: 250px;
 }
 nav {
