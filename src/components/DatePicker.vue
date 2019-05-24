@@ -1,23 +1,13 @@
 <template>
-    <div class="datePicker">
-        start
-        <input
-            v-model="chosenStartDate"
-            type="date"
-            :max="maxDate"
-            :on="getStartDate(chosenStartDate)"
-        />
-        end
-        <input v-model="chosenEndDate" type="date" :max="maxDate" :on="getEndDate(chosenEndDate)" />
-    <div class="datepicker">
+    <div>
         <v-date-picker
             v-model="chosenDate"
             :show-current="maxDate"
-            :on="getDate(chosenDate)"
             :max="maxDate"
             no-title
             scrollable
             width="250px"
+            multiple="true"
         />
     </div>
 </template>
@@ -28,6 +18,7 @@ import 'vuetify/dist/vuetify.min.css';
 export default {
     data() {
         return {
+            chosenDate: [],
             chosenStartDate: '',
             chosenEndDate: '',
             maxDate: '',

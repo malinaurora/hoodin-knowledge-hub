@@ -7,7 +7,6 @@ import App from './App.vue';
 import 'babel-polyfill';
 import i18n from './plugins/i18n';
 
-Vue.use(BootstrapVue);
 Vue.use(Vuetify);
 
 Vue.filter('striphtml', value => {
