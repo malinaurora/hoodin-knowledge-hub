@@ -11,8 +11,8 @@
                 </h2>
             </div>
         </header>
-        <div class="row mb-4 mt-2">
-            <article v-for="api of apiData" :key="api.id" class="col-lg-4 col-md-6 mt-3 mb-3">
+        <div class="row">
+            <article v-for="api of apiData" :key="api.id" class="column">
                 <Article
                     :article="api"
                     modal-route="modalStart"
@@ -21,6 +21,7 @@
             </article>
         </div>
         <router-view
+            @toggleNav="toggleNav($event)"
             @favoriteAddedInModal="favoriteAddedInModal($event)"
             @favoriteRemovedInModal="favoriteRemovedInModal($event)"
         />
@@ -35,6 +36,7 @@
 import Article from '../components/Article.vue';
 import MoreArticles from '../components/MoreArticles.vue';
 import Helper from '../helpers';
+import config from '../config.json';
 
 export default {
     components: {
@@ -54,7 +56,11 @@ export default {
             type: Array,
             default: Array,
         },
-        unixTimestamp: {
+        startTimestamp: {
+            type: String,
+            default: '',
+        },
+        endTimestamp: {
             type: String,
             default: '',
         },
@@ -65,9 +71,11 @@ export default {
             queryString: {
                 ids: '',
                 offset: 0,
-                limit: 15,
+                limit: config.articleLimit,
                 mediaCategories: '',
                 sources: '',
+                after: '',
+                before: '',
                 ondate: '',
                 searchString: '',
             },
@@ -87,8 +95,11 @@ export default {
         checkedSourcesArray(sources) {
             this.getSources(sources);
         },
-        unixTimestamp(date) {
-            this.getDate(date);
+        startTimestamp() {
+            this.getDate();
+        },
+        endTimestamp() {
+            this.getDate();
         },
     },
     mounted() {
@@ -109,6 +120,11 @@ export default {
         favoriteRemovedInModal(id) {
             this.favoriteInModal = `rem ${id}`;
         },
+        toggleNav(hide) {
+            if (window.innerWidth < 575.98) {
+                this.$emit('hideNavbar', hide);
+            }
+        },
     },
 };
 </script>
@@ -124,6 +140,7 @@ export default {
         transform: translateY(-50%) translateX(-50%);
         width: 80%;
         z-index: -9;
+
         h2 {
             text-align: center;
             font-size: 2em;
@@ -132,6 +149,7 @@ export default {
             margin: auto;
             font-family: var(--filter-box-font);
         }
+
         .error {
             img {
                 margin-top: 50px;
@@ -141,10 +159,17 @@ export default {
             }
         }
     }
+
+    .row {
+        margin-top: 40px;
+        margin-bottom: 20px;
+    }
 }
 article {
     a {
         color: var(--text-color);
+        margin-top: 30px;
+        margin-bottom: 30px;
         &:hover {
             color: var(--text-color);
             text-decoration: none;

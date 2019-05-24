@@ -13,7 +13,20 @@
         <!-- When clicking the sidebar it will make the isActive true
      and change the DOM element class to toggled -->
         <div class="sidebar" :class="{ toggleSidebar: isActive }" @click="toggleState">
-            <img v-if="isActive" class="closeNavBarImage" :src="closeImg" @click="!toggleState" />
+            <svg
+                v-if="isActive"
+                xmlns="http://www.w3.org/2000/svg"
+                width="45"
+                height="45"
+                viewBox="0 0 24 24"
+                class="closeNavBarImage"
+                @click="!toggleState"
+            >
+                <path
+                    d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                />
+                <path d="M0 0h24v24H0z" fill="none" />
+            </svg>
             <!-- Getting NavItems from component NavItems and sending isActive to NavItems-->
             <NavItems
                 :removed-filter="removedFilter"
@@ -22,7 +35,8 @@
                 @search="search($event)"
                 @checkedCategories="checkedCategories($event)"
                 @checkedSources="checkedSources($event)"
-                @chosenDate="chosenDate($event)"
+                @chosenStartDate="chosenStartDate($event)"
+                @chosenEndDate="chosenEndDate($event)"
             />
         </div>
     </nav>
@@ -45,8 +59,6 @@ export default {
     data() {
         return {
             isActive: false,
-            closeImg: 'src/assets/icons/baseline-close.svg',
-            menuImg: 'src/assets/icons/baseline-menu.svg',
         };
     },
     methods: {
@@ -64,8 +76,11 @@ export default {
         checkedSources(checkedSources) {
             this.$emit('checkedSources', checkedSources);
         },
-        chosenDate(date) {
-            this.$emit('chosenDate', date);
+        chosenStartDate(date) {
+            this.$emit('chosenStartDate', date);
+        },
+        chosenEndDate(date) {
+            this.$emit('chosenEndDate', date);
         },
     },
 };
@@ -85,6 +100,7 @@ nav {
         background-color: var(--secondary-color);
         box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.25);
         bottom: 0;
+        left: 0;
         width: 50px;
         position: fixed;
         transition: 0.4s;
@@ -97,6 +113,7 @@ nav {
         margin: 5px 2px 0px 0px;
         width: 35px;
         cursor: pointer;
+        fill: var(--navbar-close-and-hamburger);
     }
     .responsiveMenu {
         display: none;
@@ -128,7 +145,7 @@ nav {
                 width: 33px;
                 border-radius: 1.5px;
                 height: 3px;
-                background-color: #000;
+                background-color: var(--navbar-close-and-hamburger);
                 margin: 5px 0;
             }
         }
@@ -136,8 +153,8 @@ nav {
             display: none;
         }
         .closeNavBarImage {
-            width: 45px;
             margin: 0px;
+            fill: var(--navbar-close-and-hamburger);
         }
     }
 }

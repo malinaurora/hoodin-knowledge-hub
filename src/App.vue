@@ -2,12 +2,14 @@
     <div id="app">
         <Header />
         <NavBar
+            v-if="showNavbar"
             :removed-filter="removedFilter"
             :removed-source="removedSource"
             @search="search($event)"
             @checkedCategories="checkedCategories($event)"
             @checkedSources="checkedSources($event)"
-            @chosenDate="chosenDate($event)"
+            @chosenStartDate="chosenStartDate($event)"
+            @chosenEndDate="chosenEndDate($event)"
         />
         <FilterHeader
             :checked-categories-array="checkedCategoriesArray"
@@ -19,7 +21,9 @@
                 :search-string="searchString"
                 :checked-categories-array="checkedCategoriesArray"
                 :checked-sources-array="checkedSourcesArray"
-                :unix-timestamp="unixTimestamp"
+                :start-timestamp="startTimestamp"
+                :end-timestamp="endTimestamp"
+                @hideNavbar="hideNavbar($event)"
             />
         </main>
     </div>
@@ -45,7 +49,9 @@ export default {
             checkedSourcesArray: [],
             removedFilter: '',
             removedSource: '',
-            unixTimestamp: '',
+            startTimestamp: '',
+            endTimestamp: '',
+            showNavbar: true,
         };
     },
     created() {
@@ -55,6 +61,9 @@ export default {
         this.stylingFromJson();
     },
     methods: {
+        hide(toggleNavbar) {
+            this.showNavbar = toggleNavbar;
+        },
         search(searchString) {
             this.searchString = searchString;
         },
@@ -67,8 +76,14 @@ export default {
         removeFilter(filter) {
             this.removedFilter = filter;
         },
-        chosenDate(date) {
-            this.unixTimestamp = date;
+        chosenStartDate(date) {
+            this.startTimestamp = date;
+        },
+        chosenEndDate(date) {
+            this.endTimestamp = date;
+        },
+        hideNavbar(hide) {
+            this.showNavbar = hide;
         },
         stylingFromJson() {
             const jsonStyle = this.json.styling;
@@ -82,9 +97,65 @@ export default {
 
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css?family=Montserrat|Roboto+Slab|Roboto:300,400');
+
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
 body {
     font-family: var(--body-font);
     background-color: var(--primary-color);
+    margin: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+@media screen and (max-width: 1300px) {
+    .container {
+        max-width: 850px;
+    }
+}
+
+@media screen and (max-width: 765px) {
+    .container {
+        max-width: 500px;
+    }
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.column {
+    box-sizing: border-box;
+    margin-bottom: 30px;
+    margin-left: 15px;
+    margin-right: 15px;
+    width: calc(33.333% - 30px);
+}
+
+@media screen and (max-width: 1300px) {
+    .column {
+        width: calc(50% - 30px);
+    }
+}
+
+@media screen and (max-width: 765px) {
+    .column {
+        width: calc(100% - 30px);
+    }
+}
+
+input {
+    font-family: var(--filter-box-font);
+    font-size: 1em;
 }
 
 h1,

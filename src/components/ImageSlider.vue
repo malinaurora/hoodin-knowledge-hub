@@ -1,14 +1,22 @@
 <template>
     <div class="images">
-        <router-link :to="{ name: modalRoute, params: { id: articleId } }">
+        <router-link v-if="modalRoute" :to="{ name: modalRoute, params: { id: articleId } }">
             <img
                 v-for="image of images"
                 :key="image.url"
                 :src="image.url"
                 alt="Article picture."
-                :class="articleId + 'Image'"
+                :class="articleId + imageLocation"
             />
         </router-link>
+        <img
+            v-for="image of images"
+            v-else
+            :key="image.url"
+            :src="image.url"
+            alt="Article picture."
+            :class="articleId + imageLocation"
+        />
         <button v-if="images.length > 1" class="nextImageLeft" @click="previousImage()">
             &#10094;
         </button>
@@ -29,6 +37,10 @@ export default {
             required: true,
         },
         modalRoute: {
+            type: String,
+            default: '',
+        },
+        imageLocation: {
             type: String,
             required: true,
         },
@@ -59,7 +71,9 @@ export default {
          *  if the article contains more than one picture it shows a slider
          */
         imageSlider(next) {
-            const imageArray = document.getElementsByClassName(`${this.articleId}Image`);
+            const imageArray = document.getElementsByClassName(
+                `${this.articleId + this.imageLocation}`,
+            );
             if (next > imageArray.length) {
                 this.slideIndex = 1;
             }
@@ -80,7 +94,7 @@ export default {
 </script>
 <style lang="scss">
 .images {
-    max-height: 65%;
+    max-height: 60%;
     position: relative;
     overflow: hidden;
 

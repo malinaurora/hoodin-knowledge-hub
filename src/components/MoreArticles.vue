@@ -1,7 +1,10 @@
 <template>
-    <div class="text-center col-12 mb-4">
-        <a class="load-more-btn btn" role="button" aria-disabled="true" @click="loadData">
-            <img class="icon" src="/src/assets/icons/baseline-arrow.svg" alt="load more" />
+    <div class="moreArticles">
+        <a @click="loadData">
+            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24">
+                <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z" />
+                <path fill="none" d="M0 0h24v24H0V0z" />
+            </svg>
         </a>
     </div>
 </template>
@@ -17,16 +20,22 @@ export default {
 </script>
 
 <style lang="scss">
-.load-more-btn {
-    background: rgb(255, 255, 255);
-    &:hover {
-        box-sizing: border-box;
-        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.7);
+.moreArticles {
+    margin-bottom: 40px;
+    width: 100%;
+    align-content: center;
+    display: flex;
+    a {
+        margin: auto;
+        cursor: pointer;
     }
-}
-
-.icon {
-    width: 35px;
-    height: 35px;
+    svg {
+        border-radius: 4px;
+        fill: var(--show-more-articles-svg);
+        &:hover {
+            box-sizing: border-box;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.7);
+        }
+    }
 }
 </style>

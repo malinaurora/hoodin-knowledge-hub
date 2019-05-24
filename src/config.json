@@ -14,6 +14,14 @@
         "--secondary-color":"#f6f6f6",
         "--article-color": "white",
         "--article-footer-color": "white",
-        "--dropdown-color": "#e6e6e6"
+        "--dropdown-color": "#e6e6e6",
+        "--navbar-svg": "black",
+        "--favorite-svg-fill-color": "red",
+        "--favorite-svg-empty-color": "black",
+        "--navbar-close-and-hamburger": "black",
+        "--show-more-articles-svg": "black",
+        "--filter-box-background": "none",
+        "--filter-box-border": "black",
+        "--filter-box-font-color": "pink"
     }
 }

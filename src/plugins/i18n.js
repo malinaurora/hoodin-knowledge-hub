@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueI18n from 'vue-i18n';
+import config from '../config.json';
 
 Vue.use(VueI18n);
 
@@ -18,6 +19,9 @@ const messages = {
         errormsg:
             'Något gick fel, försök gärna igen eller kontakta våran support om felet kvarstår.',
         likedmsg: 'Artiklar sparas endast på den här enheten.',
+        copy: 'Kopierad!',
+        copyLink: 'Kopiera länk',
+        originalArticle: 'Gå till orginal artikeln',
     },
     en: {
         navitemHome: 'Home',
@@ -33,10 +37,13 @@ const messages = {
         errormsg:
             'Somthing went wrong, please try again or contact our support if the error continuous.',
         likedmsg: 'Favorites is only stored locally on this device.',
+        copy: 'Copied!',
+        copyLink: 'Copy link',
+        originalArticle: 'View orignial article',
     },
 };
 const i18n = new VueI18n({
-    locale: 'sv', // set locale
+    locale: config.lang, // set locale
     messages, // set locale messages
 });
 

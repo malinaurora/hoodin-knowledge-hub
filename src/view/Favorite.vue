@@ -14,8 +14,8 @@
                 {{ $t('articlesfound') }}
             </h2>
         </header>
-        <div v-if="queryString.ids" class="row mb-5">
-            <article v-for="api of apiData" :key="api.id" class="col-lg-4 col-md-6 mt-3 mb-3">
+        <div v-if="queryString.ids" class="row">
+            <article v-for="api of apiData" :key="api.id" class="column">
                 <Article
                     :article="api"
                     modal-route="modalFavorite"
@@ -58,7 +58,11 @@ export default {
             type: Array,
             default: Array,
         },
-        unixTimestamp: {
+        startTimestamp: {
+            type: String,
+            default: '',
+        },
+        endTimestamp: {
             type: String,
             default: '',
         },
@@ -72,6 +76,8 @@ export default {
                 limit: config.articleLimit,
                 mediaCategories: '',
                 sources: '',
+                after: '',
+                before: '',
                 ondate: '',
                 searchString: '',
             },
@@ -92,8 +98,11 @@ export default {
         checkedSourcesArray(sources) {
             this.getSources(sources);
         },
-        unixTimestamp(date) {
-            this.getDate(date);
+        startTimestamp() {
+            this.getDate();
+        },
+        endTimestamp() {
+            this.getDate();
         },
     },
     mounted() {
@@ -152,6 +161,10 @@ export default {
                 margin-bottom: 20px;
             }
         }
+    }
+    .row {
+        margin-top: 40px;
+        margin-bottom: 20px;
     }
 }
 </style>
