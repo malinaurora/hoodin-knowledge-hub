@@ -22,7 +22,6 @@
                 :checked-sources-array="checkedSourcesArray"
                 :unix-timestamp="unixTimestamp"
                 @hideNavbar="hideNavbar($event)"
-                @showNavbar="showNavbar($event)"
             />
         </main>
     </div>
