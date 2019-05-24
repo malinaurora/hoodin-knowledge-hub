@@ -261,6 +261,7 @@ export default {
     background: rgba(0, 0, 0, 0.6);
 }
 .modal_content {
+    background: white;
     position: relative;
     top: 50%;
     left: 50%;
@@ -271,8 +272,6 @@ export default {
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.7);
     border-radius: 4px;
     max-width: 40%;
-    display: flex;
-    flex-direction: column;
     h2 {
         font-size: 28px;
         font-weight: 200;
@@ -532,6 +531,8 @@ export default {
 @media only screen and (max-width: 480px) {
     .modal {
         .modal_content {
+            display: flex;
+            flex-direction: column;
             max-width: 100%;
             height: 100%;
             max-height: 100%;
@@ -582,6 +583,8 @@ export default {
 }
 @media only screen and (max-width: 575.98px) {
     .modal_content {
+        display: flex;
+        flex-direction: column;
         overflow: auto;
         max-width: 100%;
         height: 100%;
