@@ -2,12 +2,12 @@
     <div>
         <v-date-picker
             v-model="chosenDate"
-            :show-current="maxDate"
             :max="maxDate"
             no-title
             scrollable
             width="250px"
-            multiple="true"
+            :multiple="true"
+            v-on="checkDate()"
         />
     </div>
 </template>
@@ -19,8 +19,6 @@ export default {
     data() {
         return {
             chosenDate: [],
-            chosenStartDate: '',
-            chosenEndDate: '',
             maxDate: '',
         };
     },
@@ -47,6 +45,17 @@ export default {
                 this.$emit('chosenEndDate');
             } else {
                 this.$emit('chosenEndDate', unixTimestamp.toString());
+            }
+        },
+
+        checkDate() {
+            if (this.chosenDate.length > 2) {
+                this.chosenDate = [];
+                this.getStartDate('');
+                this.getEndDate('');
+            } else {
+                this.getStartDate(this.chosenDate[0]);
+                this.getEndDate(this.chosenDate[1]);
             }
         },
     },
