@@ -350,8 +350,28 @@ export default {
     }
 }
 .noImages {
-    max-width: 50%;
+    max-width: 60%;
+
+    h1 {
+        font-size: 2em;
+        line-height: 30px;
+        margin-bottom: 30px !important;
+    }
+
+    .styleText {
+        padding: 30px;
+        b {
+            font-size: 1.5em;
+            line-height: 30px;
+        }
+        p {
+            font-size: 1.5em;
+            line-height: 30px;
+            margin-top: 15px !important;
+        }
+    }
 }
+
 .modalFooter {
     padding: 10px;
     display: flex;
@@ -413,7 +433,6 @@ export default {
                 fill: var(--favorite-svg-empty-color);
             }
             .favoritesIcon {
-                margin-top: 5px;
                 fill: var(--favorite-svg-fill-color);
             }
         }
@@ -516,8 +535,11 @@ export default {
             max-width: 100%;
             height: 100%;
             max-height: 100%;
-            margin-top: 20px;
             background-color: var(--article-color);
+
+            .styleText {
+                margin: 0;
+            }
             .modalImages {
                 img {
                     height: 50%;

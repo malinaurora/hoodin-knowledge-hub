@@ -128,6 +128,12 @@ export default {
             }
         },
     },
+    created() {
+        if (this.article.text.length > 249) {
+            this.article.text = this.article.text.slice(0, 249);
+            this.article.text += '...';
+        }
+    },
     mounted() {
         /**
          * load all favorites as an array and loop thru it comparing ids
@@ -141,6 +147,7 @@ export default {
             }
         });
         this.time = new Date();
+
         this.getSource();
     },
     methods: {

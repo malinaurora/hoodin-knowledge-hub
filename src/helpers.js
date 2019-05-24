@@ -76,6 +76,7 @@ module.exports = {
         document.body.scrollTop = 0;
         if (this.endTimestamp === '') {
             this.queryString.after = '';
+            this.queryString.before = this.endTimestamp;
             this.queryString.ondate = this.startTimestamp;
         } else {
             this.queryString.ondate = '';

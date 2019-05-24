@@ -1,13 +1,13 @@
 <template>
     <div class="datePicker">
-        start
+        From:
         <input
             v-model="chosenStartDate"
             type="date"
             :max="maxDate"
             :on="getStartDate(chosenStartDate)"
         />
-        end
+        To:
         <input v-model="chosenEndDate" type="date" :max="maxDate" :on="getEndDate(chosenEndDate)" />
     </div>
 </template>
