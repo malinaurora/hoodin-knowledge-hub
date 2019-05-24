@@ -37,7 +37,7 @@
                 image-location="modal"
                 :images="modalArticle.imageObjects.images"
             />
-            <section class="modalText">
+            <section class="modalText" :class="modalArticle.text.length > 300 ? '' : 'flexContent'">
                 <div class="styleText">
                     <h1 v-if="modalArticle.title">{{ modalArticle.title }}</h1>
                     <b v-if="modalArticle.section">{{ modalArticle.section }}</b>
@@ -547,9 +547,11 @@ export default {
                     width: 100%;
                 }
             }
-            .modalText {
+            .flexContent {
                 display: flex;
-                align-items: center;
+                justify-content: space-around;
+            }
+            .modalText {
                 padding-top: 20px;
                 padding-bottom: 0px;
                 padding-left: 15px;
