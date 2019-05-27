@@ -335,6 +335,8 @@ ul {
     hr {
         margin-left: 5px;
         margin-right: 5px;
+        margin-top: 11;
+        margin-bottom: -3px;
         border-top: 0.5px solid var(--navbar-svg);
     }
 

@@ -39,5 +39,12 @@ export default {
     .row {
         padding: 0px 15px 0px 15px;
     }
+    .FilterLabel {
+        &:hover {
+            box-sizing: border-box;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.7);
+            color: #7b7b7b;
+        }
+    }
 }
 </style>

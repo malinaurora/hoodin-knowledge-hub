@@ -33,6 +33,8 @@ input {
     margin-left: 15px;
     padding-left: 3px;
     height: 35px;
+    background-color: white;
+    border: 1px solid gray;
 }
 @media (max-width: 767.98px) {
     div {
