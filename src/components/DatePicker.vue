@@ -77,7 +77,6 @@ export default {
         outline: 0;
     }
 }
-
 .v-btn--active {
     background-color: grey;
 
@@ -89,6 +88,9 @@ export default {
     .v-btn__content {
         color: rgb(156, 156, 156) !important;
     }
+}
+.v-btn:before {
+    color: #9e9d9d48 !important;
 }
 
 @media (max-width: 767.98px) {
