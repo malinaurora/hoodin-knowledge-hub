@@ -1,7 +1,7 @@
 <template>
     <div class="loader"></div>
 </template>
-<style lang="scss">
+<style lang="scss" scoped>
 .loader {
     border: 5px solid #f3f3f3;
     border-top: 5px solid var(--navbar-svg);

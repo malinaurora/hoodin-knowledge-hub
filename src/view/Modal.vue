@@ -188,7 +188,7 @@ export default {
                 this.favorite = true;
             }
         });
-        document.getElementsByTagName('body')[0].style.overflow = 'hidden';
+        document.getElementsByTagName('html')[0].style.overflow = 'hidden';
         this.$emit('toggleNav', false);
     },
     methods: {
@@ -206,7 +206,7 @@ export default {
             }, 4000);
         },
         enableScroll() {
-            document.getElementsByTagName('body')[0].style.overflow = 'auto';
+            document.getElementsByTagName('html')[0].style.overflow = 'auto';
             this.$emit('toggleNav', true);
         },
         addFavorite() {

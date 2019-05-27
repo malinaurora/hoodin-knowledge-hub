@@ -86,7 +86,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .toggleSidebar {
     overflow: auto;
     width: 250px;
