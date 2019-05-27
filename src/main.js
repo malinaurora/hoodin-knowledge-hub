@@ -31,6 +31,11 @@ moment.updateLocale('en', {
 
 Vue.filter('moment', date => moment(date).fromNow());
 
+router.beforeEach((to, from, next) => {
+    document.title = to.meta.title;
+    next();
+});
+
 /* eslint-disable no-new */
 new Vue({
     el: '#app',
