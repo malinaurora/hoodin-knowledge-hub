@@ -105,8 +105,6 @@ nav {
         width: 50px;
         position: fixed;
         transition: 0.4s;
-        overflow: auto;
-        overflow-x: hidden;
     }
     /* width */
     ::-webkit-scrollbar {

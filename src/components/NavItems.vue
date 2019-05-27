@@ -266,6 +266,7 @@ export default {
 ul {
     padding: 0;
     margin-top: 50px;
+    margin-bottom: 50px;
     .animationFix {
         width: 250px;
     }
