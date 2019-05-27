@@ -10,6 +10,7 @@ module.exports = {
             .then(response => response.json())
             .then(data => {
                 this.apiData = data.data.items;
+                this.fetchSuccess = true;
                 if (data.data.items.length >= this.queryString.limit) {
                     this.moreArticlesToLoad = true;
                 }

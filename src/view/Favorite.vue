@@ -10,9 +10,11 @@
             <h2 v-else-if="noFavorites">
                 {{ $t('favoritText') }}
             </h2>
-            <h2 v-else-if="apiData.length <= 0">
+            <h2 v-else-if="apiData.length <= 0 && fetchSuccess">
                 {{ $t('articlesfound') }}
             </h2>
+
+            <Spinner v-else-if="!fetchSuccess" />
         </header>
         <div v-if="queryString.ids" class="row">
             <article v-for="api of apiData" :key="api.id" class="column">
@@ -37,6 +39,7 @@
 <script>
 import Article from '../components/Article.vue';
 import MoreArticles from '../components/MoreArticles.vue';
+import Spinner from '../components/Spinner.vue';
 import Helper from '../helpers';
 import config from '../config.json';
 
@@ -44,6 +47,7 @@ export default {
     components: {
         Article,
         MoreArticles,
+        Spinner,
     },
     props: {
         searchString: {
@@ -86,6 +90,7 @@ export default {
             MoreArticlesToLoad: true,
             favoriteInModal: '',
             noFavorites: false,
+            fetchSuccess: false,
         };
     },
     watch: {
