@@ -6,8 +6,6 @@ import Modal from './view/Modal.vue';
 import lang from './plugins/i18n';
 import config from './config.json';
 
-console.log(lang.t('navitemHome'));
-
 Vue.use(Router);
 
 export default new Router({
