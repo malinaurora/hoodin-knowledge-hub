@@ -37,7 +37,7 @@
                 image-location="modal"
                 :images="modalArticle.imageObjects.images"
             />
-            <section class="modalText" :class="modalArticle.text.length > 300 ? '' : 'flexContent'">
+            <section class="modalText" :class="modalArticle.text.length > 400 ? '' : 'flexContent'">
                 <div class="styleText">
                     <h1 v-if="modalArticle.title">{{ modalArticle.title }}</h1>
                     <b v-if="modalArticle.section">{{ modalArticle.section }}</b>
@@ -548,6 +548,8 @@ export default {
             }
             .flexContent {
                 display: flex;
+                flex: 1 1 auto;
+                flex-direction: column;
                 justify-content: space-around;
             }
             .modalText {
@@ -591,6 +593,12 @@ export default {
             img {
                 width: 100%;
             }
+        }
+        .flexContent {
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
         }
         footer {
             a {
