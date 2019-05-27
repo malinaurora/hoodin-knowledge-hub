@@ -14,6 +14,7 @@ module.exports = {
                 if (data.data.items.length >= this.queryString.limit) {
                     this.moreArticlesToLoad = true;
                 }
+                this.error = false;
             })
             .catch(err => {
                 console.error(err);
@@ -34,10 +35,11 @@ module.exports = {
                 if (data.data.items.length < this.queryString.limit) {
                     this.moreArticlesToLoad = false;
                 }
+                this.error = false;
             })
             .catch(err => {
                 console.error(err);
-                this.errorMsg = err;
+                this.error = true;
             });
     },
 
