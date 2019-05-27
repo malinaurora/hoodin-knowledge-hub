@@ -524,13 +524,13 @@ export default {
                 padding-bottom: 0px;
                 padding-left: 15px;
                 padding-right: 15px;
+                max-height: none;
                 h1 {
                     margin-bottom: 20px;
                     font-size: 1.5em;
                 }
             }
             footer {
-                padding-top: 50px;
                 a {
                     font-size: 12px;
                     margin: 0 5px 0 0px !important;
