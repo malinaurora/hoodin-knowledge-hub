@@ -228,7 +228,6 @@ export default {
         margin: 10px;
         margin-bottom: 0;
         text-overflow: ellipsis;
-        overflow: hidden;
         word-break: break-word;
         display: flex;
         flex-direction: column;
