@@ -248,7 +248,8 @@ export default {
         flex: 1;
         white-space: pre-line;
         overflow: hidden;
-        color: var(--test);
+        color: var(--text-color);
+
         h2 {
             font-size: 1.7em;
             margin-bottom: 25px;

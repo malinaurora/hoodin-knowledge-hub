@@ -27,6 +27,8 @@ export default {
     padding: 7px 5px 7px 5px;
     margin: 0 5px 0 5px;
     border: 1px solid var(--filter-box-border);
+    border-style: solid;
+    border-width: 1px;
     background-color: var(--filter-box-background);
     border-radius: 3px;
     color: var(--filter-box-font-color);

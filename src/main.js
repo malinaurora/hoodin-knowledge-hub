@@ -25,11 +25,16 @@ moment.updateLocale('en', {
         M: '1mth',
         MM: '%dmth',
         y: '1y',
-        yy: '%dy',
+        yy: '%y',
     },
 });
 
-Vue.filter('moment', date => moment(date).fromNow(true));
+Vue.filter('moment', date => moment(date).fromNow());
+
+router.beforeEach((to, from, next) => {
+    document.title = to.meta.title;
+    next();
+});
 
 /* eslint-disable no-new */
 new Vue({

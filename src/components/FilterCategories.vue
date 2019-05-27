@@ -33,12 +33,10 @@ export default {
             this.$emit('checkedCategories', this.checkedCategories);
         },
         removedFilter(removedFilter) {
-            let index = 0;
             this.checkedCategories.forEach(category => {
                 if (category === removedFilter) {
-                    this.checkedCategories.splice(index, 1);
+                    this.checkedCategories.splice(this.checkedCategories.indexOf(category), 1);
                 }
-                index += 1;
             });
         },
     },

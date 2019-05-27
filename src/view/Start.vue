@@ -1,15 +1,16 @@
 <template>
     <div class="start">
         <header>
-            <h2 v-if="apiData.length <= 0 && !error">
-                {{ $t('articlesfound') }}
-            </h2>
             <div v-if="error" class="error">
                 <img :src="errorImage" />
                 <h2>
                     {{ $t('errormsg') }}
                 </h2>
             </div>
+            <h2 v-else-if="apiData.length <= 0 && fetchSuccess">
+                {{ $t('articlesfound') }}
+            </h2>
+            <Spinner v-else-if="!fetchSuccess" />
         </header>
         <div class="row">
             <article v-for="api of apiData" :key="api.id" class="column">
@@ -35,6 +36,7 @@
 <script>
 import Article from '../components/Article.vue';
 import MoreArticles from '../components/MoreArticles.vue';
+import Spinner from '../components/Spinner.vue';
 import Helper from '../helpers';
 import config from '../config.json';
 
@@ -42,6 +44,7 @@ export default {
     components: {
         Article,
         MoreArticles,
+        Spinner,
     },
     props: {
         searchString: {
@@ -80,6 +83,7 @@ export default {
                 searchString: '',
             },
             error: false,
+            fetchSuccess: false,
             errorImage: '/src/assets/images/error.svg',
             moreArticlesToLoad: false,
             favoriteInModal: '',

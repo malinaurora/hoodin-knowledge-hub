@@ -4,6 +4,7 @@
     "logo": "hoodin-logo.png",
     "articleLimit": 15,
     "lang": "sv",
+    "documentTitle": "Hoodin Super Feeder",
     "styling":{
         "--body-font": "Roboto Slab",
         "--heading-font": "Montserrat",
