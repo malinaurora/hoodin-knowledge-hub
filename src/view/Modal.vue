@@ -290,9 +290,6 @@ export default {
     .modalText {
         overflow: auto;
         min-height: 100px;
-        display: flex;
-        flex-direction: column;
-        flex: 1;
         color: var(--text-color);
         .styleText {
             margin-top: 20px;
@@ -350,7 +347,8 @@ export default {
 }
 .noImages {
     max-width: 60%;
-
+    display: flex;
+    flex-direction: column;
     h1 {
         font-size: 2em;
         line-height: 30px;
