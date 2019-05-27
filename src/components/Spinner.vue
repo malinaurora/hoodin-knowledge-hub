@@ -3,7 +3,7 @@
 </template>
 <style lang="scss" scoped>
 .loader {
-    border: 5px solid #f3f3f3;
+    border: 5px solid var(--dropdown-color);
     border-top: 5px solid var(--navbar-svg);
     border-radius: 50%;
     width: 50px;
