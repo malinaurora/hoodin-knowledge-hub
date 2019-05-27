@@ -79,7 +79,7 @@ export default {
                 offset: 0,
                 limit: config.articleLimit,
                 mediaCategories: this.checkedCategoriesArray,
-                sources: this.checkedSourcesArray,
+                Sources: this.checkedSourcesArray,
                 after: this.startTimestamp,
                 before: this.endTimestamp,
                 ondate: this.startTimestamp,
