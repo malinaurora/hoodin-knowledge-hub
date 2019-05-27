@@ -104,6 +104,12 @@ nav {
         width: 50px;
         position: fixed;
         transition: 0.4s;
+        overflow: auto;
+        overflow-x: hidden;
+    }
+    /* width */
+    ::-webkit-scrollbar {
+        width: 0px;
     }
     .toggleSidebar {
         width: 250px;
