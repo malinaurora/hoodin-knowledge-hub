@@ -6,6 +6,7 @@ import router from './router';
 import App from './App.vue';
 import 'babel-polyfill';
 import i18n from './plugins/i18n';
+import config from './config.json';
 
 Vue.use(Vuetify);
 
@@ -15,7 +16,7 @@ Vue.filter('striphtml', value => {
     const text = div.textContent || div.innerText || '';
     return text;
 });
-moment.updateLocale('en', {
+moment.updateLocale(config.lang, {
     relativeTime: {
         future: 'in %s',
         past: '%s ago',
@@ -33,7 +34,7 @@ moment.updateLocale('en', {
     },
 });
 
-Vue.filter('moment', date => moment(date).fromNow());
+Vue.filter('moment', date => moment(date).fromNow(true));
 
 router.beforeEach((to, from, next) => {
     document.title = to.meta.title;
