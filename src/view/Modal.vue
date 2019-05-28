@@ -320,7 +320,7 @@ export default {
     }
 
     .modalText {
-        max-height: none;
+        max-height: 700px;
     }
 
     .styleText {
