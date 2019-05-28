@@ -64,4 +64,15 @@ export default {
         color: var(--text-color);
     }
 }
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .dropdown {
+        .dropdownItems {
+            margin: 5px 0px 0px 60px;
+        }
+        input {
+            margin: 5px 75px 0px 0px;
+
+        }
+    }
+}
 </style>

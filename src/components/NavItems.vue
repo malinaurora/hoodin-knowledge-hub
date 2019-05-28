@@ -392,4 +392,13 @@ ul {
         }
     }
 }
+@media (min-width: 576px) and (max-width: 767.98px) {
+    ul {
+        li {
+            .arrowFix {
+                margin: 4px -340px 0px 0px;
+            }
+        }
+    }
+}
 </style>
