@@ -396,7 +396,7 @@ ul {
     ul {
         li {
             .arrowFix {
-                margin: 4px -340px 0px 0px;
+                margin: 4px -295px 0px 0px;
             }
         }
     }

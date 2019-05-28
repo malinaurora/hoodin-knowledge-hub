@@ -70,8 +70,7 @@ export default {
             margin: 5px 0px 0px 60px;
         }
         input {
-            margin: 5px 75px 0px 0px;
-
+            margin: 5px 57px 0px 0px;
         }
     }
 }
