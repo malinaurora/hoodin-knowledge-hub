@@ -168,7 +168,7 @@ export default {
             }, 4000);
         },
         enableScroll() {
-            document.getElementsByTagName('html')[0].style.overflow = 'auto';
+            document.getElementsByTagName('html')[0].style.overflowY = 'auto';
             this.$emit('toggleNav', true);
         },
         addFavorite() {
@@ -320,7 +320,7 @@ export default {
     }
 
     .modalText {
-        max-height: none;
+        max-height: 700px;
     }
 
     .styleText {

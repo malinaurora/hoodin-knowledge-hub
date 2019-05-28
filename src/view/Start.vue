@@ -128,6 +128,9 @@ export default {
             if (window.innerWidth < 575.98) {
                 this.$emit('hideNavbar', hide);
             }
+            if (window.innerHeight < 500) {
+                this.$emit('hideNavbar', hide);
+            }
         },
     },
 };
