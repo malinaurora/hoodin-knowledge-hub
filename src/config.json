@@ -1,0 +1,28 @@
+{
+    "baseRoute": "interns-test-channel.hoodin.com",
+    "token": "eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9",
+    "logo": "hoodin-logo.png",
+    "articleLimit": 15,
+    "lang": "sv",
+    "documentTitle": "Hoodin Super Feeder",
+    "styling":{
+        "--body-font": "Roboto Slab",
+        "--heading-font": "Montserrat",
+        "--filter-box-font": "Roboto",
+        "--text-color": "black",
+        "--text-hover-color": "#7b7b7b",
+        "--primary-color": "white",
+        "--secondary-color":"#f6f6f6",
+        "--article-color": "white",
+        "--article-footer-color": "white",
+        "--dropdown-color": "#e6e6e6",
+        "--navbar-svg": "black",
+        "--favorite-svg-fill-color": "red",
+        "--favorite-svg-empty-color": "black",
+        "--navbar-close-and-hamburger": "black",
+        "--show-more-articles-svg": "black",
+        "--filter-box-background": "none",
+        "--filter-box-border": "black",
+        "--filter-box-font-color": "black"
+    }
+}

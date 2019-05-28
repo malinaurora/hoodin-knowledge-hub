@@ -1,28 +1,34 @@
 <template>
-    <div class="text-center m-3">
-        <img :src="imgSrc" class="rounded logo" alt="logo" />
-    </div>
+    <header>
+        <img :src="'/src/assets/logo/' + jsonLogo.logo" class="rounded logo" alt="logo" />
+    </header>
 </template>
 
 <script>
+import config from '../config.json';
+
 export default {
     name: 'Header',
     data() {
         return {
-            imgSrc: '/src/assets/images/hoodin-logo.png',
+            jsonLogo: config,
         };
     },
 };
 </script>
 
 <style lang="scss">
-.logo {
-    width: 200px;
-    height: 50px;
+header {
+    margin-top: 30px;
+    text-align: center;
+    .logo {
+        width: 80%;
+        max-width: 300px;
+    }
 }
 @media (max-width: 767.98px) {
-    .logo {
-        margin-top: 45px;
+    header {
+        margin-top: 70px;
     }
 }
 </style>

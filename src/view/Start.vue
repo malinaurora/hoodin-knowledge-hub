@@ -1,35 +1,69 @@
 <template>
-    <div>
-        <div class="row mb-5 mt-4">
-            <article
-                v-for="api of searchInArticles"
-                :key="api.id"
-                class="col-lg-4 col-md-6 mt-3 mb-3"
-            >
+    <div class="start">
+        <header>
+            <div v-if="error" class="error">
+                <img :src="errorImage" />
+                <h2>
+                    {{ $t('errormsg') }}
+                </h2>
+            </div>
+            <h2 v-else-if="apiData.length <= 0 && fetchSuccess">
+                {{ $t('articlesfound') }}
+            </h2>
+            <Spinner v-else-if="!fetchSuccess" />
+        </header>
+        <div class="row">
+            <article v-for="api of apiData" :key="api.id" class="column">
                 <Article
-                    :api-data="api"
+                    :article="api"
                     modal-route="modalStart"
-                    @saveArticleId="saveFavorites($event)"
-                    @removeArticleId="removeFavorite($event)"
+                    :favorite-in-modal="favoriteInModal"
                 />
             </article>
         </div>
-        <router-view />
-        <MoreArticles @showMore="showMore($event)" />
+        <router-view
+            @toggleNav="toggleNav($event)"
+            @favoriteAddedInModal="favoriteAddedInModal($event)"
+            @favoriteRemovedInModal="favoriteRemovedInModal($event)"
+        />
+        <MoreArticles
+            v-if="apiData.length >= queryString.limit && moreArticlesToLoad"
+            @showMore="showMore(queryString)"
+        />
     </div>
 </template>
 
 <script>
 import Article from '../components/Article.vue';
 import MoreArticles from '../components/MoreArticles.vue';
+import Spinner from '../components/Spinner.vue';
+import Helper from '../helpers';
+import config from '../config.json';
 
 export default {
     components: {
         Article,
         MoreArticles,
+        Spinner,
     },
     props: {
         searchString: {
+            type: String,
+            default: '',
+        },
+        checkedCategoriesArray: {
+            type: Array,
+            default: Array,
+        },
+        checkedSourcesArray: {
+            type: Array,
+            default: Array,
+        },
+        startTimestamp: {
+            type: String,
+            default: '',
+        },
+        endTimestamp: {
             type: String,
             default: '',
         },
@@ -37,94 +71,114 @@ export default {
     data() {
         return {
             apiData: [],
-            Favorites: [],
-            limit: 15,
+            queryString: {
+                ids: '',
+                offset: 0,
+                limit: config.articleLimit,
+                mediaCategories: this.checkedCategoriesArray,
+                Sources: this.checkedSourcesArray,
+                after: this.startTimestamp,
+                before: this.endTimestamp,
+                ondate: this.startTimestamp,
+                searchString: this.searchString,
+            },
+            error: false,
+            fetchSuccess: false,
+            errorImage: '/src/assets/images/error.svg',
+            moreArticlesToLoad: false,
+            favoriteInModal: '',
         };
     },
-    computed: {
-        searchInArticles() {
-            const searchLowerCase = this.searchString.toLowerCase();
-            return this.apiData.filter(
-                api =>
-                    api.title.toLowerCase().match(searchLowerCase) ||
-                    api.author.name.toLowerCase().match(searchLowerCase) ||
-                    api.subtitle.toLowerCase().match(searchLowerCase) ||
-                    api.text.toLowerCase().match(searchLowerCase),
-            );
+    watch: {
+        searchString() {
+            this.getSearchString();
+        },
+        checkedCategoriesArray(categories) {
+            this.getCategories(categories);
+        },
+        checkedSourcesArray(sources) {
+            this.getSources(sources);
+        },
+        startTimestamp() {
+            this.getDate();
+        },
+        endTimestamp() {
+            this.getDate();
         },
     },
     mounted() {
-        fetch(
-            `https://interns-test-channel.hoodin.com/api/v2/items?limit=${
-                this.limit
-            }&&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9`,
-        )
-            .then(response => response.json())
-            .then(data => {
-                this.apiData = data.data.items;
-            });
-
-        setInterval(() => {
-            fetch(
-                `https://interns-test-channel.hoodin.com/api/v2/items?limit=${
-                    this.limit
-                }&&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9`,
-            )
-                .then(response => response.json())
-                .then(data => {
-                    this.apiData = data.data.items;
-                });
-        }, 60000);
-
-        /* convert local Storage from string to array */
-        const data = JSON.parse(localStorage.getItem('id'));
-
-        /* push old favorites to favorites array */
-        data.forEach(id => {
-            this.Favorites.push(id);
-        });
+        document.body.scrollTop = 0;
+        this.getData(this.queryString);
     },
     methods: {
-        saveFavorites(id) {
-            /* push new favorit id to array and saves it localy */
-            this.Favorites.push(id);
-            localStorage.setItem('id', JSON.stringify(this.Favorites));
-        },
-        removeFavorite(removedId) {
-            /* removes the id from start favorites array so it doesn't
-            push same article multiple times */
-            let index = 0;
+        getData: Helper.getData,
+        showMore: Helper.showMoreData,
+        getSearchString: Helper.getSearchString,
+        getCategories: Helper.getCategories,
+        getSources: Helper.getSources,
+        getDate: Helper.getDate,
 
-            this.Favorites.forEach(id => {
-                if (removedId === id) {
-                    this.Favorites.splice(index, 1);
-                }
-                index += 1;
-            });
+        favoriteAddedInModal(id) {
+            this.favoriteInModal = `add ${id}`;
         },
-        showMore(limit) {
-            this.limit = limit;
-
-            fetch(
-                `https://interns-test-channel.hoodin.com/api/v2/items?limit=${
-                    this.limit
-                }&&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9`,
-            )
-                .then(response => response.json())
-                .then(data => {
-                    this.apiData = data.data.items;
-                });
+        favoriteRemovedInModal(id) {
+            this.favoriteInModal = `rem ${id}`;
+        },
+        toggleNav(hide) {
+            if (window.innerWidth < 575.98) {
+                this.$emit('hideNavbar', hide);
+            }
+            if (window.innerHeight < 500) {
+                this.$emit('hideNavbar', hide);
+            }
         },
     },
 };
 </script>
 
 <style lang="scss">
+.start {
+    header {
+        position: absolute;
+        text-align: center;
+        top: 50%;
+        left: 50%;
+        -ms-transform: translateY(-50%) translateX(-50%);
+        transform: translateY(-50%) translateX(-50%);
+        width: 80%;
+        z-index: -9;
+
+        h2 {
+            text-align: center;
+            font-size: 2em;
+            font-weight: 200;
+            max-width: 900px;
+            margin: auto;
+            font-family: var(--filter-box-font);
+        }
+
+        .error {
+            img {
+                margin-top: 50px;
+                width: 100%;
+                max-width: 700px;
+                margin-bottom: 20px;
+            }
+        }
+    }
+
+    .row {
+        margin-top: 40px;
+        margin-bottom: 20px;
+    }
+}
 article {
     a {
-        color: black;
+        color: var(--text-color);
+        margin-top: 30px;
+        margin-bottom: 30px;
         &:hover {
-            color: black;
+            color: var(--text-color);
             text-decoration: none;
         }
     }

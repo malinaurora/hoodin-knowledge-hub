@@ -1,12 +1,14 @@
 import Vue from 'vue';
-import BootstrapVue from 'bootstrap-vue';
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap-vue/dist/bootstrap-vue.css';
 import moment from 'moment';
+import Vuetify from 'vuetify';
+import 'vuetify/dist/vuetify.min.css';
 import router from './router';
 import App from './App.vue';
+import 'babel-polyfill';
+import i18n from './plugins/i18n';
+import config from './config.json';
 
-Vue.use(BootstrapVue);
+Vue.use(Vuetify);
 
 Vue.filter('striphtml', value => {
     const div = document.createElement('div');
@@ -14,7 +16,7 @@ Vue.filter('striphtml', value => {
     const text = div.textContent || div.innerText || '';
     return text;
 });
-moment.locale('en', {
+moment.updateLocale(config.lang, {
     relativeTime: {
         future: 'in %s',
         past: '%s ago',
@@ -28,15 +30,21 @@ moment.locale('en', {
         M: '1mth',
         MM: '%dmth',
         y: '1y',
-        yy: '%dy',
+        yy: '%y',
     },
 });
 
 Vue.filter('moment', date => moment(date).fromNow(true));
 
+router.beforeEach((to, from, next) => {
+    document.title = to.meta.title;
+    next();
+});
+
 /* eslint-disable no-new */
 new Vue({
     el: '#app',
     router,
-    render: h => h(App),
-});
+    i18n,
+    render: html => html(App),
+}).$mount('#app');

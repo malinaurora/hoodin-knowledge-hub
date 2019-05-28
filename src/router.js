@@ -3,20 +3,50 @@ import Router from 'vue-router';
 import Start from './view/Start.vue';
 import Favorite from './view/Favorite.vue';
 import Modal from './view/Modal.vue';
+import lang from './plugins/i18n';
+import config from './config.json';
 
 Vue.use(Router);
 
 export default new Router({
+    mode: 'history',
     routes: [
         {
             path: '/favorite',
+            meta: {
+                title: `${lang.t('navitemFavorites')} - ${config.documentTitle}`,
+            },
             component: Favorite,
-            children: [{ path: ':id', component: Modal, name: 'modalFavorite' }],
+            children: [
+                {
+                    meta: {
+                        title: `${lang.t('navitemFavorites')} - ${config.documentTitle}`,
+                    },
+                    path: ':id',
+                    component: Modal,
+                    name: 'modalFavorite',
+                },
+            ],
         },
         {
-            path: '/',
+            path: '//',
+            meta: {
+                title: `${lang.t('navitemHome')} - ${config.documentTitle}`,
+            },
             component: Start,
-            children: [{ path: ':id', component: Modal, name: 'modalStart' }],
+            children: [
+                {
+                    meta: {
+                        title: `${lang.t('navitemHome')} - ${config.documentTitle}`,
+                    },
+                    path: ':id',
+                    component: Modal,
+                    name: 'modalStart',
+                },
+            ],
+            scrollBehavior() {
+                return { x: 0, y: 0 };
+            },
         },
     ],
 });

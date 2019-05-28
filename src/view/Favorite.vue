@@ -1,32 +1,115 @@
 <template>
-    <div clasS="favorite">
+    <div class="favorite">
         <header>
-            <h2 v-if="noFavorites === true">
-                No Articles Saved To Favorites!
+            <div v-if="error" class="error">
+                <img :src="errorImage" />
+                <h2>
+                    {{ $t('errormsg') }}
+                </h2>
+            </div>
+            <h2 v-else-if="noFavorites">
+                {{ $t('favoritText') }}
             </h2>
+            <h2 v-else-if="apiData.length <= 0 && fetchSuccess">
+                {{ $t('articlesfound') }}
+            </h2>
+
+            <Spinner v-else-if="!fetchSuccess" />
         </header>
-        <div class="row mb-5">
-            <article v-for="api of apiData" :key="api.id" class="col-lg-4 col-md-6 mt-3 mb-3">
-                <Article :api-data="api" modal-route="modalFavorite" />
+        <div v-if="queryString.ids" class="row">
+            <article v-for="api of apiData" :key="api.id" class="column">
+                <Article
+                    :article="api"
+                    modal-route="modalFavorite"
+                    :favorite-in-modal="favoriteInModal"
+                />
             </article>
-            <router-view />
+            <router-view
+                @toggleNav="toggleNav($event)"
+                @favoriteAddedInModal="favoriteAddedInModal($event)"
+                @favoriteRemovedInModal="favoriteRemovedInModal($event)"
+            />
         </div>
+        <MoreArticles
+            v-if="apiData.length >= queryString.limit && MoreArticlesToLoad && queryString.ids"
+            @showMore="showMore(queryString)"
+        />
     </div>
 </template>
 
 <script>
 import Article from '../components/Article.vue';
+import MoreArticles from '../components/MoreArticles.vue';
+import Spinner from '../components/Spinner.vue';
+import Helper from '../helpers';
+import config from '../config.json';
 
 export default {
     components: {
         Article,
+        MoreArticles,
+        Spinner,
+    },
+    props: {
+        searchString: {
+            type: String,
+            default: '',
+        },
+        checkedCategoriesArray: {
+            type: Array,
+            default: Array,
+        },
+        checkedSourcesArray: {
+            type: Array,
+            default: Array,
+        },
+        startTimestamp: {
+            type: String,
+            default: '',
+        },
+        endTimestamp: {
+            type: String,
+            default: '',
+        },
     },
     data() {
         return {
-            apiData: null,
-            id: '',
+            apiData: [],
+            queryString: {
+                ids: '',
+                offset: 0,
+                limit: config.articleLimit,
+                mediaCategories: this.checkedCategoriesArray,
+                Sources: this.checkedSourcesArray,
+                after: this.startTimestamp,
+                before: this.endTimestamp,
+                ondate: this.startTimestamp,
+                searchString: this.searchString,
+            },
+            error: false,
+            errorImage: '/src/assets/images/error.svg',
+            MoreArticlesToLoad: true,
+            favoriteInModal: '',
             noFavorites: false,
+            fetchSuccess: false,
         };
+    },
+    watch: {
+        searchString() {
+            this.getSearchString();
+        },
+        checkedCategoriesArray(categories) {
+            this.getCategories(categories);
+        },
+        checkedSourcesArray(sources) {
+            this.getSources(sources);
+        },
+        startTimestamp() {
+            this.getDate();
+        },
+        endTimestamp() {
+            this.getDate();
+        },
     },
     mounted() {
         document.body.scrollTop = 0;
@@ -35,17 +118,29 @@ export default {
             this.noFavorites = true;
         }
         data.forEach(idString => {
-            this.id += `${idString},`;
+            this.queryString.ids += `${idString},`;
         });
-        fetch(
-            `https://interns-test-channel.hoodin.com/api/v2/items?ids=${
-                this.id
-            },?&&token=eyJpdiI6IktJMXkwWllPdzJCSzl2RE9RMmNqQ3c9PSIsInZhbHVlIjoiQ3VQQXVOV1wvVEJidmhRR1lcL0pSUE5XUmdzdE1TK2J1VlZ6TUNwYWk1enlmaERYbzR2TlJ6enZCNUI2K2l6ejVlWlFWZFQ3NDhsY1crMzl5NHlLRzN3dz09IiwibWFjIjoiMjkxYzBjY2JkMDliNmY0YjVmY2E3NGI4NTVlMTZlNDYxMWUxZGY1NTk3ZGI4MzJkZjY2NWUwMGZmM2ExYjlhNiJ9`,
-        )
-            .then(response => response.json())
-            .then(post => {
-                this.apiData = post.data.items;
-            });
+        this.getData(this.queryString);
+    },
+    methods: {
+        getData: Helper.getData,
+        showMore: Helper.showMoreData,
+        getSearchString: Helper.getSearchString,
+        getCategories: Helper.getCategories,
+        getSources: Helper.getSources,
+        getDate: Helper.getDate,
+
+        favoriteAddedInModal(id) {
+            this.favoriteInModal = `add ${id}`;
+        },
+        favoriteRemovedInModal(id) {
+            this.favoriteInModal = `rem ${id}`;
+        },
+        toggleNav(hide) {
+            if (window.innerWidth < 575.98) {
+                this.$emit('hideNavbar', hide);
+            }
+        },
     },
 };
 </script>
@@ -53,16 +148,34 @@ export default {
 <style lang="scss">
 .favorite {
     header {
-        h1 {
-            text-align: center;
-            font-size: 4em;
-        }
+        position: absolute;
+        text-align: center;
+        top: 50%;
+        left: 50%;
+        -ms-transform: translateY(-50%) translateX(-50%);
+        transform: translateY(-50%) translateX(-50%);
+        width: 80%;
+        z-index: -9;
         h2 {
             text-align: center;
-            margin-top: 35vh;
             font-size: 2em;
             font-weight: 200;
+            max-width: 900px;
+            font-family: var(--filter-box-font);
+            margin: auto;
         }
+        .error {
+            img {
+                margin-top: 50px;
+                width: 100%;
+                max-width: 700px;
+                margin-bottom: 20px;
+            }
+        }
+    }
+    .row {
+        margin-top: 40px;
+        margin-bottom: 20px;
     }
 }
 </style>
