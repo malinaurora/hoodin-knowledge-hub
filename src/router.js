@@ -9,6 +9,7 @@ import config from './config.json';
 Vue.use(Router);
 
 export default new Router({
+    mode: 'history',
     routes: [
         {
             path: '/favorite',
@@ -43,6 +44,9 @@ export default new Router({
                     name: 'modalStart',
                 },
             ],
+            scrollBehavior() {
+                return { x: 0, y: 0 };
+            },
         },
     ],
 });
